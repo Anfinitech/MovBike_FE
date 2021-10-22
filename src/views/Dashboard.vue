@@ -1,25 +1,40 @@
 <template>
   <div>
     <Sidebar />
-      <Header />
-      <Main />
-    <div class="main-container">
-
-    </div>
+    <Header />
+      
+     <main>
+            <div class="cards">
+                <div class="card-single">
+                    <div>
+                        <h2>Estaciones</h2>
+                    </div>
+                    <div>
+                        <img src="@/assets/Estacion.svg" width="250px" alt="">
+                    </div>
+                </div>
+                <div class="card-single">
+                    <div>
+                        <h2>Bicicletas</h2>
+                    </div>
+                    <div>
+                        <img src="@/assets/Bicis.svg" width="200px" alt="">
+                    </div>
+                </div>
+            </div>
+        </main>
   </div>
 </template>
 
 <script>
 import Header from '@/components/Header.vue'
 import Sidebar from '@/components/Sidebar.vue'
-import Main from '@/components/Main.vue'
 
 export default {
   name: "Dashboard",
   components: {
     Header,
     Sidebar,
-    Main
   },
   method: {
     activeLink: function () {
@@ -85,13 +100,41 @@ export default {
   display: none;
 }
 
-#nav-toggle:checked ~ .main-container {
+#nav-toggle:checked ~ .main{
   margin-left: 70px;
 }
 
-#nav-toggle:checked ~ .main-container header {
-  width: calc(100% - 70px);
-  left: 70px;
+main {
+  margin-top: 85px;
+  margin-left: 335px;
+  padding: 2rem 1.5rem;
+  background: #e7e9f5;
+  min-height: calc(100vh - 90px);
+}
+
+/*=========== Tarjetas de selección del dashboard ===========*/
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 3rem;
+  margin: 1rem 1rem;
+}
+
+.card-single {
+  display: flex;
+  justify-content: space-between;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+.card-single:hover {
+  background: var(--main-color);
+}
+
+.card-single:hover h2 {
+  color: var(--white);
+  padding-right: 10px;
 }
 
 

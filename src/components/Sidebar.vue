@@ -1,4 +1,5 @@
 <template>
+  <link rel="stylesheet" href="@/assets/line-awesome-1.3.0/1.3.0/css/line-awesome.min.css">
   <input
     type="checkbox"
     name=""
@@ -8,7 +9,7 @@
     <div class="siderbar-brand">
       <img
         class="brand"
-        src=""
+        src="@/assets/mov-bike.svg"
         alt=""
       >
     </div>
@@ -16,30 +17,37 @@
     <div class="sidebar-menu">
       <ul>
         <li>
+          <fa icon="igloo" />
           <span
             class="las la-igloo"
             @click="loadHome"
           >Dashboard</span>
         </li>
         <li>
+          
           <span
             class="las la-user-circle"
             v-on:click="loadUsers"
-          >Crear usuario</span>
+          ></span>
+          <fa icon="user-circle" />
+          <span>Crear usuario</span>
         </li>
         <li>
+          <fa icon="industry" />
           <span
             class="las la-industry"
             @click="loadStages"
           >Estaciones</span>
         </li>
         <li>
+          <fa icon="biking" />
           <span
             class="las la-biking"
             v-on:click="loadBikes"
           >Bicicletas</span>
         </li>
         <li>
+          <fa icon="power-off" />
           <span
             class="las la-power-off"
             @click="logOut"
@@ -59,7 +67,7 @@ export default {
       this.is_auth = localStorage.getItem("isAuth") || false;
 
       if (!this.is_auth)
-        this.$router.push({ name: "Home" });
+        this.$router.push({ name: "Login" });
       else
         this.$router.push({ name: "Dashboard" });
     },

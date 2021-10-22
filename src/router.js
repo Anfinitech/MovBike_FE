@@ -1,13 +1,13 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import Home from './views/Home.vue'
+import Login from './views/Login.vue'
 import Dashboard from './views/Dashboard.vue'
 import Bikes from './views/Bikes.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'Login',
+    component: Login
   },
   {
     path: '/dashboard',

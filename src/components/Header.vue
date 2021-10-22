@@ -1,14 +1,16 @@
 <template>
   <header>
-
+    <link rel="stylesheet" href="@/assets/line-awesome-1.3.0/1.3.0/css/line-awesome.min.css">
     <h1>
+      <fa icon="bars" />
       <label for="nav-toggle">
-        <span class="las la-bars"></span>
+         <i class="fa fa-bars" aria-hidden="true"></i>
       </label>
     </h1>
+   
     <div class="user-wrapper">
       <img
-        src="img/avatar.jpg"
+        src="@/assets/avatar.jpg"
         width="50px"
         height="50px"
         alt=""
@@ -21,6 +23,7 @@
       </div>
     </div>
   </header>
+
 </template>
 
 <script>
@@ -38,7 +41,6 @@ export default {
 </script>
 
 <style scoped>
-
 
 
 #nav-toggle {
