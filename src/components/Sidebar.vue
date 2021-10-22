@@ -79,6 +79,9 @@ export default {
     loadBikes: function () {
       this.$router.push({ name: "Bikes" });
     },
+    loadStages: function () {
+      this.$router.push({ name: "Stages" });
+    },
 
     logOut: function () {
       localStorage.clear();

@@ -1,125 +1,120 @@
 <template>
-  <div>
-    <Sidebar />
-    <Header />
-    <main>
-      <!--     <h1>Bicicletas</h1> -->
-
-      <!--     <div class="contenedorfiltros">
-        <div class="filtros">
-          <h5>Estacion:</h5>
-          <input
-            type="checkbox"
-            id="alfa"
-            value="Alpha"
-            v-model="checkedNames"
-          />
-          <label for="alfa">Alpha</label>
-          <input
-            type="checkbox"
-            id="delta"
-            value="Delta"
-            v-model="checkedNames"
-          />
-          <label for="delta">Delta</label>
-          <input
-            type="checkbox"
-            id="omega"
-            value="Omega"
-            v-model="checkedNames"
-          />
-          <label for="omega">Omega</label>
-          <br />
-          <span>Estaciones: {{ checkedNames }}</span>
-        </div>
-      </div> -->
   
-      <div class="listadoBicicletas">
-        <div
-          class="bicicletas"
-          v-for="bicicleta in bicicletas"
-          :key="bicicleta"
-        >
-          <h4>{{ bicicleta.id}}</h4>
-          <h4>{{ bicicleta.condicion }}</h4>
-          <h4>{{ bicicleta.estación_id }}</h4>
-          <h4>{{ bicicleta.estacion_nombre }}</h4>
-          <div class="opciones">
-            <button id="update">Actualizar</button>
-            <button
-              v-on:click="deleteBikes(bicicleta.id)"
-              id="delete"
-            >Borrar</button>
-          </div>
-
+    <Header />
+    <Sidebar />
+    <main>
+      <div class="greetings">
+    <!--     <h1>Bicicletas</h1> -->
+    <!--     <div class="contenedorfiltros">
+      <div class="filtros">
+        <h5>Estacion:</h5>
+        <input
+          type="checkbox"
+          id="alfa"
+          value="Alpha"
+          v-model="checkedNames"
+        />
+        <label for="alfa">Alpha</label>
+        <input
+          type="checkbox"
+          id="delta"
+          value="Delta"
+          v-model="checkedNames"
+        />
+        <label for="delta">Delta</label>
+        <input
+          type="checkbox"
+          id="omega"
+          value="Omega"
+          v-model="checkedNames"
+        />
+        <label for="omega">Omega</label>
+        <br />
+        <span>Estaciones: {{ checkedNames }}</span>
+      </div>
+    </div> -->
+    <div class="listadoBicicletas">
+      <div
+        class="bicicletas"
+        v-for="bicicleta in bicicletas"
+        :key="bicicleta"
+      >
+        <h4>{{ bicicleta.id}}</h4>
+        <h4>{{ bicicleta.condicion }}</h4>
+        <h4>{{ bicicleta.estación_id }}</h4>
+        <h4>{{ bicicleta.estacion_nombre }}</h4>
+        <div class="opciones">
+          <button v-on:click="loadDeleteBikes(bicicleta)">Borrar X</button>
         </div>
-      </div>
 
-      <div class="createBikes">
-        <form v-on:submit.prevent="createBikes">
-          <select v-model="newBike.b_condicion">
-            <option selected>N/A</option>
-            <option value=true>Buen estado</option>
-            <option value=false>Averiada</option>
-          </select>
-          <br />
-          <span>
-            {{newBike.b_condicion}}
-          </span>
-          <br>
-          <input
-            type="number"
-            v-model="newBike.b_en_estacion"
-          />
-          <br />
-          <button type="submit">Registrar</button>
-        </form>
       </div>
+    </div>
 
-      <div class="updateBike">
-        <form v-on:submit.prevent="updateBikes">
-          <input
-            type="number"
-            v-model="id"
-          />
-          <span>
-            {{id}}
-          </span>
-          <br />
+    <div class="createBikes">
+      <form v-on:submit.prevent="createBikes">
+        <select v-model="newBike.b_condicion">
+          <option selected>N/A</option>
+          <option value=true>Buen estado</option>
+          <option value=false>Averiada</option>
+        </select>
+        <br />
+        <span>
+          {{newBike.b_condicion}}
+        </span>
+        <br>
+        <input
+          type="number"
+          v-model="newBike.b_en_estacion"
+        />
+        <br />
+        <button type="submit">Registrar</button>
+      </form>
+    </div>
 
-          <select v-model="putBikes.b_condicion">
-            <option selected>N/A</option>
-            <option value=true>Buen estado</option>
-            <option value=false>Averiada</option>
-          </select>
-          <br />
-          <span>
-            {{putBikes.b_condicion}}
-          </span>
-          <br>
-          <input
-            type="number"
-            v-model="putBikes.b_en_estacion"
-          />
-          <br />
-          <button type="submit">Actualizar</button>
-        </form>
-      </div>
-    
+    <div class="updateBike">
+      <form v-on:submit.prevent="updateBikes">
+        <input
+          type="number"
+          v-model="id"
+        />
+        <span>
+          {{id}}
+        </span>
+        <br />
+
+        <select v-model="putBikes.b_condicion">
+          <option selected>N/A</option>
+          <option value=true>Buen estado</option>
+          <option value=false>Averiada</option>
+        </select>
+        <br />
+        <span>
+          {{putBikes.b_condicion}}
+        </span>
+        <br>
+        <input
+          type="number"
+          v-model="putBikes.b_en_estacion"
+        />
+        <br />
+        <button type="submit">Actualizar</button>
+      </form>
+    </div>
+     </div>
     </main>
-  </div>
+ 
 </template>
 
 <script>
-
+import axios from "axios";
 import Header from '@/components/Header.vue'
 import Sidebar from '@/components/Sidebar.vue'
 
 export default {
+  name: "bicicleta",
   components: {
     Header,
-    Sidebar
-
+    Sidebar,
   },
   data() {
     return {
@@ -150,6 +145,7 @@ export default {
           console.log(error.response);
         });
     },
+
     renderBikes: function () {
       let url = "https://open-move-and-flow-be.herokuapp.com";
       axios
@@ -163,18 +159,7 @@ export default {
         });
     },
 
-    deleteBikes: function (id) {
-      let url = "https://open-move-and-flow-be.herokuapp.com";
-      axios
-        .delete(url + "/bicicletas/" + id + "/")
-        .then((response) => {
-          this.renderBikes();
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.log("error " + error);
-        });
-    },
+
 
     updateBikes: function () {
       let url = "https://open-move-and-flow-be.herokuapp.com";
@@ -190,7 +175,21 @@ export default {
           console.log(error.response);
         });
 
-    }
+    },
+
+
+
+    loadDeleteBikes: function (bike) {
+      try {
+        localStorage.setItem("ObjBorrarBici", bike.id);
+        this.$router.push({ name: "deleteBikes" });
+
+      } catch (error) {
+        console.log(error.response);
+      }
+    },
+
+
   },
 
   //TODO:Filtro de estaciones  
@@ -212,14 +211,28 @@ export default {
 };
 </script>
 
-<style scoped>
-main {
-  margin-top: 85px;
-  margin-left: 335px;
-  padding: 2rem 1.5rem;
-  background: #e7e9f5;
-  min-height: calc(100vh - 90px);
+<style>
+:root {
+  --main-color: #5046af;
+  --text-grey: #8390a2;
+  --white: #fff;
 }
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  list-style-type: none;
+  text-decoration: none;
+  font-family: "Poppins", sans-serif;
+}
+.greetings {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
 .contenedorfiltros {
   width: 80%;
   margin: 10px;
@@ -235,6 +248,7 @@ main {
 }
 
 .listadoBicicletas {
+  margin-top: 200px;
   width: 80%;
   height: 750px;
   border: var(--borde) solid blue;
@@ -274,7 +288,13 @@ main {
   padding: 10px;
   border: var(--borde) solid blue;
 }
-
+main {
+  margin-top: 50px;
+  margin-left: 335px;
+  padding: 2rem 1.5rem;
+  background: #e7e9f5;
+  min-height: calc(100vh - 90px);
+}
 #delete:hover {
   background: red;
 }

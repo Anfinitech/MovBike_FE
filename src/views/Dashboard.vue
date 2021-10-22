@@ -105,7 +105,7 @@ export default {
 }
 
 main {
-  margin-top: 85px;
+  margin-top: 50px;
   margin-left: 335px;
   padding: 2rem 1.5rem;
   background: #e7e9f5;
