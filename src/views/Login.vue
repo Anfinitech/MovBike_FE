@@ -91,7 +91,7 @@ export default {
     }
 
     *{
-          border: 0px solid red;
+          border: 0px solid red !important;
 
     }
 

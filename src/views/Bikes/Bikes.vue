@@ -3,10 +3,13 @@
     <Header />
     <Sidebar />
     <main>
-      <h1>BICICLETAS</h1>
-      <button v-on:click="loadCreateBikes">
-        Crear
-      </button>
+      <div class="top-bar">
+        <h1>BICICLETAS</h1>
+        <button v-on:click="loadCreateBikes">
+          Crear
+        </button>
+
+      </div>
       <div class="listadoBicicletas">
         <div
           class="bicicletas"
@@ -41,22 +44,13 @@ export default {
 
   data() {
     return {
-      id: 0,
-      putBikes: {
-        b_condicion: true,
-        b_en_estacion: 0
-      },
-      newBike: {
-        b_condicion: true,
-        b_en_estacion: 0
-      },
+
       bicicletas: [],
       checkedNames: [],
     };
   },
 
   methods: {
-    
     renderBikes: function () {
       let url = "https://open-move-and-flow-be.herokuapp.com";
       axios
@@ -78,7 +72,7 @@ export default {
         console.log(error.response);
       }
     },
-    
+
     loadDeleteBikes: function (bike) {
       try {
         localStorage.setItem("ObjBorrarBici", bike.id);
@@ -151,13 +145,13 @@ export default {
 }
 
 .listadoBicicletas {
-  margin-top: 200px;
   width: 80%;
   height: 750px;
   border: var(--borde) solid blue;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
+  align-content: center;
   align-items: center;
 }
 
@@ -192,6 +186,11 @@ export default {
   border: var(--borde) solid blue;
 }
 main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
   margin-top: 50px;
   margin-left: 335px;
   padding: 2rem 1.5rem;
@@ -204,5 +203,13 @@ main {
 
 .bikesid {
   width: 100px;
+}
+
+.top-bar {
+  width: 500px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
 }
 </style>
