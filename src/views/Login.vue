@@ -36,7 +36,7 @@ import axios from 'axios';
 export default {
   name: 'Login',
   components: {
-    // HelloWorld
+
   },
 
   data: function () {
@@ -88,6 +88,11 @@ export default {
         --title-bg: #5046AF;
         --red-span: #ED1C24;
         --button-bg: #5046AF;
+    }
+
+    *{
+          border: 0px solid red;
+
     }
 
     body {

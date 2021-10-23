@@ -2,27 +2,35 @@
   <div>
     <Sidebar />
     <Header />
-      
-     <main>
-            <div class="cards">
-                <div class="card-single">
-                    <div>
-                        <h2>Estaciones</h2>
-                    </div>
-                    <div>
-                        <img src="@/assets/Estacion.svg" width="250px" alt="">
-                    </div>
-                </div>
-                <div class="card-single">
-                    <div>
-                        <h2>Bicicletas</h2>
-                    </div>
-                    <div>
-                        <img src="@/assets/Bicis.svg" width="200px" alt="">
-                    </div>
-                </div>
-            </div>
-        </main>
+
+    <main>
+      <div class="cards">
+        <div class="card-single">
+          <div>
+            <h2>Estaciones</h2>
+          </div>
+          <div>
+            <img
+              src="@/assets/Estacion.svg"
+              width="250px"
+              alt=""
+            >
+          </div>
+        </div>
+        <div class="card-single">
+          <div>
+            <h2>Bicicletas</h2>
+          </div>
+          <div>
+            <img
+              src="@/assets/Bicis.svg"
+              width="200px"
+              alt=""
+            >
+          </div>
+        </div>
+      </div>
+    </main>
   </div>
 </template>
 
@@ -37,14 +45,17 @@ export default {
     Sidebar,
   },
   method: {
+    },
+  computed:{
     activeLink: function () {
-      let list = document.querySelectorAll('Sidebar ul li');
+      let list = document.querySelectorAll('.sidebar-menu ul li');
       list.forEach((item) =>
         item.classList.remove('hovered'));
       this.classList.add('hovered');
       list.forEach((item) =>
         item.addEventListener('mouseover', activeLink));
     }
+    
   }
 
 }
@@ -100,7 +111,7 @@ export default {
   display: none;
 }
 
-#nav-toggle:checked ~ .main{
+#nav-toggle:checked ~ .main {
   margin-left: 70px;
 }
 
@@ -136,6 +147,4 @@ main {
   color: var(--white);
   padding-right: 10px;
 }
-
-
 </style>

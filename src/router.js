@@ -1,8 +1,13 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Login from './views/Login.vue'
 import Dashboard from './views/Dashboard.vue'
-import Bikes from './views/Bikes.vue'
-import Stages from './views/Stages.vue'
+
+import Bikes from './views/Bikes/Bikes.vue'
+import createBikes from './views/Bikes/createBikes.vue'
+import deleteBikes from './views/Bikes/deleteBikes.vue'
+import updateBikes from './views/Bikes/updateBikes.vue'
+
+import Stations from './views/Stations/Stations.vue'
 
 const routes = [
   {
@@ -21,9 +26,24 @@ const routes = [
     component: Bikes
   },
   {
-    path: '/dashboard/stages',
-    name: 'Stages',
-    component: Stages
+    path: '/dashboard/bikes/create',
+    name: 'createBikes',
+    component: createBikes
+  },
+  {
+    path: '/dashboard/bikes/delete',
+    name: 'deleteBikes',
+    component: deleteBikes
+  },
+  {
+    path: '/dashboard/bikes/update',
+    name: 'updateBikes',
+    component: updateBikes
+  },
+  {
+    path: '/dashboard/stations',
+    name: 'Stations',
+    component: Stations
   },
 ]
 

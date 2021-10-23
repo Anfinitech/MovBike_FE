@@ -1,13 +1,19 @@
 <template>
   <header>
-    <link rel="stylesheet" href="@/assets/line-awesome-1.3.0/1.3.0/css/line-awesome.min.css">
+    <link
+      rel="stylesheet"
+      href="@/assets/line-awesome-1.3.0/1.3.0/css/line-awesome.min.css"
+    >
     <h1>
       <fa icon="bars" />
       <label for="nav-toggle">
-         <i class="fa fa-bars" aria-hidden="true"></i>
+        <i
+          class="fa fa-bars"
+          aria-hidden="true"
+        ></i>
       </label>
     </h1>
-   
+
     <div class="user-wrapper">
       <img
         src="@/assets/avatar.jpg"
@@ -23,7 +29,6 @@
       </div>
     </div>
   </header>
-
 </template>
 
 <script>
@@ -41,7 +46,6 @@ export default {
 </script>
 
 <style scoped>
-
 
 #nav-toggle {
   display: none;
@@ -94,7 +98,7 @@ header {
   top: 0;
   z-index: 100;
   transition: left 300ms;
-  background:white;
+  background: white;
 }
 
 header label span {
@@ -118,4 +122,6 @@ header label span {
   color: var(--text-grey);
   margin-top: -3px !important;
 }
+
+
 </style>
