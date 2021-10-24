@@ -6,22 +6,25 @@
       <h1>
         update bikes
       </h1>
-      <div class="bicicleta">
-        <h4>{{ bicicleta.id}}</h4>
-        <h4>{{ bicicleta.condicion }}</h4>
-        <h4>{{ bicicleta.estación_id }}</h4>
-        <h4>{{ bicicleta.estacion_nombre }}</h4>
-      </div>
+      <div class="container-cards">
 
-      <div class="updateBike">
-        <form v-on:submit.prevent="updateBike">
+        <div class="bicicleta cards">
+          <h4>{{ bicicleta.id}}</h4>
+          <h4>{{ bicicleta.condicion }}</h4>
+          <h4>{{ bicicleta.estación_id }}</h4>
+          <h4>{{ bicicleta.estacion_nombre }}</h4>
+        </div>
+
+        <form
+          class="updateBike cards"
+          v-on:submit.prevent="updateBike"
+        >
           <input
             type="number"
             v-model="idBike"
+            disabled
           />
-          <span>
-            {{idBike}}
-          </span>
+
           <br />
           <select v-model="putBikes.b_condicion">
             <option selected>N/A</option>
@@ -29,10 +32,7 @@
             <option value=false>Averiada</option>
           </select>
           <br />
-          <span>
-            {{putBikes.b_condicion}}
-          </span>
-          <br>
+
           <input
             type="number"
             v-model="putBikes.b_en_estacion"
@@ -40,6 +40,7 @@
           <br />
           <button type="submit">Actualizar</button>
         </form>
+
       </div>
     </main>
   </div>
@@ -75,17 +76,19 @@ export default {
       axios
         .patch(url + "/bicicletas/" + this.bicicleta.id + "/", this.putBikes, {
           headers: {
-            Authorization:`bearer ${token}`
+            Authorization: `bearer ${token}`
           }
         })
         .then((result) => {
-          console.log(result);
-
+          console.log(this.idBike);
+          console.log(result.data);
+          this.bicicleta = result.data;
         })
         .catch((error) => {
           console.log(error.response);
         });
     },
+
   },
 
   mounted() {
@@ -106,17 +109,36 @@ export default {
       .catch((error) => {
         console.log("error " + error);
       });
-  }
+  },
+
 }
 
 </script>
 
 <style scoped >
 main {
+  display: flex;
   margin-top: 50px;
   margin-left: 335px;
   padding: 2rem 1.5rem;
   background: #e7e9f5;
   min-height: calc(100vh - 90px);
+}
+
+.container-cards {
+  display: flex;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 200px;
+  height: 200px;
+  padding: 10px;
+}
+
+input {
+  width: 100%;
 }
 </style >

@@ -8,24 +8,31 @@
         <button v-on:click="loadCreateBikes">
           Crear
         </button>
+      </div>
 
-      </div>
-      <div class="listadoBicicletas">
-        <div
-          class="bicicletas"
-          v-for="bicicleta in bicicletas"
-          :key="bicicleta"
-        >
-          <h4 class="bikesid">{{ bicicleta.id}}</h4>
-          <h4>{{ bicicleta.condicion }}</h4>
-          <h4>{{ bicicleta.estación_id }}</h4>
-          <h4>{{ bicicleta.estacion_nombre }}</h4>
-          <div class="opciones">
-            <button v-on:click="loadUpdateBikes(bicicleta)">Actualizar</button>
-            <button v-on:click="loadDeleteBikes(bicicleta)">Borrar</button>
-          </div>
-        </div>
-      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Estado</th>
+            <th>Estacion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="bicicleta in bicicletas"
+            :key="bicicleta"
+          >
+            <td>{{bicicleta.id}}</td>
+            <td>{{bicicleta.estación_id}}</td>
+            <td>{{bicicleta.condicion}}</td>
+            <div class="opciones">
+              <button v-on:click="loadUpdateBikes(bicicleta)">Actualizar</button>
+              <button v-on:click="loadDeleteBikes(bicicleta)">Borrar</button>
+            </div>
+          </tr>
+        </tbody>
+      </table>
     </main>
   </div>
 </template>
@@ -150,9 +157,9 @@ export default {
   border: var(--borde) solid blue;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-content: center;
   align-items: center;
+  justify-content: flex-start;
 }
 
 .bicicletas {
@@ -211,5 +218,9 @@ main {
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
+}
+
+td{
+  text-align:center;
 }
 </style>
