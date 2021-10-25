@@ -22,8 +22,7 @@
                 <a href="">
                   <span class="las la-user-circle"></span>
                   <span v-on:click.self.prevent="activeOption = 'HelloWorld'">
-                    Crear usuario</span
-                  >
+                    Crear usuario [Beta]</span>
                 </a>
               </li>
               <li>
@@ -74,7 +73,6 @@
           <div>
             <main>
               <component :is="activeOption" />
-              <router-view />
             </main>
           </div>
         </div>
