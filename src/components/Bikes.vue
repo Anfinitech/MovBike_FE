@@ -1,57 +1,42 @@
 <template>
   <div>
-    <Header />
-    <Sidebar />
-    <main>
-      <div class="top-bar">
-        <h1>BICICLETAS</h1>
-        <button v-on:click="loadCreateBikes">
-          Crear
-        </button>
-      </div>
-
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Estado</th>
-            <th>Estacion</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
+    <div class="main-container">
+      <main>
+        <div class="top-bar">
+          <h1>BICICLETAS</h1>
+          <button v-on:click="loadCreateBikes">Crear</button>
+        </div>
+        <div class="listadoBicicletas">
+          <div
+            class="bicicletas"
             v-for="bicicleta in bicicletas"
             :key="bicicleta"
           >
-            <td>{{bicicleta.id}}</td>
-            <td>{{bicicleta.estación_id}}</td>
-            <td>{{bicicleta.condicion}}</td>
+            <h4 class="bikesid">{{ bicicleta.id }}</h4>
+            <h4>{{ bicicleta.condicion }}</h4>
+            <h4>{{ bicicleta.estación_id }}</h4>
+            <h4>{{ bicicleta.estacion_nombre }}</h4>
             <div class="opciones">
-              <button v-on:click="loadUpdateBikes(bicicleta)">Actualizar</button>
+              <button v-on:click="loadUpdateBikes(bicicleta)">
+                Actualizar
+              </button>
               <button v-on:click="loadDeleteBikes(bicicleta)">Borrar</button>
             </div>
-          </tr>
-        </tbody>
-      </table>
-    </main>
+          </div>
+        </div>
+      </main>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import Header from '@/components/Header.vue'
-import Sidebar from '@/components/Sidebar.vue'
 
 export default {
-  name: "bicicleta",
-  components: {
-    Header,
-    Sidebar,
-  },
+  name: "Bicicletas",
 
   data() {
     return {
-
       bicicletas: [],
       checkedNames: [],
     };
@@ -74,7 +59,6 @@ export default {
     loadCreateBikes: function () {
       try {
         this.$router.push({ name: "createBikes" });
-
       } catch (error) {
         console.log(error.response);
       }
@@ -84,7 +68,6 @@ export default {
       try {
         localStorage.setItem("ObjBorrarBici", bike.id);
         this.$router.push({ name: "deleteBikes" });
-
       } catch (error) {
         console.log(error.response);
       }
@@ -94,15 +77,13 @@ export default {
       try {
         localStorage.setItem("ObjUpdateBici", bike.id);
         this.$router.push({ name: "updateBikes" });
-
       } catch (error) {
         console.log(error.response);
       }
     },
-
   },
 
-  //TODO:Filtro de estaciones  
+  //TODO:Filtro de estaciones
   /*     computed:{
         filterBicicletas(filtro){
             return this.bicicletas.filter((bicicleta)=>{
@@ -122,34 +103,10 @@ export default {
 </script>
 
 <style>
-:root {
-  --main-color: #5046af;
-  --text-grey: #8390a2;
-  --white: #fff;
-}
 
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  list-style-type: none;
-  text-decoration: none;
-  font-family: "Poppins", sans-serif;
-}
 
-.contenedorfiltros {
-  width: 80%;
-  margin: 10px;
-  display: flex;
-  justify-content: space-around;
-}
 
-.filtros {
-  background-color: #283747;
-  color: white;
-  padding: 10px;
-  border-radius: 20px;
-}
+
 
 .listadoBicicletas {
   width: 80%;
@@ -157,9 +114,9 @@ export default {
   border: var(--borde) solid blue;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-content: center;
   align-items: center;
-  justify-content: flex-start;
 }
 
 .bicicletas {
@@ -192,18 +149,7 @@ export default {
   padding: 10px;
   border: var(--borde) solid blue;
 }
-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 
-  margin-top: 50px;
-  margin-left: 335px;
-  padding: 2rem 1.5rem;
-  background: #e7e9f5;
-  min-height: calc(100vh - 90px);
-}
 #delete:hover {
   background: red;
 }
@@ -219,8 +165,5 @@ main {
   align-items: center;
   justify-content: space-around;
 }
-
-td{
-  text-align:center;
-}
 </style>
+

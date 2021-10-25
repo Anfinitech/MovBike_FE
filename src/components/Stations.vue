@@ -1,0 +1,131 @@
+<template>
+  <div class="general-container">
+    <div class="title-container">
+      <h1>Estaciones</h1>
+      <button class="btn-register">Nueva Estación</button>
+    </div>
+    <table class="table-stations">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Estado</th>
+          <th>Capacidad</th>
+          <th>Ocupación</th>
+          <th>Bicis D</th>
+          <th>Bicis ND</th>
+          <th>Bicis T</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="station in listStations" :key="station.e_id">
+          <td>{{ station.e_id }}</td>
+          <td>{{ station.e_nombre }}</td>
+          <td>{{ station.e_estado }}</td>
+          <td>{{ station.e_capacidad }}</td>
+          <td>
+            {{
+              Number(station.e_ocupacion * 100)
+                .toFixed(2)
+                .concat("%")
+            }}
+          </td>
+          <td>{{ station.e_bicicletasD }}</td>
+          <td>{{ station.e_bicicletasND }}</td>
+          <td>{{ station.e_bicicletasT }}</td>
+          <td><button class="btn-detail">Ver</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+
+export default {
+  name: "Estaciones",
+
+  data: function () {
+    return {
+      station: {
+        e_id: 0,
+        e_nombre: "",
+        e_estado: "",
+        e_capacidad: 0,
+        e_ocupacion: 0,
+        e_bicicletasD: 0,
+        e_bicicletasND: 0,
+        e_bicicletasT: 0,
+      },
+      listStations: [],
+    };
+  },
+
+  methods: {
+    getAllStations: function () {
+      axios
+        .get("https://open-move-and-flow-be.herokuapp.com/estaciones/")
+        .then((response) => {
+          console.log(response);
+          this.listStations = response.data;
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log("error " + error);
+        });
+    },
+  },
+  created() {
+    try {
+      this.getAllStations();
+    } catch (error) {
+      console.log(error);
+    }
+  },
+};
+</script>
+
+<style scoped>
+.title-container {
+  display: flex;
+  justify-content: center;
+  position: initial;
+}
+
+.btn-register {
+  position: relative;
+  margin: 4px;
+  padding: 0px 15px;
+}
+
+.btn-detail {
+  padding: 1px 25px;
+}
+
+h1 {
+  text-align: center;
+  margin: 0px 30px 0px 170px;
+}
+
+.table-stations {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+th {
+  background-color: #8819ff;
+  color: white;
+  padding: 3px 8px 3px 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+td {
+  text-align: center;
+}
+
+</style>
