@@ -66,7 +66,11 @@ export default {
   methods: {
     getAllStations: function () {
       axios
-        .get("https://open-move-and-flow-be.herokuapp.com/estaciones/")
+        .get("https://move-and-flow-be.herokuapp.com/estaciones/", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token_access")}`,
+          },
+        })
         .then((response) => {
           console.log(response);
           this.listStations = response.data;
@@ -127,5 +131,4 @@ tr:nth-child(even) {
 td {
   text-align: center;
 }
-
 </style>
