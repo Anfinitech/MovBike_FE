@@ -5,7 +5,13 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    children: [{
+      path: '/stations',
+      name: 'Stations',
+      component: () => import('./views/Stations.vue')
+    },
+    ]
   },
   {
     path: '/login',

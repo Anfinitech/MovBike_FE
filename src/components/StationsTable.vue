@@ -1,7 +1,6 @@
 <template>
   <div class="general-container">
     <div class="title-container">
-      <h1>Estaciones</h1>
       <button class="btn-register">Nueva Estación</button>
     </div>
     <table class="table-stations">
@@ -45,7 +44,7 @@
 import axios from "axios";
 
 export default {
-  name: "Estaciones",
+  name: "StationsTable",
 
   data: function () {
     return {
@@ -94,13 +93,13 @@ export default {
 <style scoped>
 .title-container {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   position: initial;
 }
 
 .btn-register {
   position: relative;
-  margin: 4px;
+  margin: 3px 65px 5px;
   padding: 0px 15px;
 }
 

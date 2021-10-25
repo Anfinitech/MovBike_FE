@@ -21,14 +21,14 @@
               <li>
                 <a href="">
                   <span class="las la-user-circle"></span>
-                  <span v-on:click.self.prevent="activeOption = 'HelloWorld'">
+                  <span v-on:click.self.prevent="loadStations()">
                     Crear usuario [Beta]</span>
                 </a>
               </li>
               <li>
                 <a href="">
                   <span class="las la-industry"></span>
-                  <span v-on:click.self.prevent="activeOption = 'Estaciones'">
+                  <span v-on:click.self.prevent="loadStations()">
                     Estaciones</span
                   >
                 </a>
@@ -73,6 +73,7 @@
           <div>
             <main>
               <component :is="activeOption" />
+              <router-view/>
             </main>
           </div>
         </div>
@@ -93,11 +94,11 @@ list.forEach((item) => item.addEventListener("mouseover", activeLink));
 import HelloWorld from "@/components/HelloWorld.vue";
 import Dashboard from "@/components/Dashboard.vue";
 import Bicicletas from "@/components/Bikes.vue";
-import Estaciones from "@/components/Stations.vue";
+
 
 export default {
   name: "Home",
-  components: { HelloWorld, Dashboard, Bicicletas, Estaciones },
+  components: { HelloWorld, Dashboard, Bicicletas },
   data: function () {
     return {
       username: localStorage.getItem("username") || "none",
@@ -106,8 +107,8 @@ export default {
   },
 
   methods: {
-    myalert: function () {
-      alert("Holi");
+    loadStations: function () {
+      this.$router.push({ name: "Stations" });
     },
 
     logOut: function () {
