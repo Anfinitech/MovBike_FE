@@ -1,15 +1,11 @@
 <template>
   <div>
-    <router-view 
-    v-on:completedLogIn="completedLogIn"/>
+    <router-view v-on:completedLogIn="completedLogIn" />
   </div>
 </template>
 
 
 <script>
-
-
-
 export default {
   name: "App",
 
@@ -36,8 +32,7 @@ export default {
       localStorage.setItem("token_refresh", data.token_refresh);
       alert("Autenticación Exitosa");
       this.verifyAuth();
-    }
-
+    },
   },
 
   created: function () {

@@ -18,11 +18,19 @@
           <h1 class="title">Iniciar sesión</h1>
 
           <form class="inputs-container" v-on:submit.prevent="processLogInUser">
-            <input class="input" type="text" placeholder="Usuario" v-model="user.username"/>
-            <input class="input" type="password" placeholder="Contraseña" v-model="user.password"/>
-            <button class="btn" type="submit">
-              Iniciar sesión
-            </button>
+            <input
+              class="input"
+              type="text"
+              placeholder="Usuario"
+              v-model="user.username"
+            />
+            <input
+              class="input"
+              type="password"
+              placeholder="Contraseña"
+              v-model="user.password"
+            />
+            <button class="btn" type="submit">Iniciar sesión</button>
             <p id="forgot"><span class="span">Olvidaste la contraseña</span></p>
           </form>
         </div>

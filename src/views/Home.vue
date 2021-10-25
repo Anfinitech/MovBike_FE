@@ -13,13 +13,15 @@
               <li>
                 <a href="">
                   <span class="las la-igloo"></span>
-                  <span v-on:click.self.prevent="activeOption = 'Dashboard'"> Dashboard</span>
+                  <span v-on:click.self.prevent="activeOption = 'Dashboard'">
+                    Dashboard</span
+                  >
                 </a>
               </li>
               <li>
                 <a href="">
                   <span class="las la-user-circle"></span>
-                  <span v-on:click.self.prevent="activeOption= 'HelloWorld'">
+                  <span v-on:click.self.prevent="activeOption = 'HelloWorld'">
                     Crear usuario</span
                   >
                 </a>
@@ -27,13 +29,17 @@
               <li>
                 <a href="">
                   <span class="las la-industry"></span>
-                  <span v-on:click.self.prevent="activeOption= 'Estaciones'"> Estaciones</span>
+                  <span v-on:click.self.prevent="activeOption = 'Estaciones'">
+                    Estaciones</span
+                  >
                 </a>
               </li>
               <li>
                 <a href="">
                   <span class="las la-biking"></span>
-                  <span v-on:click.self.prevent="activeOption= 'Bicicletas'"> Bicicletas</span>
+                  <span v-on:click.self.prevent="activeOption = 'Bicicletas'">
+                    Bicicletas</span
+                  >
                 </a>
               </li>
               <li>
@@ -97,7 +103,7 @@ export default {
   data: function () {
     return {
       username: localStorage.getItem("username") || "none",
-      activeOption: 'Dashboard'
+      activeOption: "Dashboard",
     };
   },
 

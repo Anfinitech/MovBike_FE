@@ -103,11 +103,6 @@ export default {
 </script>
 
 <style>
-
-
-
-
-
 .listadoBicicletas {
   width: 80%;
   height: 750px;
