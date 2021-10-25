@@ -7,9 +7,24 @@ const routes = [
     name: 'Home',
     component: Home,
     children: [{
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: () => import('./views/Dashboard.vue')
+    },
+    {
+      path: '/users',
+      name: 'Users',
+      component: () => import('./views/Users.vue')
+    },
+    {
       path: '/stations',
       name: 'Stations',
       component: () => import('./views/Stations.vue')
+    },
+    {
+      path: '/bikes',
+      name: 'Bikes',
+      component: () => import('./views/Bikes.vue')
     },
     ]
   },

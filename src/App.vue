@@ -22,7 +22,7 @@ export default {
       this.is_auth = localStorage.getItem("isAuth") || false;
 
       if (this.is_auth == false) this.$router.push({ name: "Login" });
-      else this.$router.push({ name: "Home" });
+      else this.$router.push({ name: "Dashboard" });
     },
 
     completedLogIn: function (data) {

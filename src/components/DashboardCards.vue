@@ -23,7 +23,7 @@
 // @ is an alias to /src
 
 export default {
-  name: "Dashboard",
+  name: "DashboardCards",
   components: {},
 };
 </script>

@@ -13,7 +13,7 @@
               <li>
                 <a href="">
                   <span class="las la-igloo"></span>
-                  <span v-on:click.self.prevent="activeOption = 'Dashboard'">
+                  <span v-on:click.self.prevent="loadDashboard()">
                     Dashboard</span
                   >
                 </a>
@@ -21,8 +21,8 @@
               <li>
                 <a href="">
                   <span class="las la-user-circle"></span>
-                  <span v-on:click.self.prevent="loadStations()">
-                    Crear usuario [Beta]</span>
+                  <span v-on:click.self.prevent="loadUsers()">
+                    Usuarios [Beta]</span>
                 </a>
               </li>
               <li>
@@ -36,7 +36,7 @@
               <li>
                 <a href="">
                   <span class="las la-biking"></span>
-                  <span v-on:click.self.prevent="activeOption = 'Bicicletas'">
+                  <span v-on:click.self.prevent="loadBikes()">
                     Bicicletas</span
                   >
                 </a>
@@ -72,7 +72,6 @@
           </header>
           <div>
             <main>
-              <component :is="activeOption" />
               <router-view/>
             </main>
           </div>
@@ -91,24 +90,27 @@ function activeLink() {
 }
 list.forEach((item) => item.addEventListener("mouseover", activeLink));
 
-import HelloWorld from "@/components/HelloWorld.vue";
-import Dashboard from "@/components/Dashboard.vue";
-import Bicicletas from "@/components/Bikes.vue";
-
-
 export default {
   name: "Home",
-  components: { HelloWorld, Dashboard, Bicicletas },
+  components: {},
   data: function () {
     return {
       username: localStorage.getItem("username") || "none",
-      activeOption: "Dashboard",
     };
   },
 
   methods: {
+    loadDashboard: function () {
+      this.$router.push({ name: "Dashboard" });
+    },
+    loadUsers: function () {
+      this.$router.push({ name: "Users" });
+    },
     loadStations: function () {
       this.$router.push({ name: "Stations" });
+    },
+    loadBikes: function () {
+      this.$router.push({ name: "Bikes" });
     },
 
     logOut: function () {
