@@ -67,10 +67,7 @@
           </header>
           <div>
             <main>
-              <Dashboard v-if="activeOption === 'Dashboard'"/>
-              <HelloWorld v-if="activeOption === 'HelloWorld'"/>
-              <Bicicletas v-if="activeOption === 'Bicicletas'"/>
-              <Estaciones v-if="activeOption === 'Estaciones'"/>
+              <component :is="activeOption" />
               <router-view />
             </main>
           </div>
