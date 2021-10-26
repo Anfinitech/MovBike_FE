@@ -3,6 +3,14 @@
     <div class="title-container">
       <button class="btn-register" v-on:click.self.prevent="renderCreate">Registrar Estación</button>
     </div>
+    <div class="filtros">
+      <h3>Filtro por estado:</h3>
+      <select v-model="filterByState">
+        <option value="">N/A</option>
+        <option value="Abierta">Abierta</option>
+        <option value="Cerrada">Cerrada</option>
+      </select>
+    </div>
     <table class="table-stations">
       <thead>
         <tr>
@@ -18,7 +26,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="station in listStations" :key="station.e_id">
+        <tr v-for="station in filterStationsByState" :key="station.e_id">
           <td>{{ station.e_id }}</td>
           <td>{{ station.e_nombre }}</td>
           <td>{{ station.e_estado }}</td>
@@ -58,6 +66,7 @@ export default {
         e_bicicletasT: 0,
       },
       listStations: [],
+      filterByState: ''
     };
   },
 
@@ -84,6 +93,16 @@ export default {
       this.$emit("loadcomponent", 'DetailStation');
     },
   },
+
+  computed: {
+    filterStationsByState() {
+      return this.listStations.filter(estacion => {
+        /* console.log(estacion) */
+        return !estacion.e_estado.indexOf(this.filterByState);
+      })
+    }
+  },
+
   created() {
     try {
       this.getAllStations();
