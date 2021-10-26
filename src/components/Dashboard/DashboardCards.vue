@@ -5,7 +5,7 @@
         <h2>Estaciones</h2>
       </div>
       <div>
-        <img src="../assets/home/img/Estacion.svg" width="250px" alt="" />
+        <img src="@/assets/home/img/Estacion.svg" width="250px" alt="" />
       </div>
     </div>
     <div class="card-single">
@@ -13,7 +13,7 @@
         <h2>Bicicletas</h2>
       </div>
       <div>
-        <img src="../assets/home/img/Bicis.svg" width="200px" alt="" />
+        <img src="@/assets/home/img/Bicis.svg" width="200px" alt="" />
       </div>
     </div>
   </div>

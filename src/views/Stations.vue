@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import StationsTable from "@/components/StationsTable.vue";
+import StationsTable from "@/components/Stations/StationsTable.vue";
 
 export default {
   name: "Stations",

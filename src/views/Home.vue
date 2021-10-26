@@ -5,7 +5,7 @@
         <input type="checkbox" name="" id="nav-toggle" />
         <div class="sidebar">
           <div class="siderbar-brand">
-            <img class="brand" src="../assets/home/img/mov-bike.svg" alt="" />
+            <img class="brand" src="../assets/home/img/mov-bike.svg" alt=""/>
           </div>
 
           <div class="sidebar-menu">

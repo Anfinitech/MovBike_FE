@@ -1,9 +1,9 @@
 <template>
   <div class="general-container">
     <div class="title-container">
-      <button class="btn-register">Nueva Estación</button>
+      <button class="btn-register">Registrar Estación</button>
     </div>
-    <table class="table-stations">
+    <table  class="table-stations">
       <thead>
         <tr>
           <th>ID</th>
@@ -59,6 +59,7 @@ export default {
         e_bicicletasT: 0,
       },
       listStations: [],
+      
     };
   },
 
@@ -71,7 +72,6 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response);
           this.listStations = response.data;
           console.log(response.data);
         })
@@ -99,7 +99,7 @@ export default {
 
 .btn-register {
   position: relative;
-  margin: 3px 65px 5px;
+  margin: 3px 0px 5px;
   padding: 0px 15px;
 }
 

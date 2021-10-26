@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import DashboardCards from "@/components/DashboardCards.vue";
+import DashboardCards from "@/components/Dashboard/DashboardCards.vue";
 
 export default {
   name: "Dashboard",

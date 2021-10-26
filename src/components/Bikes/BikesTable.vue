@@ -1,7 +1,7 @@
 <template>
   <div class="general-container">
     <div class="title-container">
-      <button class="btn-register"> Registrar Bicicleta</button>
+      <button class="btn-register" v-on:submit.prevent="this.$emit('createButton');"> Registrar Bicicleta</button>
     </div>
     <table class="table-bikes">
       <thead>

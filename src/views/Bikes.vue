@@ -2,16 +2,22 @@
   <div>
     <h1>Bicicletas</h1>
     <div>
-      <BikesTable />
+      <component :is="activeOption" />
     </div>
   </div>
 </template>
 
 <script>
-import BikesTable from "@/components/BikesTable.vue";
+import BikesTable from "@/components/Bikes/BikesTable.vue";
+import CreateBike from "@/components/Bikes/CreateBike.vue";
 
 export default {
   name: "Bikes",
-  components: { BikesTable },
+  components: { BikesTable, CreateBike },
+  data: function() {
+    return{
+      activeOption: 'BikesTable'
+    }
+  }
 };
 </script>
