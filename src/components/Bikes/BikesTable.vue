@@ -5,7 +5,7 @@
     </div>
     <div class="filtroPorCondicion">
       <select v-model="filtroPorCondicion">
-        <option value="">N/A</option>
+        <option value="">Todas</option>
         <option value="En buen estado">En buen estado</option>
         <option value="Averiada">Averiada</option>
       </select>
