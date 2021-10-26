@@ -13,31 +13,31 @@
               <li>
                 <a href="" v-on:click.self.prevent="loadDashboard()">
                   <span class="las la-igloo"></span>
-                  <span> Dashboard</span>
+                  <span v-on:click.self.prevent="loadDashboard()"> Dashboard</span>
                 </a>
               </li>
               <li>
                 <a href="" v-on:click.self.prevent="loadUsers()">
                   <span class="las la-user-circle"></span>
-                  <span> Usuarios [Beta]</span>
+                  <span v-on:click.self.prevent="loadUsers()"> Usuarios [Beta]</span>
                 </a>
               </li>
               <li>
                 <a href="" v-on:click.self.prevent="loadStations()">
                   <span class="las la-industry"></span>
-                  <span> Estaciones</span>
+                  <span v-on:click.self.prevent="loadStations()"> Estaciones</span>
                 </a>
               </li>
               <li>
                 <a href="" v-on:click.self.prevent="loadBikes()">
                   <span class="las la-biking"></span>
-                  <span> Bicicletas</span>
+                  <span v-on:click.self.prevent="loadBikes()"> Bicicletas</span>
                 </a>
               </li>
               <li>
                 <a href="" v-on:click="logOut">
                   <span class="las la-power-off"></span>
-                  <span> Cerrar sesión</span>
+                  <span v-on:click="logOut"> Cerrar sesión</span>
                 </a>
               </li>
             </ul>
