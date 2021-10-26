@@ -14,6 +14,7 @@ import CreateBike from "@/components/Bikes/CreateBike.vue";
 export default {
   name: "Bikes",
   components: { BikesTable, CreateBike },
+  
   data: function() {
     return{
       activeOption: 'BikesTable'

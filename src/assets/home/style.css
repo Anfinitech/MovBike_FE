@@ -204,7 +204,7 @@ main {
     margin-top: 82px;
     padding: 2rem 1.5rem;
     background: #E7E9F5;
-    min-height: calc(100vh - 90px);
+    min-height: calc(100vh - 0px);
 }
 
 /*=========== Tarjetas de selección del dashboard ===========*/
@@ -221,6 +221,11 @@ main {
     background: #fff;
     padding: 2rem;
     border-radius: 8px;
+}
+
+.card-single img{
+    width: 180px;
+    padding-top: 40px;
 }
 
 .card-single:hover{
