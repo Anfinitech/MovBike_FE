@@ -1,9 +1,9 @@
 <template>
   <div class="general-container">
     <div class="title-container">
-      <button class="btn-register">Registrar Estación</button>
+      <button class="btn-register" v-on:click.self.prevent="renderCreate">Registrar Estación</button>
     </div>
-    <table  class="table-stations">
+    <table class="table-stations">
       <thead>
         <tr>
           <th>ID</th>
@@ -33,7 +33,7 @@
           <td>{{ station.e_bicicletasD }}</td>
           <td>{{ station.e_bicicletasND }}</td>
           <td>{{ station.e_bicicletasT }}</td>
-          <td><button class="btn-detail">Ver</button></td>
+          <td><button class="btn-detail" v-on:click.self.prevent="renderDetail">Ver más</button></td>
         </tr>
       </tbody>
     </table>
@@ -45,7 +45,6 @@ import axios from "axios";
 
 export default {
   name: "StationsTable",
-
   data: function () {
     return {
       station: {
@@ -59,7 +58,6 @@ export default {
         e_bicicletasT: 0,
       },
       listStations: [],
-      
     };
   },
 
@@ -78,6 +76,12 @@ export default {
         .catch((error) => {
           console.log("error " + error);
         });
+    },
+    renderCreate: function () {
+      this.$emit("loadcomponent", 'CreateStation');
+    },
+    renderDetail: function () {
+      this.$emit("loadcomponent", 'DetailStation');
     },
   },
   created() {

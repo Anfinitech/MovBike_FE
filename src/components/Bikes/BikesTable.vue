@@ -17,7 +17,7 @@
           <td>{{ bicicleta.id }}</td>
           <td>{{ bicicleta.condicion }}</td>
           <td>{{ bicicleta.estacion_nombre }}</td>
-          <td><button class="btn-detail">Ver</button></td>
+          <td><button class="btn-detail">Ver más</button></td>
         </tr>
       </tbody>
     </table>
