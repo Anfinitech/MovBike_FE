@@ -6,7 +6,7 @@
     <div class="filtros">
       <h3>Filtro por estado:</h3>
       <select v-model="filterByState">
-        <option value="">N/A</option>
+        <option value="">Todas</option>
         <option value="Abierta">Abierta</option>
         <option value="Cerrada">Cerrada</option>
       </select>
