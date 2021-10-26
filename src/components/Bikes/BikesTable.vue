@@ -3,6 +3,13 @@
     <div class="title-container">
       <button class="btn-register" v-on:submit.prevent="this.$emit('createButton');"> Registrar Bicicleta</button>
     </div>
+    <div class="filtroPorCondicion">
+      <select v-model="filtroPorCondicion">
+        <option value="">N/A</option>
+        <option value="En buen estado">En buen estado</option>
+        <option value="Averiada">Averiada</option>
+      </select>
+    </div>
     <table class="table-bikes">
       <thead>
         <tr>
@@ -13,7 +20,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="bicicleta in bicicletas" :key="bicicleta.b_id">
+        <tr v-for="bicicleta in filterBikeListByCondition" :key="bicicleta.b_id">
           <td>{{ bicicleta.id }}</td>
           <td>{{ bicicleta.condicion }}</td>
           <td>{{ bicicleta.estacion_nombre }}</td>
@@ -34,6 +41,7 @@ export default {
     return {
       bicicletas: [],
       checkedNames: [],
+      filtroPorCondicion: ''
     };
   },
 
@@ -78,14 +86,15 @@ export default {
     },
   },
 
-  //TODO:Filtro de estaciones
-  /*     computed:{
-        filterBicicletas(filtro){
-            return this.bicicletas.filter((bicicleta)=>{
-              return bicicleta.estacion_nombre === "Alpha"; 
-            }) 
-        }
-      }, */
+  computed: {
+    filterBikeListByCondition() {
+      return this.bicicletas.filter(bicicleta => {
+        /* console.log(bicicleta) */
+        return !bicicleta.condicion.indexOf(this.filtroPorCondicion);
+      })
+    }
+  },
+
 
   created() {
     try {
