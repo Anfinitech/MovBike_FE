@@ -78,11 +78,22 @@ export default {
   },
 
   methods: {
-    getAllStations: function () {
+    getAllStations: async function () {
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        console.log("Mierda rara");
+        this.accessDenied();
+        return;
+      }
+
+      await this.verifyToken();
+
       axios
         .get("https://move-and-flow-be.herokuapp.com/estaciones/", {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token_access")}`,
+            Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
           },
         })
         .then((response) => {
@@ -104,14 +115,8 @@ export default {
       this.$emit("loadcomponent", "DetailStation");
     },
 
-    verifyToken: function () {
-      if (
-        localStorage.getItem("tokenRefresh") === null ||
-        localStorage.getItem("tokenAccess") === null
-      ) {
-        this.$emit("logOut");
-      }
-      axios
+    verifyToken: async function () {
+      return axios
         .post(
           "https://move-and-flow-be.herokuapp.com/refresh/",
           { refresh: localStorage.getItem("tokenRefresh") },
@@ -140,8 +145,10 @@ export default {
     },
   },
 
-  created() {
+  created: async function () {
     try {
+      console.log(localStorage.getItem("tokenRefresh"));
+      console.log(localStorage.getItem("tokenAccess"));
       this.getAllStations();
     } catch (error) {
       console.log(error);
