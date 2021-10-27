@@ -79,14 +79,6 @@ export default {
 
   methods: {
     getAllStations: async function () {
-      if (
-        localStorage.getItem("tokenRefresh") === null ||
-        localStorage.getItem("tokenAccess") === null
-      ) {
-        this.accessDenied();
-        return;
-      }
-
       await this.verifyToken();
 
       axios
@@ -115,6 +107,14 @@ export default {
     },
 
     verifyToken: async function () {
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        this.accessDenied();
+        return;
+      }
+
       return axios
         .post(
           "https://move-and-flow-be.herokuapp.com/refresh/",
