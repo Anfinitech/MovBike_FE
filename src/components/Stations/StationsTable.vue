@@ -83,7 +83,6 @@ export default {
         localStorage.getItem("tokenRefresh") === null ||
         localStorage.getItem("tokenAccess") === null
       ) {
-        console.log("Mierda rara");
         this.accessDenied();
         return;
       }
@@ -147,8 +146,6 @@ export default {
 
   created: async function () {
     try {
-      console.log(localStorage.getItem("tokenRefresh"));
-      console.log(localStorage.getItem("tokenAccess"));
       this.getAllStations();
     } catch (error) {
       console.log(error);
