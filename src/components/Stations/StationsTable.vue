@@ -125,8 +125,8 @@ export default {
         });
     },
     accessDenied: function () {
-      alert("Acceso Denegado. Vuelve a iniciar sesión.");
       localStorage.clear();
+      alert("Acceso Denegado. Vuelve a iniciar sesión.");
       this.$router.push({ name: "Login" });
     },
   },
