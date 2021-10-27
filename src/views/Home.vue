@@ -5,44 +5,37 @@
         <input type="checkbox" name="" id="nav-toggle" />
         <div class="sidebar">
           <div class="siderbar-brand">
-            <img class="brand" src="../assets/home/img/mov-bike.svg" alt=""/>
+            <img class="brand" src="../assets/home/img/mov-bike.svg" alt=""  @click.self.prevent="loadDashboard()"/>
           </div>
 
           <div class="sidebar-menu">
             <ul>
               <li>
-                <a href="">
+                <a href="" v-on:click.self.prevent="loadDashboard()">
                   <span class="las la-igloo"></span>
-                  <span v-on:click.self.prevent="loadDashboard()">
-                    Dashboard</span
-                  >
+                  <span v-on:click.self.prevent="loadDashboard()"> Dashboard</span>
                 </a>
               </li>
               <li>
-                <a href="">
+                <a href="" v-on:click.self.prevent="loadUsers()">
                   <span class="las la-user-circle"></span>
-                  <span v-on:click.self.prevent="loadUsers()">
-                    Usuarios [Beta]</span>
+                  <span v-on:click.self.prevent="loadUsers()"> Usuarios [Beta]</span>
                 </a>
               </li>
               <li>
-                <a href="">
+                <a href="" v-on:click.self.prevent="loadStations()">
                   <span class="las la-industry"></span>
-                  <span v-on:click.self.prevent="loadStations()">
-                    Estaciones</span
-                  >
+                  <span v-on:click.self.prevent="loadStations()"> Estaciones</span>
                 </a>
               </li>
               <li>
-                <a href="">
+                <a href="" v-on:click.self.prevent="loadBikes()">
                   <span class="las la-biking"></span>
-                  <span v-on:click.self.prevent="loadBikes()">
-                    Bicicletas</span
-                  >
+                  <span v-on:click.self.prevent="loadBikes()"> Bicicletas</span>
                 </a>
               </li>
               <li>
-                <a href="">
+                <a href="" v-on:click="logOut">
                   <span class="las la-power-off"></span>
                   <span v-on:click="logOut"> Cerrar sesión</span>
                 </a>
@@ -72,7 +65,7 @@
           </header>
           <div>
             <main>
-              <router-view/>
+              <router-view />
             </main>
           </div>
         </div>

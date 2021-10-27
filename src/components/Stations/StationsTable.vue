@@ -1,9 +1,17 @@
 <template>
   <div class="general-container">
     <div class="title-container">
-      <button class="btn-register">Registrar Estación</button>
+      <button class="btn-register" v-on:click.self.prevent="renderCreate">Registrar Estación</button>
     </div>
-    <table  class="table-stations">
+    <div class="filtros">
+      <h3>Filtro por estado:</h3>
+      <select v-model="filterByState">
+        <option value="">Todas</option>
+        <option value="Abierta">Abierta</option>
+        <option value="Cerrada">Cerrada</option>
+      </select>
+    </div>
+    <table class="table-stations">
       <thead>
         <tr>
           <th>ID</th>
@@ -18,7 +26,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="station in listStations" :key="station.e_id">
+        <tr v-for="station in filterStationsByState" :key="station.e_id">
           <td>{{ station.e_id }}</td>
           <td>{{ station.e_nombre }}</td>
           <td>{{ station.e_estado }}</td>
@@ -33,7 +41,7 @@
           <td>{{ station.e_bicicletasD }}</td>
           <td>{{ station.e_bicicletasND }}</td>
           <td>{{ station.e_bicicletasT }}</td>
-          <td><button class="btn-detail">Ver</button></td>
+          <td><button class="btn-detail" v-on:click.self.prevent="renderDetail">Ver más</button></td>
         </tr>
       </tbody>
     </table>
@@ -45,7 +53,6 @@ import axios from "axios";
 
 export default {
   name: "StationsTable",
-
   data: function () {
     return {
       station: {
@@ -59,7 +66,7 @@ export default {
         e_bicicletasT: 0,
       },
       listStations: [],
-      
+      filterByState: ''
     };
   },
 
@@ -79,7 +86,23 @@ export default {
           console.log("error " + error);
         });
     },
+    renderCreate: function () {
+      this.$emit("loadcomponent", 'CreateStation');
+    },
+    renderDetail: function () {
+      this.$emit("loadcomponent", 'DetailStation');
+    },
   },
+
+  computed: {
+    filterStationsByState() {
+      return this.listStations.filter(estacion => {
+        /* console.log(estacion) */
+        return !estacion.e_estado.indexOf(this.filterByState);
+      })
+    }
+  },
+
   created() {
     try {
       this.getAllStations();
