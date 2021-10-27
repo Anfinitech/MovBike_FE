@@ -1,7 +1,9 @@
 <template>
   <div class="general-container" v-if="loaded">
     <div class="title-container">
-      <button class="btn-register" v-on:click.self.prevent="renderCreate">Registrar Estación</button>
+      <button class="btn-register" v-on:click.self.prevent="renderCreate">
+        Registrar Estación
+      </button>
     </div>
     <div class="filtros">
       <h3>Filtro por estado:</h3>
@@ -41,7 +43,11 @@
           <td>{{ station.e_bicicletasD }}</td>
           <td>{{ station.e_bicicletasND }}</td>
           <td>{{ station.e_bicicletasT }}</td>
-          <td><button class="btn-detail" v-on:click.self.prevent="renderDetail">Ver más</button></td>
+          <td>
+            <button class="btn-detail" v-on:click.self.prevent="renderDetail">
+              Ver más
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -66,8 +72,8 @@ export default {
         e_bicicletasT: 0,
       },
       listStations: [],
-      filterByState: '',
-      loaded: false
+      filterByState: "",
+      loaded: false,
     };
   },
 
@@ -81,28 +87,57 @@ export default {
         })
         .then((response) => {
           this.listStations = response.data;
-          this.loaded=true;
+          this.loaded = true;
           console.log(response.data);
         })
         .catch((error) => {
-          console.log("error " + error);
+          console.log(error);
+          if (error.response.status == "401") {
+            this.accessDenied();
+          }
         });
     },
     renderCreate: function () {
-      this.$emit("loadcomponent", 'CreateStation');
+      this.$emit("loadcomponent", "CreateStation");
     },
     renderDetail: function () {
-      this.$emit("loadcomponent", 'DetailStation');
+      this.$emit("loadcomponent", "DetailStation");
+    },
+
+    verifyToken: function () {
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        this.$emit("logOut");
+      }
+      axios
+        .post(
+          "https://move-and-flow-be.herokuapp.com/refresh/",
+          { refresh: localStorage.getItem("tokenRefresh") },
+          { headers: {} }
+        )
+        .then((result) => {
+          localStorage.setItem("tokenAccess", result.data.access);
+        })
+        .catch((error) => {
+          this.accessDenied();
+        });
+    },
+    accessDenied: function () {
+      alert("Acceso Denegado. Vuelve a iniciar sesión.");
+      localStorage.clear();
+      this.$router.push({ name: "Login" });
     },
   },
 
   computed: {
     filterStationsByState() {
-      return this.listStations.filter(estacion => {
+      return this.listStations.filter((estacion) => {
         /* console.log(estacion) */
         return !estacion.e_estado.indexOf(this.filterByState);
-      })
-    }
+      });
+    },
   },
 
   created() {
