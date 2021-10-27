@@ -1,5 +1,5 @@
 <template>
-  <div class="general-container">
+  <div class="general-container" v-if="loaded">
     <div class="title-container">
       <button class="btn-register" v-on:click.self.prevent="renderCreate">Registrar Estación</button>
     </div>
@@ -66,7 +66,8 @@ export default {
         e_bicicletasT: 0,
       },
       listStations: [],
-      filterByState: ''
+      filterByState: '',
+      loaded: false
     };
   },
 
@@ -80,6 +81,7 @@ export default {
         })
         .then((response) => {
           this.listStations = response.data;
+          this.loaded=true;
           console.log(response.data);
         })
         .catch((error) => {
