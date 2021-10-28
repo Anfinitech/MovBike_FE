@@ -37,7 +37,7 @@
       <button class="boton" type="submit">Registrar</button>
     </form>
     <p class="caja">
-      Construyendo un nodo de bienestar para nuestra comunidad.
+      Una nueva bici a tu servicio.
     </p>
     <v-container fluid>
       <img src="@/assets/stations/images.jpg" alt="" />
