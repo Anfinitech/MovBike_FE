@@ -1,7 +1,7 @@
 <template>
   <div class="general-container" v-if="loaded">
     <div class="title-container">
-      <div class="title"><h1>Bicicletas</h1></div>
+      <div class="title"><h1>Usuarios</h1></div>
     </div>
     <div class="filtroPorCondicion">
       <button class="btn-register" v-on:click.self.prevent="renderCreate">

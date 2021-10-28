@@ -17,7 +17,7 @@
             <ul>
               <li>
                 <a href="" v-on:click.self.prevent="loadDashboard()">
-                  <span class="las la-igloo"></span>
+                  <span class="las la-igloo" v-on:click.self.prevent="loadDashboard()"></span>
                   <span v-on:click.self.prevent="loadDashboard()">
                     Dashboard</span
                   >
@@ -25,13 +25,13 @@
               </li>
               <li>
                 <a href="" v-on:click.self.prevent="loadUsers()">
-                  <span class="las la-user-circle"></span>
+                  <span class="las la-user-circle" v-on:click.self.prevent="loadUsers()"></span>
                   <span v-on:click.self.prevent="loadUsers()"> Usuarios</span>
                 </a>
               </li>
               <li>
                 <a href="" v-on:click.self.prevent="loadStations()">
-                  <span class="las la-industry"></span>
+                  <span class="las la-industry" v-on:click.self.prevent="loadStations()"></span>
                   <span v-on:click.self.prevent="loadStations()">
                     Estaciones</span
                   >
@@ -39,13 +39,13 @@
               </li>
               <li>
                 <a href="" v-on:click.self.prevent="loadBikes()">
-                  <span class="las la-biking"></span>
+                  <span class="las la-biking" v-on:click.self.prevent="loadBikes()"></span>
                   <span v-on:click.self.prevent="loadBikes()"> Bicicletas</span>
                 </a>
               </li>
               <li>
                 <a href="" v-on:click.self="logOut">
-                  <span class="las la-power-off"></span>
+                  <span class="las la-power-off" v-on:click.self="logOut"></span>
                   <span v-on:click.self="logOut"> Cerrar sesión</span>
                 </a>
               </li>
