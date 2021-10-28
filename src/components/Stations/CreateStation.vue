@@ -1,9 +1,12 @@
 <template>
   <div class="general-container">
     <h1>Registrar Estacion</h1>
-    <form name="form" id="form" v-on:submit.prevent="crear()">
+    <form
+      name="form"
+      id="form"
+      v-on:submit.prevent="createStation()"
+    >
       <h3 class="title">Nueva Estacion</h3>
-      <br />
       <p>
         Nombre:
         <input
@@ -11,48 +14,75 @@
           name="e_nombre"
           placeholder="Nombre"
           class="form-control"
-          v-model="nueva.nombre"
+          v-model="nuevaEstacion.e_nombre"
         />
       </p>
       <p>
         Capacidad:
         <input
-          type="int"
+          type="number"
           name="e_capacidad"
           placeholder="Capacidad"
           class="form-control"
-          v-model="nueva.capacidad"
+          v-model="nuevaEstacion.e_capacidad"
         />
       </p>
       <p>Estado:</p>
-      <input type="radio" name="estado" id="abierta" value="true" v-model="estado" />
-      <label class="rad" for="abierta">Abierta</label>
+      <input
+        type="radio"
+        name="estado"
+        id="abierta"
+        value="true"
+        v-model="nuevaEstacion.e_estado"
+      />
+      <label
+        class="rad"
+        for="abierta"
+      >Abierta</label>
       <br />
-      <input type="radio" name="estado" id="cerrada" value="false" v-model="estado" />
-      <label class="rad" for="cerrada">Cerrada</label>
+      <input
+        type="radio"
+        name="estado"
+        id="cerrada"
+        value="false"
+        v-model="nuevaEstacion.e_estado"
+      />
+      <label
+        class="rad"
+        for="cerrada"
+      >Cerrada</label>
 
       <br />
       <button class="boton">Registrar</button>
-      <button class="boton" v-on:click="renderStationsTable">Volver</button>
+      <button
+        class="boton"
+        v-on:click="renderStationsTable"
+      >Volver</button>
     </form>
     <p class="caja">
       Construyendo un nodo de bienestar para nuestra comunidad.
     </p>
     <v-container fluid>
-      <img src="@/assets/stations/images.jpg" alt="" />
+      <img
+        src="@/assets/stations/images.jpg"
+        alt=""
+      />
     </v-container>
   </div>
 </template>
 
 <script>
+
+import axios from "axios";
+
 export default {
   name: "CreateStation",
   data() {
     return {
-      nueva: {
-        nombre: "",
-        capacidad: "",
-        estado: "",
+      nuevaEstacion: {
+        e_nombre: "",
+        e_estado: false,
+        e_capacidad: 90,
       },
     };
   },
@@ -61,11 +91,29 @@ export default {
     renderStationsTable: function () {
       this.$emit("loadcomponent", "StationsTable");
     },
-    crear() {
-      alert(this.nueva);
-    },
+    createStation: function () {
+      let url = "https://move-and-flow-be.herokuapp.com";
+      axios
+        .post(url + "/estaciones/", this.nuevaEstacion, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
+          },
+        })
+        .then((response) => {
+          alert(response.data);
+          console.log(response.data);
+          /* this.loaded = true; */
+        })
+        .catch((error) => {
+          console.log(error.response);
+          if (error.response.status == "401") {
+            /* this.accessDenied(); */
+          }
+        });
+    }
   },
 };
+
 </script>
 
 

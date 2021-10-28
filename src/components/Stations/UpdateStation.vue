@@ -1,44 +1,75 @@
 <template>
   <div class="general-container">
-    <h1> Actualizar estación </h1>
-    <form name="form" id="form" method="post"  enctype="multipart/form-data" v-on:submit.prevent="actualizar()">
-      <h3 class="title"> Estación {{ station.nombre }} </h3>
+    <h1>Actualizar estación</h1>
+    <form
+      name="form"
+      id="form"
+      method="post"
+      enctype="multipart/form-data"
+      v-on:submit.prevent="actualizar()"
+    >
+      <h3 class="title">Estación {{ station.nombre }}</h3>
+      <br />
+      <div class="form-group">
+        <label for="nombre" class="txt_negrita">Nombre:</label>
         <br />
-          <div class="form-group">
-        		<label for="nombre" class="txt_negrita">Nombre:</label>
-            <br />
-            <input v-model="station.nombre" type="text" id="name" name="name" class="form-control">
-          </div>
-          <div class="form-group">
-        		<label for="estado">Estado:</label>
-            <br />
-        		<input type="radio" name="estado" id="abierta" value="true" v-model="estado" />
-            <label class="rad" for="abierta">Abierta</label>
-            <br />
-            <input type="radio" name="estado" id="cerrada" value="false" v-model="estado" />
-            <label class="rad" for="cerrada">Cerrada</label>
-          </div>
-        	<div class="form-group">
-        		<label for="capacidad" class="txt_negrita">Capacidad:</label>
-            <br />
-        		<input type="int" id="capacidad" name="capacidad" class="form-control" v-model="station.capacidad" >
-        	</div>
+        <input
+          v-model="station.nombre"
+          type="text"
+          id="name"
+          name="name"
+          class="form-control"
+        />
+      </div>
+      <div class="form-group">
+        <label for="estado">Estado:</label>
         <br />
-      <button class="boton"> Actualizar </button>
-      <button class="boton" v-on:click.self.prevent="renderStationsTable"> Volver </button>
+        <input
+          type="radio"
+          name="estado"
+          id="abierta"
+          value="true"
+          v-model="estado"
+        />
+        <label class="rad" for="abierta">Abierta</label>
+        <br />
+        <input
+          type="radio"
+          name="estado"
+          id="cerrada"
+          value="false"
+          v-model="estado"
+        />
+        <label class="rad" for="cerrada">Cerrada</label>
+      </div>
+      <div class="form-group">
+        <label for="capacidad" class="txt_negrita">Capacidad:</label>
+        <br />
+        <input
+          type="int"
+          id="capacidad"
+          name="capacidad"
+          class="form-control"
+          v-model="station.capacidad"
+        />
+      </div>
+      <br />
+      <button class="boton">Actualizar</button>
+      <button class="boton" v-on:click.self.prevent="renderStationsTable">
+        Volver
+      </button>
     </form>
     <p class="caja">
-      Haciendo seguimiento continuo a cada nodo para mejorar nuestro servicio y la experiencia de usuario.
+      Haciendo seguimiento continuo a cada nodo para mejorar nuestro servicio y
+      la experiencia de usuario.
     </p>
     <v-container fluid>
       <img src="@/assets/stations/actualizar.jpg" alt="" />
     </v-container>
-    
   </div>
 </template>
 
 <script>
-
 import axios from "axios";
 export default {
   name: "UpdateStation",
@@ -52,12 +83,11 @@ export default {
       },
     };
   },
-  
+
   methods: {
     renderStationsTable: function () {
-      this.$emit("loadcomponent", 'StationsTable');
+      this.$emit("loadcomponent", "StationsTable");
     },
-    
   },
 };
 </script>
@@ -97,6 +127,5 @@ form {
 /*--------------Imagen-------------*/
 v-container {
   margin-left: 10%;
-  
 }
 </style>

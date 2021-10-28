@@ -4,41 +4,27 @@
       <div class="title"><h1>Bicicletas</h1></div>
     </div>
     <div class="filtroPorCondicion">
-      <h4>Filtrar</h4>
-      <select v-model="filtroPorCondicion">
-        <option value="">Todas</option>
-        <option value="En buen estado">En buen estado</option>
-        <option value="Averiada">Averiada</option>
-      </select>
       <button class="btn-register" v-on:click.self.prevent="renderCreate">
-        Registrar Bicicleta
+        Registrar Usuario
       </button>
     </div>
-    <table class="table-bikes">
+    <table class="table-users">
       <thead>
         <tr>
           <th>ID</th>
-          <th>Condición</th>
-          <th>Ubicación</th>
-          <th>Acciones</th>
+          <th>Alias</th>
+          <th>Nombre</th>
+          <th>Correo Electrónico</th>
+          <th>Rol</th>
         </tr>
       </thead>
       <tbody>
-        <tr
-          v-for="bicicleta in filterBikeListByCondition"
-          :key="bicicleta.b_id"
-        >
-          <td>{{ bicicleta.id }}</td>
-          <td>{{ bicicleta.condicion }}</td>
-          <td>{{ bicicleta.estacion_nombre }}</td>
-          <td>
-            <button class="btn-detail" v-on:click.self.prevent="renderUpdate">
-              <fa icon="edit" />Editar
-            </button>
-            <button class="btn-detail" v-on:click.self.prevent="renderDelete">
-              <fa icon="edit" />Eliminar
-            </button>
-          </td>
+        <tr v-for="user in usersList" :key="user.id">
+          <td>{{ user.id }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.role }}</td>
         </tr>
       </tbody>
     </table>
@@ -49,19 +35,17 @@
 import axios from "axios";
 
 export default {
-  name: "BikesTable",
+  name: "UsersTable",
 
   data() {
     return {
-      bicicletas: [],
-      checkedNames: [],
-      filtroPorCondicion: "",
+      usersList: [],
       loaded: false,
     };
   },
 
   methods: {
-    renderBikes: async function () {
+    getAllUsers: async function () {
       await this.verifyToken();
 
       if (
@@ -72,19 +56,20 @@ export default {
       }
 
       let url = "https://move-and-flow-be.herokuapp.com";
+
       axios
-        .get(url + "/bicicletas/", {
+        .get(url + "/users/", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
           },
         })
         .then((response) => {
-          this.bicicletas = response.data;
+          this.usersList = response.data;
           console.log(response.data);
           this.loaded = true;
         })
         .catch((error) => {
-          console.log(error.response);
+          console.log("error " + error);
           if (error.response.status == "401") {
             this.accessDenied();
           }
@@ -92,13 +77,7 @@ export default {
     },
 
     renderCreate: function () {
-      this.$emit("loadcomponent", "CreateBike");
-    },
-    renderUpdate: function () {
-      this.$emit("loadcomponent", "UpdateBike");
-    },
-    renderDelete: function () {
-      this.$emit("loadcomponent", "DeleteBike");
+      this.$emit("loadcomponent", "CreateUser");
     },
 
     verifyToken: async function () {
@@ -130,18 +109,9 @@ export default {
     },
   },
 
-  computed: {
-    filterBikeListByCondition() {
-      return this.bicicletas.filter((bicicleta) => {
-        /* console.log(bicicleta) */
-        return !bicicleta.condicion.indexOf(this.filtroPorCondicion);
-      });
-    },
-  },
-
   created: async function () {
     try {
-      this.renderBikes();
+      this.getAllUsers();
     } catch (error) {
       console.log(error);
     }
@@ -168,7 +138,7 @@ export default {
   display: flex;
   justify-content: space-around;
   position: initial;
-  padding-bottom: 30px;
+  padding-bottom: 15px;
   margin-top: 20px;
 }
 
@@ -198,7 +168,7 @@ export default {
   justify-content: center;
   position: initial;
   padding-bottom: 30px;
-  margin-top: 20px;
+  margin-top: 0px;
 }
 
 .filtroPorCondicion h4 {
@@ -240,7 +210,7 @@ h1 {
   text-align: center;
 }
 
-.table-bikes {
+.table-users {
   margin-right: 0px;
   margin-left: 0px;
   width: 100%;
@@ -319,7 +289,7 @@ td {
     transition: 0.3s;
   }
 
-  .table-bikes thead {
+  .table-users thead {
     background-color: var(--main-color);
     color: white;
     text-align: center;
