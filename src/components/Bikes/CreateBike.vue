@@ -4,7 +4,7 @@
     <form name="form" id="form" v-on:submit.prevent="createBike()">
       <h3 class="title">Nueva Bicicleta</h3>
       <br />
-
+    <div class="form-group">
       <p>Condición:</p>
       <input
         type="radio"
@@ -23,14 +23,16 @@
         v-model="condicion"
       />
       <label class="rad" for="averiada">Averiada</label>
-
+    </div>
       <br />
+    <div class="form-group">
       <p>Ubicación:</p>
       
         <select v-model="bikeCreation.creation_data.current_station">
           <option disabled selected>Seleccione una estacion</option>
           <option v-for="station in stations" :key="station.e_id" :value="station.e_id">{{ station.e_nombre }}</option>        
         </select>
+    </div>
         
       <br />
       <button class="boton" v-on:click.self.prevent="renderBikesTable">Volver</button>
