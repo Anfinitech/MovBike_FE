@@ -1,7 +1,7 @@
 <template>
   <div class="general-container">
     <h1>Registrar bicicleta</h1>
-    <form name="form" id="form" v-on:submit.prevent="crear()">
+    <form name="form" id="form" v-on:submit.prevent="createBike()">
       <h3 class="title">Nueva Bicicleta</h3>
       <br />
 
@@ -26,15 +26,15 @@
 
       <br />
       <p>Ubicación:</p>
-      <div class="form-group">
-        <select class="form-control">
-          <option value="">Seleccione una estacion</option>
-          <option v-for="station in stations" :key="station.e_id" :value="station"/>
+      
+        <select v-model="bikeCreation.creation_data.current_station">
+          <option disabled selected>Seleccione una estacion</option>
+          <option v-for="station in stations" :key="station.e_id" :value="station.e_id">{{ station.e_nombre }}</option>        
         </select>
-      </div>
+        
       <br />
-      <button class="boton">Registrar</button>
-      <button class="boton" v-on:click.self.prevent="renderStationsTable">Volver</button>
+      <button class="boton" v-on:click.self.prevent="renderBikesTable">Volver</button>
+      <button class="boton" type="submit">Registrar</button>
     </form>
     <p class="caja">
       Construyendo un nodo de bienestar para nuestra comunidad.
@@ -46,23 +46,86 @@
 </template>
 
 <script>
+import axios      from 'axios';
+
 export default {
   name: "CreateBike",
   data: function() {
     return {
       bikeCreation: {
-        b_id : "",
+        b_id : 0,
         creation_data: {
+          condicion: 0,
           current_station : 0,
         }
       },
       stations: [],
-    };
+    }
   },
 
   methods: {
-    renderStationsTable: function () {
+    getAllStations: async function () {
+      await this.verifyToken();
+
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        return;
+      }
+
+      axios
+        .get("https://move-and-flow-be.herokuapp.com/estaciones/", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
+          },
+        })
+        .then((response) => {
+          this.stations = response.data;
+          this.loaded = true;
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error.response);
+          if (error.response.status == "401") {
+            this.accessDenied();
+          }
+        });
+    },
+    createBike: async function () {
+      let url = "https://move-and-flow-be.herokuapp.com";
+      axios
+        .post(url + "/bicicletas/", this.nuevaBicicleta, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
+          },
+        })
+        .then((response) => {
+          alert(response.data);
+          console.log(response.data);
+          /* this.loaded = true; */
+        })
+        .catch((error) => {
+          console.log(error.response);
+          if (error.response.status == "401") {
+            /* this.accessDenied(); */
+          }
+        });
+    },
+    renderBikesTable: function () {
       this.$emit("loadcomponent", "BikesTable");
+    },
+    created: async function() {
+      this.getAllStations();
+    },
+    verifyToken: async function () {
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        this.accessDenied();
+        return;
+      }
     },
   },
 };
