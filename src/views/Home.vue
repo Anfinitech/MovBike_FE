@@ -76,12 +76,8 @@
 
 <script>
 //Añadir efecto hovered para dejar en selección un item
-let list = document.querySelectorAll(".sidebar-menu ul li");
-function activeLink() {
-  list.forEach((item) => item.classList.remove("hovered"));
-  this.classList.add("hovered");
-}
-list.forEach((item) => item.addEventListener("mouseover", activeLink));
+
+
 
 export default {
   name: "Home",
@@ -113,6 +109,8 @@ export default {
     },
   },
 };
+
+
 </script>
 
 <style>
