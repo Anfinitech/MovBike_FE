@@ -10,18 +10,11 @@
       <br />
       <input type="radio" name="condicion" id="averiada" value="false" v-model="condicion" />
       <label class="rad" for="averiada">Averiada</label>
-
       <br />
-      <p>
-        Ubicacion:
-        <input
-          type="int"
-          name="e_capacidad"
-          placeholder="Capacidad"
-          class="form-control"
-          v-model="nueva.capacidad"
-        />
-      </p>
+      <p>Ubicacion:</p>
+      <select name="estaciones" v-model="verEstaciones">
+          <option value= {{ station.e_id }}> {{ station.e_nombre}}</option>
+      </select>
       <button class="boton">Crear</button>
       <button class="boton" v-on:click="renderStationsTable">Volver</button>
     </form>
