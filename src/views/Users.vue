@@ -1,5 +1,4 @@
 <template>
-<h1>Usuarios</h1>
   <div>
     <component @loadcomponent="renderUserComponent" :is="activeOption" />
   </div>
