@@ -1,6 +1,6 @@
 <template>
   <h1>Eliminar una estación</h1>
-<button>Eliminar</button>
+  <button>Eliminar</button>
   <button v-on:click.self.prevent="renderStationsTable">Volver</button>
 </template>
 

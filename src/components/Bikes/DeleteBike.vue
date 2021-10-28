@@ -1,6 +1,6 @@
 <template>
   <h1>Eliminar una bicicleta</h1>
-
+  <button>Eliminar</button>
   <button v-on:click.self.prevent="renderStationsTable">Volver</button>
 </template>
 
@@ -11,7 +11,7 @@ export default {
 
   methods: {
     renderStationsTable: function () {
-      this.$emit("loadcomponent", "StationsTable");
+      this.$emit("loadcomponent", "BikesTable");
     },
   },
 };
