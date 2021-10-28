@@ -74,7 +74,16 @@ export default {
     renderStationsTable: function () {
       this.$emit("loadcomponent", "StationsTable");
     },
-    createStation: function () {
+    createStation: async function () {
+      await this.verifyToken();
+
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        return;
+      }
+
       let url = "https://move-and-flow-be.herokuapp.com";
       axios
         .post(url + "/estaciones/", this.nuevaEstacion, {
@@ -88,9 +97,13 @@ export default {
         })
         .catch((error) => {
           console.log(error.response);
-          alert(error.response);
+
           if (error.response.status == "401") {
             this.accessDenied();
+          } else if (error.response.status == "400") {
+            alert("BAD REQUEST [400]");
+          } else {
+            alert(error);
           }
         });
     },
