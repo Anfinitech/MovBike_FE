@@ -143,33 +143,39 @@ export default {
 <style scoped>
 /*------------Formulario------------*/
 form {
-  width: 250px;
-  padding: 20px;
-  font-size: 20px;
+  width: 370px;
+  padding: 30px;
+  font-size: 18px;
   float: right;
-  margin-right: 15%;
+  margin-right: 10%;
   border: 2px double purple;
+  margin-top: 3%;
+}
+
+.form-control {
+  width: 300px;
+}
+.rad {
+  font-size: 15px;
 }
 .boton {
   width: 80px;
   font-size: 12px;
   height: 22px;
 }
-.rad {
-  font-size: 15px;
-}
 /*------------Mensaje--------------*/
 .caja {
   font-family: sans-serif;
   font-size: 20px;
-  width: 350px;
-  margin-left: 15%;
+  width: 500px;
+  margin-left: 10%;
   margin-top: 30px;
   overflow: hidden;
 }
 /*--------------Imagen-------------*/
 v-container {
-  margin-left: 15%;
+  margin-left: 10%;
+  
 }
 </style>
 
