@@ -35,8 +35,9 @@
     </div>
         
       <br />
-      <button class="boton" v-on:click.self.prevent="renderBikesTable">Volver</button>
       <button class="boton" type="submit">Registrar</button>
+      <button class="boton" v-on:click.self.prevent="renderBikesTable">Volver</button>
+      
     </form>
     <p class="caja">
       Una nueva bici a tu servicio.

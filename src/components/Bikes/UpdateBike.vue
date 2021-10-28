@@ -45,8 +45,9 @@
         </select>
       </div>
       <br />
-      <button class="boton" v-on:click.self.prevent="renderStationsTable">Volver</button>
       <button class="boton">Actualizar</button>
+      <button class="boton" v-on:click.self.prevent="renderStationsTable">Volver</button>
+      
     </form>
 
     <p class="caja">
