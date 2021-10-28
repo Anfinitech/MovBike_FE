@@ -84,7 +84,7 @@ export default {
           this.loaded = true;
         })
         .catch((error) => {
-          console.log("error " + error);
+          console.log(error.response);
           if (error.response.status == "401") {
             this.accessDenied();
           }
