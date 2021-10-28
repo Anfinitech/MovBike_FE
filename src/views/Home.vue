@@ -35,9 +35,9 @@
                 </a>
               </li>
               <li>
-                <a href="" v-on:click="logOut">
+                <a href="" v-on:click.self="logOut">
                   <span class="las la-power-off"></span>
-                  <span v-on:click="logOut"> Cerrar sesión</span>
+                  <span v-on:click.self="logOut"> Cerrar sesión</span>
                 </a>
               </li>
             </ul>
@@ -108,8 +108,6 @@ export default {
 
     logOut: function () {
       localStorage.clear();
-      alert("Sesión Cerrada");
-      this.verifyAuth();
     },
   },
 };

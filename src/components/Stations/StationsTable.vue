@@ -81,6 +81,13 @@ export default {
     getAllStations: async function () {
       await this.verifyToken();
 
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        return;
+      }
+
       axios
         .get("https://move-and-flow-be.herokuapp.com/estaciones/", {
           headers: {
@@ -93,7 +100,7 @@ export default {
           console.log(response.data);
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response);
           if (error.response.status == "401") {
             this.accessDenied();
           }
