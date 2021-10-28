@@ -1,28 +1,17 @@
 <template>
-    <div class="general-container">
-        <h1> Registrar Bicicleta </h1>
-        <form name="form" id="form" v-on:submit.prevent="crear()">
-      <h3 class="title">Nueva Bicicleta</h3>
-      <br />
-      <p>Condicion:</p>
-      <input type="radio" name="condicion" id="buena" value="true" v-model="condicion" />
-      <label class="rad" for="buena">En buen estado</label>
-      <br />
-      <input type="radio" name="condicion" id="averiada" value="false" v-model="condicion" />
-      <label class="rad" for="averiada">Averiada</label>
-      <br />
-      <p>Ubicacion:</p>
-      <select name="estaciones" v-model="verEstaciones">
-          <option value= {{ station.e_id }}> {{ station.e_nombre}}</option>
-      </select>
-      <button class="boton">Crear</button>
-      <button class="boton" v-on:click="renderStationsTable">Volver</button>
-    </form>
-    <p class="caja">
-      Construyendo un nodo de bienestar para nuestra comunidad.
-    </p>
-    <v-container fluid>
-      <img src="@/assets/stations/images.jpg" alt="" />
-    </v-container>
-  </div>
+    <h1> Registrar una nueva bici </h1>
+    <button>Registrar</button>
+    <button v-on:click.self.prevent="renderStationsTable"> Volver </button>
 </template>
+
+<script>
+export default {
+  name: "CreateBike",
+
+  methods: {
+    renderStationsTable: function () {
+      this.$emit("loadcomponent", "BikesTable");
+    },
+  },
+};
+</script>

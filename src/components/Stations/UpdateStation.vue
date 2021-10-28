@@ -25,7 +25,6 @@
         	</div>
         <br />
       <button class="boton"> Actualizar </button>
-      <button class="boton"> Eliminar </button>
       <button class="boton" v-on:click.self.prevent="renderStationsTable"> Volver </button>
     </form>
     <p class="caja">

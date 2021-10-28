@@ -12,7 +12,7 @@
       </select>
       <button
         class="btn-register"
-        v-on:submit.prevent="this.$emit('createButton')"
+        v-on:click.self.prevent="renderCreate"
       >
         Registrar Bicicleta
       </button>
@@ -35,7 +35,8 @@
           <td>{{ bicicleta.condicion }}</td>
           <td>{{ bicicleta.estacion_nombre }}</td>
           <td>
-            <button class="btn-detail"><fa icon="edit" />Editar</button>
+            <button class="btn-detail" v-on:click.self.prevent="renderUpdate"><fa icon="edit" />Editar</button>
+            <button class="btn-detail" v-on:click.self.prevent="renderDelete"><fa icon="edit" />Eliminar</button>
           </td>
         </tr>
       </tbody>
@@ -72,10 +73,10 @@ export default {
       let url = "https://move-and-flow-be.herokuapp.com";
       axios
         .get(url + "/bicicletas/", {
-           headers: {
+          headers: {
             Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
-           },
-         })
+          },
+        })
         .then((response) => {
           this.bicicletas = response.data;
           console.log(response.data);
@@ -88,31 +89,15 @@ export default {
           }
         });
     },
-
-    loadCreateBikes: function () {
-      try {
-        this.$router.push({ name: "createBikes" });
-      } catch (error) {
-        console.log(error.response);
-      }
+    
+    renderCreate: function () {
+      this.$emit("loadcomponent", "CreateBike");
     },
-
-    loadDeleteBikes: function (bike) {
-      try {
-        localStorage.setItem("ObjBorrarBici", bike.id);
-        this.$router.push({ name: "deleteBikes" });
-      } catch (error) {
-        console.log(error.response);
-      }
+    renderUpdate: function () {
+      this.$emit("loadcomponent", "UpdateBike");
     },
-
-    loadUpdateBikes: function (bike) {
-      try {
-        localStorage.setItem("ObjUpdateBici", bike.id);
-        this.$router.push({ name: "updateBikes" });
-      } catch (error) {
-        console.log(error.response);
-      }
+    renderDelete: function () {
+      this.$emit("loadcomponent", "DeleteBike");
     },
 
     verifyToken: async function () {
@@ -153,7 +138,7 @@ export default {
     },
   },
 
-  created: async function() {
+  created: async function () {
     try {
       this.renderBikes();
     } catch (error) {
