@@ -25,7 +25,6 @@
         	</div>
         <br />
       <button class="boton"> Actualizar </button>
-      <button class="boton"> Eliminar </button>
       <button class="boton" v-on:click.self.prevent="renderStationsTable"> Volver </button>
     </form>
     <p class="caja">
@@ -51,22 +50,10 @@ export default {
         e_estado: "estado",
         e_capacidad: "capacidad",
       },
-      listStations: [],
     };
   },
   
   methods: {
-    getAllStations: function () {
-      axios
-        .get("https://move-and-flow-be.herokuapp.com/estaciones/", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token_access")}`,
-          },
-        })
-        .then((response) => {
-          this.listStations = response.data;
-        })
-    },
     renderStationsTable: function () {
       this.$emit("loadcomponent", 'StationsTable');
     },

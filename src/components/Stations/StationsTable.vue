@@ -24,7 +24,7 @@
           <th>Bicis D</th>
           <th>Bicis ND</th>
           <th>Bicis T</th>
-          <th></th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -44,8 +44,11 @@
           <td>{{ station.e_bicicletasND }}</td>
           <td>{{ station.e_bicicletasT }}</td>
           <td>
-            <button class="btn-detail" v-on:click.self.prevent="renderDetail">
-              Ver más
+            <button class="btn-action" v-on:click.self.prevent="renderUpdate">
+              Editar
+            </button>
+            <button class="btn-action" v-on:click.self.prevent="renderDelete">
+              Eliminar
             </button>
           </td>
         </tr>
@@ -109,8 +112,11 @@ export default {
     renderCreate: function () {
       this.$emit("loadcomponent", "CreateStation");
     },
-    renderDetail: function () {
-      this.$emit("loadcomponent", "DetailStation");
+    renderUpdate: function () {
+      this.$emit("loadcomponent", "UpdateStation");
+    },
+    renderDelete: function () {
+      this.$emit("loadcomponent", "DeleteStation");
     },
 
     verifyToken: async function () {
@@ -174,7 +180,7 @@ export default {
   padding: 0px 15px;
 }
 
-.btn-detail {
+.btn-action {
   padding: 1px 25px;
 }
 
