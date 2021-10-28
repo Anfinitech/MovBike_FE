@@ -1,7 +1,9 @@
 <template>
-  <div class="general-container">
+  <div class="general-container" v-if="loaded">
     <div class="title-container">
-      <button class="btn-register" v-on:click.self.prevent="renderCreate">Registrar Estación</button>
+      <button class="btn-register" v-on:click.self.prevent="renderCreate">
+        Registrar Estación
+      </button>
     </div>
     <div class="filtros">
       <h3>Filtro por estado:</h3>
@@ -41,7 +43,11 @@
           <td>{{ station.e_bicicletasD }}</td>
           <td>{{ station.e_bicicletasND }}</td>
           <td>{{ station.e_bicicletasT }}</td>
-          <td><button class="btn-detail" v-on:click.self.prevent="renderDetail">Ver más</button></td>
+          <td>
+            <button class="btn-detail" v-on:click.self.prevent="renderDetail">
+              Ver más
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -66,44 +72,86 @@ export default {
         e_bicicletasT: 0,
       },
       listStations: [],
-      filterByState: ''
+      filterByState: "",
+      loaded: false,
     };
   },
 
   methods: {
-    getAllStations: function () {
+    getAllStations: async function () {
+      await this.verifyToken();
+
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        return;
+      }
+
       axios
         .get("https://move-and-flow-be.herokuapp.com/estaciones/", {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token_access")}`,
+            Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
           },
         })
         .then((response) => {
           this.listStations = response.data;
+          this.loaded = true;
           console.log(response.data);
         })
         .catch((error) => {
-          console.log("error " + error);
+          console.log(error.response);
+          if (error.response.status == "401") {
+            this.accessDenied();
+          }
         });
     },
     renderCreate: function () {
-      this.$emit("loadcomponent", 'CreateStation');
+      this.$emit("loadcomponent", "CreateStation");
     },
     renderDetail: function () {
-      this.$emit("loadcomponent", 'DetailStation');
+      this.$emit("loadcomponent", "DetailStation");
+    },
+
+    verifyToken: async function () {
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        this.accessDenied();
+        return;
+      }
+
+      return axios
+        .post(
+          "https://move-and-flow-be.herokuapp.com/refresh/",
+          { refresh: localStorage.getItem("tokenRefresh") },
+          { headers: {} }
+        )
+        .then((result) => {
+          localStorage.setItem("tokenAccess", result.data.access);
+        })
+        .catch((error) => {
+          this.accessDenied();
+        });
+    },
+    accessDenied: function () {
+      localStorage.clear();
+      alert("Acceso Denegado. Vuelve a iniciar sesión.");
+      this.$router.push({ name: "Login" });
     },
   },
 
   computed: {
     filterStationsByState() {
-      return this.listStations.filter(estacion => {
+      return this.listStations.filter((estacion) => {
         /* console.log(estacion) */
         return !estacion.e_estado.indexOf(this.filterByState);
-      })
-    }
+      });
+    },
   },
 
-  created() {
+  created: async function () {
     try {
       this.getAllStations();
     } catch (error) {
