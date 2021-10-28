@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
   <div class="general-container">
     <h1>Registrar bicicleta</h1>
     <form name="form" id="form" v-on:submit.prevent="crear()">
@@ -30,6 +29,7 @@
       <div class="form-group">
         <select class="form-control">
           <option value="">Seleccione una estacion</option>
+          <option v-for="station in stations" :key="station.e_id" :value="station"/>
         </select>
       </div>
       <br />
@@ -43,16 +43,22 @@
       <img src="@/assets/stations/images.jpg" alt="" />
     </v-container>
   </div>
-=======
-  <h1>Registrar una nueva bici</h1>
-  <button>Registrar</button>
-  <button v-on:click.self.prevent="renderStationsTable">Volver</button>
->>>>>>> d432eab3675448e509698f5cd429aebd2f7f80ed
 </template>
 
 <script>
 export default {
   name: "CreateBike",
+  data: function() {
+    return {
+      bikeCreation: {
+        b_id : "",
+        creation_data: {
+          current_station : 0,
+        }
+      },
+      stations: [],
+    };
+  },
 
   methods: {
     renderStationsTable: function () {
