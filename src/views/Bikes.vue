@@ -1,9 +1,5 @@
 <template>
   <div>
-<<<<<<< HEAD
-=======
-    
->>>>>>> develop
     <div>
       <component :is="activeOption" />
     </div>
