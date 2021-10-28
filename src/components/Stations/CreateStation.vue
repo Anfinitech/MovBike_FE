@@ -32,7 +32,7 @@
       <label class="rad" for="cerrada">Cerrada</label>
 
       <br />
-      <button class="boton">Crear</button>
+      <button class="boton">Registrar</button>
       <button class="boton" v-on:click="renderStationsTable">Volver</button>
     </form>
     <p class="caja">
