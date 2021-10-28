@@ -18,7 +18,7 @@
           <th>ID</th>
           <th>Condición</th>
           <th>Ubicación</th>
-          <th>Accione</th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
