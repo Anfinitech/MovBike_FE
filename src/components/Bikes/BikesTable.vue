@@ -1,5 +1,5 @@
 <template>
-  <div class="general-container">
+  <div class="general-container" v-if="loaded">
     <div class="title-container">
       <div class="title"><h1>Bicicletas</h1></div>
     </div>
@@ -54,20 +54,38 @@ export default {
       bicicletas: [],
       checkedNames: [],
       filtroPorCondicion: "",
+      loaded: false,
     };
   },
 
   methods: {
-    renderBikes: function () {
-      let url = "https://open-move-and-flow-be.herokuapp.com";
+    renderBikes: async function () {
+      await this.verifyToken();
+
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        return;
+      }
+
+      let url = "https://move-and-flow-be.herokuapp.com";
       axios
-        .get(url + "/bicicletas/")
+        .get(url + "/bicicletas/", {
+           headers: {
+            Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
+           },
+         })
         .then((response) => {
           this.bicicletas = response.data;
           console.log(response.data);
+          this.loaded = true;
         })
         .catch((error) => {
           console.log("error " + error);
+          if (error.response.status == "401") {
+            this.accessDenied();
+          }
         });
     },
 
@@ -96,6 +114,34 @@ export default {
         console.log(error.response);
       }
     },
+
+    verifyToken: async function () {
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        this.accessDenied();
+        return;
+      }
+
+      return axios
+        .post(
+          "https://move-and-flow-be.herokuapp.com/refresh/",
+          { refresh: localStorage.getItem("tokenRefresh") },
+          { headers: {} }
+        )
+        .then((result) => {
+          localStorage.setItem("tokenAccess", result.data.access);
+        })
+        .catch((error) => {
+          this.accessDenied();
+        });
+    },
+    accessDenied: function () {
+      localStorage.clear();
+      alert("Acceso Denegado. Vuelve a iniciar sesión.");
+      this.$router.push({ name: "Login" });
+    },
   },
 
   computed: {
@@ -107,7 +153,7 @@ export default {
     },
   },
 
-  created() {
+  created: async function() {
     try {
       this.renderBikes();
     } catch (error) {
