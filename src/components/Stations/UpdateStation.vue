@@ -51,22 +51,10 @@ export default {
         e_estado: "estado",
         e_capacidad: "capacidad",
       },
-      listStations: [],
     };
   },
   
   methods: {
-    getAllStations: function () {
-      axios
-        .get("https://move-and-flow-be.herokuapp.com/estaciones/", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token_access")}`,
-          },
-        })
-        .then((response) => {
-          this.listStations = response.data;
-        })
-    },
     renderStationsTable: function () {
       this.$emit("loadcomponent", 'StationsTable');
     },
