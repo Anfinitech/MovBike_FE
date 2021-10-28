@@ -129,4 +129,3 @@ v-container {
   margin-left: 10%;
 }
 </style>
-
