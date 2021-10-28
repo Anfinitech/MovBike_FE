@@ -15,16 +15,16 @@ import DeleteStation from "@/components/Stations/DeleteStation.vue";
 
 export default {
   name: "Stations",
-  components: { StationsTable, CreateStation, UpdateStation, DeleteStation},
+  components: { StationsTable, CreateStation, UpdateStation, DeleteStation },
   data: function () {
     return {
       activeOption: "StationsTable",
     };
   },
   methods: {
-    renderStationComponent(message){
+    renderStationComponent(message) {
       this.activeOption = message;
-    }
+    },
   },
 };
 </script>

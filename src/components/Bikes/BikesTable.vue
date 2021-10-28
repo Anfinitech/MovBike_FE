@@ -10,10 +10,7 @@
         <option value="En buen estado">En buen estado</option>
         <option value="Averiada">Averiada</option>
       </select>
-      <button
-        class="btn-register"
-        v-on:click.self.prevent="renderCreate"
-      >
+      <button class="btn-register" v-on:click.self.prevent="renderCreate">
         Registrar Bicicleta
       </button>
     </div>
@@ -35,8 +32,12 @@
           <td>{{ bicicleta.condicion }}</td>
           <td>{{ bicicleta.estacion_nombre }}</td>
           <td>
-            <button class="btn-detail" v-on:click.self.prevent="renderUpdate"><fa icon="edit" />Editar</button>
-            <button class="btn-detail" v-on:click.self.prevent="renderDelete"><fa icon="edit" />Eliminar</button>
+            <button class="btn-detail" v-on:click.self.prevent="renderUpdate">
+              <fa icon="edit" />Editar
+            </button>
+            <button class="btn-detail" v-on:click.self.prevent="renderDelete">
+              <fa icon="edit" />Eliminar
+            </button>
           </td>
         </tr>
       </tbody>
@@ -48,7 +49,7 @@
 import axios from "axios";
 
 export default {
-  name: "Bikes",
+  name: "BikesTable",
 
   data() {
     return {
@@ -89,7 +90,7 @@ export default {
           }
         });
     },
-    
+
     renderCreate: function () {
       this.$emit("loadcomponent", "CreateBike");
     },
