@@ -33,10 +33,10 @@
           <td>{{ bicicleta.estacion_nombre }}</td>
           <td>
             <button class="btn-detail" v-on:click.self.prevent="renderUpdate">
-              <fa icon="edit" />Editar
+              <fa icon="edit" v-on:click="renderUpdate"/> Editar
             </button>
             <button class="btn-detail" v-on:click.self.prevent="renderDelete">
-              <fa icon="edit" />Eliminar
+              <fa icon="trash" v-on:click="renderDelete"/> Eliminar
             </button>
           </td>
         </tr>
