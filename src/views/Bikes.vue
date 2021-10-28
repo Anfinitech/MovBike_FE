@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Bicicletas</h1>
     <div>
       <component :is="activeOption" />
     </div>
