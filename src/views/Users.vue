@@ -1,13 +1,25 @@
 <template>
   <div>
-    <h1>Usuarios [Beta]</h1>
-    <div></div>
+    <component @loadcomponent="renderUserComponent" :is="activeOption" />
   </div>
 </template>
 
 <script>
+import UsersTable from "@/components/Users/UsersTable.vue";
+import CreateUser from "@/components/Users/CreateUser.vue";
+
 export default {
   name: "Users",
-  components: {},
+  components: { UsersTable, CreateUser },
+  data: function () {
+    return {
+      activeOption: "UsersTable",
+    };
+  },
+  methods: {
+    renderUserComponent(message) {
+      this.activeOption = message;
+    },
+  },
 };
 </script>

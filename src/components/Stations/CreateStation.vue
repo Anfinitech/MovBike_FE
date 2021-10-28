@@ -25,10 +25,22 @@
         />
       </p>
       <p>Estado:</p>
-      <input type="radio" name="estado" id="abierta" value="true" v-model="estado" />
+      <input
+        type="radio"
+        name="estado"
+        id="abierta"
+        value="true"
+        v-model="estado"
+      />
       <label class="rad" for="abierta">Abierta</label>
       <br />
-      <input type="radio" name="estado" id="cerrada" value="false" v-model="estado" />
+      <input
+        type="radio"
+        name="estado"
+        id="cerrada"
+        value="false"
+        v-model="estado"
+      />
       <label class="rad" for="cerrada">Cerrada</label>
 
       <br />

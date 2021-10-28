@@ -5,7 +5,12 @@
         <input type="checkbox" name="" id="nav-toggle" />
         <div class="sidebar">
           <div class="siderbar-brand">
-            <img class="brand" src="../assets/home/img/mov-bike.svg" alt=""  @click.self.prevent="loadDashboard()"/>
+            <img
+              class="brand"
+              src="../assets/home/img/mov-bike.svg"
+              alt=""
+              @click.self.prevent="loadDashboard()"
+            />
           </div>
 
           <div class="sidebar-menu">
@@ -13,19 +18,23 @@
               <li>
                 <a href="" v-on:click.self.prevent="loadDashboard()">
                   <span class="las la-igloo"></span>
-                  <span v-on:click.self.prevent="loadDashboard()"> Dashboard</span>
+                  <span v-on:click.self.prevent="loadDashboard()">
+                    Dashboard</span
+                  >
                 </a>
               </li>
               <li>
                 <a href="" v-on:click.self.prevent="loadUsers()">
                   <span class="las la-user-circle"></span>
-                  <span v-on:click.self.prevent="loadUsers()"> Usuarios [Beta]</span>
+                  <span v-on:click.self.prevent="loadUsers()"> Usuarios</span>
                 </a>
               </li>
               <li>
                 <a href="" v-on:click.self.prevent="loadStations()">
                   <span class="las la-industry"></span>
-                  <span v-on:click.self.prevent="loadStations()"> Estaciones</span>
+                  <span v-on:click.self.prevent="loadStations()">
+                    Estaciones</span
+                  >
                 </a>
               </li>
               <li>
@@ -77,8 +86,6 @@
 <script>
 //Añadir efecto hovered para dejar en selección un item
 
-
-
 export default {
   name: "Home",
   components: {},
@@ -107,8 +114,6 @@ export default {
     },
   },
 };
-
-
 </script>
 
 <style>
