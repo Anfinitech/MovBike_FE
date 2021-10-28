@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div class="general-container">
     <h1>Registrar bicicleta</h1>
     <form name="form" id="form" v-on:submit.prevent="crear()">
@@ -42,6 +43,11 @@
       <img src="@/assets/stations/images.jpg" alt="" />
     </v-container>
   </div>
+=======
+  <h1>Registrar una nueva bici</h1>
+  <button>Registrar</button>
+  <button v-on:click.self.prevent="renderStationsTable">Volver</button>
+>>>>>>> d432eab3675448e509698f5cd429aebd2f7f80ed
 </template>
 
 <script>

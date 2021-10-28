@@ -18,13 +18,13 @@ export default {
 
   data: function () {
     return {
-      activeOption: 'BikesTable'
-    }
+      activeOption: "BikesTable",
+    };
   },
   methods: {
-    renderBikeComponent(message){
+    renderBikeComponent(message) {
       this.activeOption = message;
-    }
+    },
   },
 };
 </script>
