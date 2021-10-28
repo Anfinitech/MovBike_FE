@@ -254,10 +254,18 @@ td {
 }
 
 @media only screen and (max-width: 950px) {
+   .general-container {
+    padding: 10px;
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: var(--white);
+    border-radius: 20px;
+  }
+
   .title-container {
     display: flex;
     justify-content: center !important;
-    padding-bottom: 30px;
     margin-top: 20px;
     flex-direction: column;
     text-align: center;
@@ -266,7 +274,6 @@ td {
   .title-container .title {
     display: flex;
     justify-content: center !important;
-    padding-bottom: 30px;
     margin-top: 20px;
     flex-direction: column;
     text-align: center;
@@ -303,5 +310,18 @@ td {
     background-color: var(--white);
     border-radius: 20px;
   }
+
+  .filtroPorCondicion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-bottom: 30px;
+  margin-top: 20px;
+}
+
+.btn-register{
+  margin-top:15px;
+}
 }
 </style>
