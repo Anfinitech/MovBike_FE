@@ -130,7 +130,6 @@ export default {
   },
 };
 </script>
-<<<<<<< HEAD
 
 <style scoped>
 /*------------Formulario------------*/
@@ -170,5 +169,3 @@ v-container {
   
 }
 </style>
-=======
->>>>>>> develop
