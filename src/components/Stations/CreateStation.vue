@@ -1,11 +1,7 @@
 <template>
   <div class="general-container">
     <h1>Registrar Estacion</h1>
-    <form
-      name="form"
-      id="form"
-      v-on:submit.prevent="createStation()"
-    >
+    <form name="form" id="form" v-on:submit.prevent="createStation()">
       <h3 class="title">Nueva Estacion</h3>
       <p>
         Nombre:
@@ -35,10 +31,7 @@
         value="true"
         v-model="nuevaEstacion.e_estado"
       />
-      <label
-        class="rad"
-        for="abierta"
-      >Abierta</label>
+      <label class="rad" for="abierta">Abierta</label>
       <br />
       <input
         type="radio"
@@ -47,32 +40,22 @@
         value="false"
         v-model="nuevaEstacion.e_estado"
       />
-      <label
-        class="rad"
-        for="cerrada"
-      >Cerrada</label>
+      <label class="rad" for="cerrada">Cerrada</label>
 
       <br />
       <button class="boton">Registrar</button>
-      <button
-        class="boton"
-        v-on:click="renderStationsTable"
-      >Volver</button>
+      <button class="boton" v-on:click="renderStationsTable">Volver</button>
     </form>
     <p class="caja">
       Construyendo un nodo de bienestar para nuestra comunidad.
     </p>
     <v-container fluid>
-      <img
-        src="@/assets/stations/images.jpg"
-        alt=""
-      />
+      <img src="@/assets/stations/images.jpg" alt="" />
     </v-container>
   </div>
 </template>
 
 <script>
-
 import axios from "axios";
 
 export default {
@@ -91,7 +74,16 @@ export default {
     renderStationsTable: function () {
       this.$emit("loadcomponent", "StationsTable");
     },
-    createStation: function () {
+    createStation: async function () {
+      await this.verifyToken();
+
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        return;
+      }
+
       let url = "https://move-and-flow-be.herokuapp.com";
       axios
         .post(url + "/estaciones/", this.nuevaEstacion, {
@@ -102,18 +94,49 @@ export default {
         .then((response) => {
           alert(response.data);
           console.log(response.data);
-          /* this.loaded = true; */
         })
         .catch((error) => {
           console.log(error.response);
+
           if (error.response.status == "401") {
-            /* this.accessDenied(); */
+            this.accessDenied();
+          } else if (error.response.status == "400") {
+            alert("BAD REQUEST [400]");
+          } else {
+            alert(error);
           }
         });
-    }
+    },
+
+    verifyToken: async function () {
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        this.accessDenied();
+        return;
+      }
+
+      return axios
+        .post(
+          "https://move-and-flow-be.herokuapp.com/refresh/",
+          { refresh: localStorage.getItem("tokenRefresh") },
+          { headers: {} }
+        )
+        .then((result) => {
+          localStorage.setItem("tokenAccess", result.data.access);
+        })
+        .catch((error) => {
+          this.accessDenied();
+        });
+    },
+    accessDenied: function () {
+      localStorage.clear();
+      alert("Acceso Denegado. Vuelve a iniciar sesión.");
+      this.$router.push({ name: "Login" });
+    },
   },
 };
-
 </script>
 
 
