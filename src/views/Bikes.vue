@@ -1,6 +1,5 @@
 <template>
   <div>
-    
     <div>
       <component :is="activeOption" />
     </div>
