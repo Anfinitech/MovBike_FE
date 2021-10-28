@@ -10,7 +10,7 @@
 <script>
 import StationsTable from "@/components/Stations/StationsTable.vue";
 import CreateStation from "@/components/Stations/CreateStation.vue";
-import DetailStation from "@/components/Stations/DetailStation.vue";
+import DetailStation from "@/components/Stations/UpdateStation.vue";
 
 export default {
   name: "Stations",
