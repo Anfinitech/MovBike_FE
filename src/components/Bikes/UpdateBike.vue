@@ -53,7 +53,7 @@
     </form>
     </div>
 
-    <div class="image-container">
+    <div class="imagen-container">
     <p class="caja">
       Haciendo seguimiento continuo a cada nodo para mejorar nuestro servicio y
       la experiencia de usuario.
@@ -114,21 +114,22 @@ export default {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 1.5rem 1.5rem;
+    padding: 0rem 1.5rem;
     width: 350px;    
     background-color: rgba(255, 255, 255, 0.822);
     border-radius: 20px;
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(30px);
     margin: 20px;
     align-items: center;
     margin-left: 5%;
     box-shadow: 0 0 10px rgb(103, 0, 124);
 }
-.image-container {
+.imagen-container {
     width: 55%;
     box-sizing: border-box;
     align-items: center;
     background-color: transparent;
+    
 }
 
 /*------------Formulario------------*/
@@ -247,7 +248,7 @@ form {
 }
 
 @media only screen and (max-width: 650px) {
-.image-container {
+.imagen-container {
   display: none;
 }
 
