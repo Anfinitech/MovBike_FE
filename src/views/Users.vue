@@ -7,10 +7,12 @@
 <script>
 import UsersTable from "@/components/Users/UsersTable.vue";
 import CreateUser from "@/components/Users/CreateUser.vue";
+import UpdateUser from "@/components/Users/UpdateUser.vue";
+import DeleteUser from "@/components/Users/DeleteUser.vue";
 
 export default {
   name: "Users",
-  components: { UsersTable, CreateUser },
+  components: { UsersTable, CreateUser, UpdateUser, DeleteUser },
   data: function () {
     return {
       activeOption: "UsersTable",
