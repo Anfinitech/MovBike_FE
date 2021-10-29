@@ -34,10 +34,10 @@
           <td>{{ user.role }}</td>
           <td>
             <button class="btn-detail" v-on:click.self.prevent="renderUpdate">
-              <fa icon="edit" v-on:click="renderUpdate"/><h6> Editar</h6>
+              <fa icon="edit" v-on:click="renderUpdate"/><h6 v-on:click="renderUpdate"> Editar</h6>
             </button>
             <button class="btn-delete" v-on:click.self.prevent="renderDelete">
-              <fa icon="trash" v-on:click="renderDelete"/><h6> Eliminar</h6>
+              <fa icon="trash" v-on:click="renderDelete"/><h6 v-on:click="renderDelete"> Eliminar</h6>
             </button>
           </td>
         </tr>
@@ -93,6 +93,14 @@ export default {
 
     renderCreate: function () {
       this.$emit("loadcomponent", "CreateUser");
+    },
+    
+    renderUpdate: function () {
+      this.$emit("loadcomponent", "UpdateUser");
+    },
+
+    renderDelete: function () {
+      this.$emit("loadcomponent", "DeleteUser");
     },
 
     verifyToken: async function () {
