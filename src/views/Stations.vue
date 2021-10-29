@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Estaciones</h1>
     <div>
       <component @loadcomponent="renderStationComponent" :is="activeOption" />
     </div>

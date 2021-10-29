@@ -1,17 +1,16 @@
 <template>
   <div class="general-container" v-if="loaded">
     <div class="title-container">
-      <button class="btn-register" v-on:click.self.prevent="renderCreate">
-        Registrar Estación
-      </button>
+      <div class="title"><h1>Estaciones</h1></div>
     </div>
     <div class="filtros">
-      <h3>Filtro por estado:</h3>
+      <h4>Filtro por estado:</h4>
       <select v-model="filterByState">
         <option value="">Todas</option>
         <option value="Abierta">Abierta</option>
         <option value="Cerrada">Cerrada</option>
       </select>
+      <button class="btn-register" v-on:click.self.prevent="renderCreate">Registrar Estación</button>
     </div>
     <table class="table-stations">
       <thead>
@@ -29,28 +28,23 @@
       </thead>
       <tbody>
         <tr v-for="station in filterStationsByState" :key="station.e_id">
-          <td>{{ station.e_id }}</td>
-          <td>{{ station.e_nombre }}</td>
-          <td>{{ station.e_estado }}</td>
-          <td>{{ station.e_capacidad }}</td>
-          <td>
+          <td data-label="ID:">{{ station.e_id }}</td>
+          <td data-label="Nombre:">{{ station.e_nombre }}</td>
+          <td data-label="Estado:">{{ station.e_estado }}</td>
+          <td data-label="Capacidad:">{{ station.e_capacidad }}</td>
+          <td data-label="Ocupación:">
             {{
               Number(station.e_ocupacion * 100)
                 .toFixed(2)
                 .concat("%")
             }}
           </td>
-          <td>{{ station.e_bicicletasD }}</td>
-          <td>{{ station.e_bicicletasND }}</td>
-          <td>{{ station.e_bicicletasT }}</td>
-          <td>
-            <button class="btn-action" v-on:click.self.prevent="renderUpdate">
-              Editar
-            </button>
-            <button class="btn-action" v-on:click.self.prevent="renderDelete">
+          <td data-label="Bicis. Disponibles:">{{ station.e_bicicletasD }}</td>
+          <td data-label="Bicis. No disponibles:">{{ station.e_bicicletasND }}</td>
+          <td data-label="Bicis. Totales:">{{ station.e_bicicletasT }}</td>
+          <td><button class="btn-detail" v-on:click.self.prevent="renderUpdate">Editar</button><button class="btn-detail" v-on:click.self.prevent="renderDelete">
               Eliminar
-            </button>
-          </td>
+            </button></td>
         </tr>
       </tbody>
     </table>
@@ -168,43 +162,246 @@ export default {
 </script>
 
 <style scoped>
+:root {
+  --main-color: #5046af;
+  --text-grey: #8390a2;
+  --white: #fff;
+}
+
+.general-container {
+  padding: 10px;
+  margin-top: 20px;
+  margin-left: 100px;
+  margin-right: 100px;
+  background-color: var(--white);
+  border-radius: 20px;
+}
 .title-container {
   display: flex;
-  justify-content: left;
+  justify-content: space-around;
   position: initial;
+  padding-bottom: 30px;
+  margin-top: 20px;
 }
 
 .btn-register {
   position: relative;
-  margin: 3px 0px 5px;
-  padding: 0px 15px;
+  margin: 3px 50px 5px;
+  padding: 10px 15px;
+  text-decoration: none;
+  background-color: var(--main-color);
+  border: none;
+  border-radius: 7px;
+  font-weight: 600;
+  color: var(--white);
+  box-shadow: 0 0 10px rgb(121, 121, 121);
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.btn-action {
-  padding: 1px 25px;
+.btn-register:hover {
+  background-color: var(--white);
+  color: var(--main-color);
+}
+
+.filtros {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: initial;
+  padding-bottom: 30px;
+  margin-top: 20px;
+}
+
+.filtros h4 {
+  padding-right: 5px;
+  color: var(--main-color);
+}
+
+.filtros select {
+  border-radius: 7px;
+  cursor: pointer;
+  border: #5046af solid 2px;
+  text-decoration: none;
+  justify-content: space-between;
+}
+
+.filtros select option:hover {
+  background-color: #6ee1ff !important;
+}
+
+.btn-detail {
+  padding: 10px 10px;
+  position: relative;
+  margin: 3px 0px 5px;
+  text-decoration: none;
+  background-color: #0081cf;
+  border: none;
+  border-radius: 7px;
+  font-weight: 600;
+  color: var(--white);
+  cursor: pointer;
+}
+
+.btn-detail:hover {
+  background-color: var(--white);
+  color: #0081cf;
 }
 
 h1 {
   text-align: center;
-  margin: 0px 30px 0px 170px;
 }
 
 .table-stations {
-  margin-right: auto;
-  margin-left: auto;
+  margin-right: 0px;
+  margin-left: 0px;
+  width: 100%;
+  border-collapse: collapse;
 }
 
-th {
-  background-color: #8819ff;
+thead {
+  background-color: var(--main-color);
   color: white;
-  padding: 3px 8px 3px 8px;
+  text-align: center;
+  width: 100%;
+}
+
+thead tr:first-child:hover {
+  background-color: var(--main-color);
+}
+
+th:first-child {
+  border-top-left-radius: 7px;
+}
+
+th:last-child {
+  border-top-right-radius: 7px;
+}
+
+tr:hover {
+  background-color: #c4f0fc;
+  font-weight: 700;
+  transition: 0.5s;
 }
 
 tr:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color: #e3f9ff;
+}
+
+tr:nth-child(even):hover {
+  background-color: #b5ecfc;
 }
 
 td {
   text-align: center;
+  padding: 6px;
 }
+
+@media only screen and (max-width: 1020px) {
+   .general-container {
+    padding: 10px;
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: var(--white);
+    border-radius: 20px;
+  }
+
+  .title-container {
+    display: flex;
+    justify-content: center !important;
+    margin-top: 20px;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+  .title-container .title {
+    display: flex;
+    justify-content: center !important;
+    margin-top: 20px;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .title-container .btn-register {
+    position: relative;
+    text-decoration: none;
+    background-color: var(--main-color);
+    border: none;
+    border-radius: 7px;
+    font-weight: 600;
+    color: var(--white);
+    box-shadow: 0 0 10px rgb(121, 121, 121);
+    cursor: pointer;
+    width: 50%;
+    padding: 15px 0;
+    transition: 0.3s;
+  }
+
+  .table-stations thead {
+    background-color: var(--main-color);
+    color: white;
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  .general-container {
+    padding: 10px;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: var(--white);
+    border-radius: 20px;
+  }
+
+  .filtros{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-bottom: 30px;
+  margin-top: 20px;
+}
+
+.btn-register{
+  margin-top:15px;
+}
+
+.table-stations thead{
+  display: none; 
+}
+
+
+.table-stations tbody,
+.table-stations tr,
+.table-stations td{
+  display: block;
+  width: 100%;
+  border:1px solid var(--main-color) ;
+}
+
+.table-stations tr{
+  margin-bottom: 15px;
+}
+
+.table-stations tbody tr td{
+  text-align: right;
+  padding-left:50%;
+  position: relative;
+}
+
+.table-stations td:before{
+  content:attr(data-label);
+  position: absolute;
+  left: 0;
+  width: 50%;
+  padding-left: 15px;
+  font-weight: 700;
+  text-align: left;
+  color: var(--main-color);
+}
+
+}
+
 </style>
