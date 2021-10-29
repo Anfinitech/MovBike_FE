@@ -42,7 +42,9 @@
           <td data-label="Bicis. Disponibles:">{{ station.e_bicicletasD }}</td>
           <td data-label="Bicis. No disponibles:">{{ station.e_bicicletasND }}</td>
           <td data-label="Bicis. Totales:">{{ station.e_bicicletasT }}</td>
-          <td><button class="btn-detail" v-on:click.self.prevent="renderDetail">Ver más</button></td>
+          <td><button class="btn-detail" v-on:click.self.prevent="renderUpdate">Editar</button><button class="btn-detail" v-on:click.self.prevent="renderDelete">
+              Eliminar
+            </button></td>
         </tr>
       </tbody>
     </table>
