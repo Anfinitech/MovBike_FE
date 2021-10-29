@@ -1,9 +1,8 @@
 <template>
   <div class="general-container">
     <h1>Registrar Estacion</h1>
-    <form name="form" id="form" v-on:submit.prevent="crear()">
+    <form name="form" id="form" v-on:submit.prevent="createStation()">
       <h3 class="title">Nueva Estacion</h3>
-      <br />
       <p>
         Nombre:
         <input
@@ -11,28 +10,40 @@
           name="e_nombre"
           placeholder="Nombre"
           class="form-control"
-          v-model="nueva.nombre"
+          v-model="nuevaEstacion.e_nombre"
         />
       </p>
       <p>
         Capacidad:
         <input
-          type="int"
+          type="number"
           name="e_capacidad"
           placeholder="Capacidad"
           class="form-control"
-          v-model="nueva.capacidad"
+          v-model="nuevaEstacion.e_capacidad"
         />
       </p>
       <p>Estado:</p>
-      <input type="radio" id="abierta" value="true" v-model="estado" />
+      <input
+        type="radio"
+        name="estado"
+        id="abierta"
+        value="true"
+        v-model="nuevaEstacion.e_estado"
+      />
       <label class="rad" for="abierta">Abierta</label>
       <br />
-      <input type="radio" id="cerrada" value="false" v-model="estado" />
+      <input
+        type="radio"
+        name="estado"
+        id="cerrada"
+        value="false"
+        v-model="nuevaEstacion.e_estado"
+      />
       <label class="rad" for="cerrada">Cerrada</label>
 
       <br />
-      <button class="boton">Crear</button>
+      <button class="boton">Registrar</button>
       <button class="boton" v-on:click="renderStationsTable">Volver</button>
     </form>
     <p class="caja">
@@ -45,14 +56,16 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "CreateStation",
   data() {
     return {
-      nueva: {
-        nombre: "",
-        capacidad: "",
-        estado: "",
+      nuevaEstacion: {
+        e_nombre: "",
+        e_estado: false,
+        e_capacidad: 90,
       },
     };
   },
@@ -61,8 +74,66 @@ export default {
     renderStationsTable: function () {
       this.$emit("loadcomponent", "StationsTable");
     },
-    crear() {
-      alert(this.nueva);
+    createStation: async function () {
+      await this.verifyToken();
+
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        return;
+      }
+
+      let url = "https://move-and-flow-be.herokuapp.com";
+      axios
+        .post(url + "/estaciones/", this.nuevaEstacion, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
+          },
+        })
+        .then((response) => {
+          alert(response.data);
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error.response);
+
+          if (error.response.status == "401") {
+            this.accessDenied();
+          } else if (error.response.status == "400") {
+            alert("BAD REQUEST [400]");
+          } else {
+            alert(error);
+          }
+        });
+    },
+
+    verifyToken: async function () {
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        this.accessDenied();
+        return;
+      }
+
+      return axios
+        .post(
+          "https://move-and-flow-be.herokuapp.com/refresh/",
+          { refresh: localStorage.getItem("tokenRefresh") },
+          { headers: {} }
+        )
+        .then((result) => {
+          localStorage.setItem("tokenAccess", result.data.access);
+        })
+        .catch((error) => {
+          this.accessDenied();
+        });
+    },
+    accessDenied: function () {
+      localStorage.clear();
+      alert("Acceso Denegado. Vuelve a iniciar sesión.");
+      this.$router.push({ name: "Login" });
     },
   },
 };
@@ -72,33 +143,39 @@ export default {
 <style scoped>
 /*------------Formulario------------*/
 form {
-  width: 250px;
-  padding: 20px;
-  font-size: 20px;
+  width: 370px;
+  padding: 30px;
+  font-size: 18px;
   float: right;
-  margin-right: 15%;
+  margin-right: 10%;
   border: 2px double purple;
+  margin-top: 3%;
+}
+
+.form-control {
+  width: 300px;
+}
+.rad {
+  font-size: 15px;
 }
 .boton {
   width: 80px;
   font-size: 12px;
   height: 22px;
 }
-.rad {
-  font-size: 15px;
-}
 /*------------Mensaje--------------*/
 .caja {
   font-family: sans-serif;
   font-size: 20px;
-  width: 350px;
-  margin-left: 15%;
+  width: 500px;
+  margin-left: 10%;
   margin-top: 30px;
   overflow: hidden;
 }
 /*--------------Imagen-------------*/
 v-container {
-  margin-left: 15%;
+  margin-left: 10%;
+  
 }
 </style>
 

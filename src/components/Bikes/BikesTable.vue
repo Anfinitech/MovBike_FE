@@ -1,5 +1,5 @@
 <template>
-  <div class="general-container">
+  <div class="general-container" v-if="loaded">
     <div class="title-container">
       <div class="title"><h1>Bicicletas</h1></div>
     </div>
@@ -10,10 +10,7 @@
         <option value="En buen estado">En buen estado</option>
         <option value="Averiada">Averiada</option>
       </select>
-      <button
-        class="btn-register"
-        v-on:submit.prevent="this.$emit('createButton')"
-      >
+      <button class="btn-register" v-on:click.self.prevent="renderCreate">
         Registrar Bicicleta
       </button>
     </div>
@@ -35,7 +32,12 @@
           <td>{{ bicicleta.condicion }}</td>
           <td>{{ bicicleta.estacion_nombre }}</td>
           <td>
-            <button class="btn-detail"><fa icon="edit" />Editar</button>
+            <button class="btn-detail" v-on:click.self.prevent="renderUpdate">
+              <fa icon="edit" v-on:click="renderUpdate"/> Editar
+            </button>
+            <button class="btn-detail" v-on:click.self.prevent="renderDelete">
+              <fa icon="trash" v-on:click="renderDelete"/> Eliminar
+            </button>
           </td>
         </tr>
       </tbody>
@@ -47,54 +49,84 @@
 import axios from "axios";
 
 export default {
-  name: "Bikes",
+  name: "BikesTable",
 
   data() {
     return {
       bicicletas: [],
       checkedNames: [],
       filtroPorCondicion: "",
+      loaded: false,
     };
   },
 
   methods: {
-    renderBikes: function () {
-      let url = "https://open-move-and-flow-be.herokuapp.com";
+    renderBikes: async function () {
+      await this.verifyToken();
+
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        return;
+      }
+
+      let url = "https://move-and-flow-be.herokuapp.com";
       axios
-        .get(url + "/bicicletas/")
+        .get(url + "/bicicletas/", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
+          },
+        })
         .then((response) => {
           this.bicicletas = response.data;
           console.log(response.data);
+          this.loaded = true;
         })
         .catch((error) => {
-          console.log("error " + error);
+          console.log(error.response);
+          if (error.response.status == "401") {
+            this.accessDenied();
+          }
         });
     },
 
-    loadCreateBikes: function () {
-      try {
-        this.$router.push({ name: "createBikes" });
-      } catch (error) {
-        console.log(error.response);
-      }
+    renderCreate: function () {
+      this.$emit("loadcomponent", "CreateBike");
+    },
+    renderUpdate: function () {
+      this.$emit("loadcomponent", "UpdateBike");
+    },
+    renderDelete: function () {
+      this.$emit("loadcomponent", "DeleteBike");
     },
 
-    loadDeleteBikes: function (bike) {
-      try {
-        localStorage.setItem("ObjBorrarBici", bike.id);
-        this.$router.push({ name: "deleteBikes" });
-      } catch (error) {
-        console.log(error.response);
+    verifyToken: async function () {
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        this.accessDenied();
+        return;
       }
-    },
 
-    loadUpdateBikes: function (bike) {
-      try {
-        localStorage.setItem("ObjUpdateBici", bike.id);
-        this.$router.push({ name: "updateBikes" });
-      } catch (error) {
-        console.log(error.response);
-      }
+      return axios
+        .post(
+          "https://move-and-flow-be.herokuapp.com/refresh/",
+          { refresh: localStorage.getItem("tokenRefresh") },
+          { headers: {} }
+        )
+        .then((result) => {
+          localStorage.setItem("tokenAccess", result.data.access);
+        })
+        .catch((error) => {
+          this.accessDenied();
+        });
+    },
+    accessDenied: function () {
+      localStorage.clear();
+      alert("Acceso Denegado. Vuelve a iniciar sesión.");
+      this.$router.push({ name: "Login" });
     },
   },
 
@@ -107,7 +139,7 @@ export default {
     },
   },
 
-  created() {
+  created: async function () {
     try {
       this.renderBikes();
     } catch (error) {
