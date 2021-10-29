@@ -47,9 +47,9 @@
           </td>
           <td data-label="Bicis. Totales:">{{ station.e_bicicletasT }}</td>
           <td>
-            <button class="btn-detail" v-on:click.self.prevent="renderUpdate">
+            <button class="btn-detail" v-on:click.self.prevent="renderUpdate(station.e_id)">
               Editar</button
-            ><button class="btn-detail" v-on:click.self.prevent="renderDelete">
+            ><button class="btn-detail" v-on:click.self.prevent="renderDelete(station.e_id)">
               Eliminar
             </button>
           </td>
