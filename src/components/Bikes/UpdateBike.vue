@@ -128,6 +128,7 @@ export default {
     width: 55%;
     box-sizing: border-box;
     align-items: center;
+    background-color: transparent;
 }
 
 /*------------Formulario------------*/
