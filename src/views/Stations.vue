@@ -9,20 +9,21 @@
 <script>
 import StationsTable from "@/components/Stations/StationsTable.vue";
 import CreateStation from "@/components/Stations/CreateStation.vue";
-import DetailStation from "@/components/Stations/DetailStation.vue";
+import UpdateStation from "@/components/Stations/UpdateStation.vue";
+import DeleteStation from "@/components/Stations/DeleteStation.vue";
 
 export default {
   name: "Stations",
-  components: { StationsTable, CreateStation, DetailStation },
+  components: { StationsTable, CreateStation, UpdateStation, DeleteStation },
   data: function () {
     return {
       activeOption: "StationsTable",
     };
   },
   methods: {
-    renderStationComponent(message){
+    renderStationComponent(message) {
       this.activeOption = message;
-    }
+    },
   },
 };
 </script>

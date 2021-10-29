@@ -1,48 +1,30 @@
 <template>
   <div class="general-container" v-if="loaded">
     <div class="title-container">
-      <div class="title"><h1>Estaciones</h1></div>
+      <div class="title"><h1>Usuarios</h1></div>
     </div>
-    <div class="filtros">
-      <h4>Filtro por estado:</h4>
-      <select v-model="filterByState">
-        <option value="">Todas</option>
-        <option value="Abierta">Abierta</option>
-        <option value="Cerrada">Cerrada</option>
-      </select>
-      <button class="btn-register" v-on:click.self.prevent="renderCreate">Registrar Estación</button>
+    <div class="filtroPorCondicion">
+      <button class="btn-register" v-on:click.self.prevent="renderCreate">
+        Registrar Usuario
+      </button>
     </div>
-    <table class="table-stations">
+    <table class="table-users">
       <thead>
         <tr>
           <th>ID</th>
+          <th>Alias</th>
           <th>Nombre</th>
-          <th>Estado</th>
-          <th>Capacidad</th>
-          <th>Ocupación</th>
-          <th>Bicis D</th>
-          <th>Bicis ND</th>
-          <th>Bicis T</th>
-          <th>Acciones</th>
+          <th>Correo Electrónico</th>
+          <th>Rol</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="station in filterStationsByState" :key="station.e_id">
-          <td data-label="ID:">{{ station.e_id }}</td>
-          <td data-label="Nombre:">{{ station.e_nombre }}</td>
-          <td data-label="Estado:">{{ station.e_estado }}</td>
-          <td data-label="Capacidad:">{{ station.e_capacidad }}</td>
-          <td data-label="Ocupación:">
-            {{
-              Number(station.e_ocupacion * 100)
-                .toFixed(2)
-                .concat("%")
-            }}
-          </td>
-          <td data-label="Bicis. Disponibles:">{{ station.e_bicicletasD }}</td>
-          <td data-label="Bicis. No disponibles:">{{ station.e_bicicletasND }}</td>
-          <td data-label="Bicis. Totales:">{{ station.e_bicicletasT }}</td>
-          <td><button class="btn-detail" v-on:click.self.prevent="renderDetail">Ver más</button></td>
+        <tr v-for="user in usersList" :key="user.id">
+          <td>{{ user.id }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.role }}</td>
         </tr>
       </tbody>
     </table>
@@ -53,27 +35,17 @@
 import axios from "axios";
 
 export default {
-  name: "StationsTable",
-  data: function () {
+  name: "UsersTable",
+
+  data() {
     return {
-      station: {
-        e_id: 0,
-        e_nombre: "",
-        e_estado: "",
-        e_capacidad: 0,
-        e_ocupacion: 0,
-        e_bicicletasD: 0,
-        e_bicicletasND: 0,
-        e_bicicletasT: 0,
-      },
-      listStations: [],
-      filterByState: "",
+      usersList: [],
       loaded: false,
     };
   },
 
   methods: {
-    getAllStations: async function () {
+    getAllUsers: async function () {
       await this.verifyToken();
 
       if (
@@ -83,32 +55,29 @@ export default {
         return;
       }
 
+      let url = "https://move-and-flow-be.herokuapp.com";
+
       axios
-        .get("https://move-and-flow-be.herokuapp.com/estaciones/", {
+        .get(url + "/users/", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
           },
         })
         .then((response) => {
-          this.listStations = response.data;
-          this.loaded = true;
+          this.usersList = response.data;
           console.log(response.data);
+          this.loaded = true;
         })
         .catch((error) => {
-          console.log(error.response);
+          console.log("error " + error);
           if (error.response.status == "401") {
             this.accessDenied();
           }
         });
     },
+
     renderCreate: function () {
-      this.$emit("loadcomponent", "CreateStation");
-    },
-    renderUpdate: function () {
-      this.$emit("loadcomponent", "UpdateStation");
-    },
-    renderDelete: function () {
-      this.$emit("loadcomponent", "DeleteStation");
+      this.$emit("loadcomponent", "CreateUser");
     },
 
     verifyToken: async function () {
@@ -140,18 +109,9 @@ export default {
     },
   },
 
-  computed: {
-    filterStationsByState() {
-      return this.listStations.filter((estacion) => {
-        /* console.log(estacion) */
-        return !estacion.e_estado.indexOf(this.filterByState);
-      });
-    },
-  },
-
   created: async function () {
     try {
-      this.getAllStations();
+      this.getAllUsers();
     } catch (error) {
       console.log(error);
     }
@@ -178,7 +138,7 @@ export default {
   display: flex;
   justify-content: space-around;
   position: initial;
-  padding-bottom: 30px;
+  padding-bottom: 15px;
   margin-top: 20px;
 }
 
@@ -202,21 +162,21 @@ export default {
   color: var(--main-color);
 }
 
-.filtros {
+.filtroPorCondicion {
   display: flex;
   align-items: center;
   justify-content: center;
   position: initial;
   padding-bottom: 30px;
-  margin-top: 20px;
+  margin-top: 0px;
 }
 
-.filtros h4 {
+.filtroPorCondicion h4 {
   padding-right: 5px;
   color: var(--main-color);
 }
 
-.filtros select {
+.filtroPorCondicion select {
   border-radius: 7px;
   cursor: pointer;
   border: #5046af solid 2px;
@@ -224,7 +184,7 @@ export default {
   justify-content: space-between;
 }
 
-.filtros select option:hover {
+.filtroPorCondicion select option:hover {
   background-color: #6ee1ff !important;
 }
 
@@ -250,7 +210,7 @@ h1 {
   text-align: center;
 }
 
-.table-stations {
+.table-users {
   margin-right: 0px;
   margin-left: 0px;
   width: 100%;
@@ -277,7 +237,7 @@ th:last-child {
 }
 
 tr:hover {
-  background-color: #c4f0fc;
+  background-color: #6ee1ff;
   font-weight: 700;
   transition: 0.5s;
 }
@@ -287,7 +247,7 @@ tr:nth-child(even) {
 }
 
 tr:nth-child(even):hover {
-  background-color: #b5ecfc;
+  background-color: #6ee1ff;
 }
 
 td {
@@ -295,19 +255,11 @@ td {
   padding: 6px;
 }
 
-@media only screen and (max-width: 1020px) {
-   .general-container {
-    padding: 10px;
-    margin-top: 20px;
-    margin-left: 10px;
-    margin-right: 10px;
-    background-color: var(--white);
-    border-radius: 20px;
-  }
-
+@media only screen and (max-width: 950px) {
   .title-container {
     display: flex;
     justify-content: center !important;
+    padding-bottom: 30px;
     margin-top: 20px;
     flex-direction: column;
     text-align: center;
@@ -316,6 +268,7 @@ td {
   .title-container .title {
     display: flex;
     justify-content: center !important;
+    padding-bottom: 30px;
     margin-top: 20px;
     flex-direction: column;
     text-align: center;
@@ -336,14 +289,14 @@ td {
     transition: 0.3s;
   }
 
-  .table-stations thead {
+  .table-users thead {
     background-color: var(--main-color);
     color: white;
     text-align: center;
   }
 }
 
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 670px) {
   .general-container {
     padding: 10px;
     margin-top: 20px;
@@ -352,54 +305,5 @@ td {
     background-color: var(--white);
     border-radius: 20px;
   }
-
-  .filtros{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding-bottom: 30px;
-  margin-top: 20px;
 }
-
-.btn-register{
-  margin-top:15px;
-}
-
-.table-stations thead{
-  display: none; 
-}
-
-
-.table-stations tbody,
-.table-stations tr,
-.table-stations td{
-  display: block;
-  width: 100%;
-  border:1px solid var(--main-color) ;
-}
-
-.table-stations tr{
-  margin-bottom: 15px;
-}
-
-.table-stations tbody tr td{
-  text-align: right;
-  padding-left:50%;
-  position: relative;
-}
-
-.table-stations td:before{
-  content:attr(data-label);
-  position: absolute;
-  left: 0;
-  width: 50%;
-  padding-left: 15px;
-  font-weight: 700;
-  text-align: left;
-  color: var(--main-color);
-}
-
-}
-
 </style>

@@ -5,39 +5,48 @@
         <input type="checkbox" name="" id="nav-toggle" />
         <div class="sidebar">
           <div class="siderbar-brand">
-            <img class="brand" src="../assets/home/img/mov-bike.svg" alt=""  @click.self.prevent="loadDashboard()"/>
+            <img
+              class="brand"
+              src="../assets/home/img/mov-bike.svg"
+              alt=""
+              @click.self.prevent="loadDashboard()"
+            />
           </div>
 
           <div class="sidebar-menu">
             <ul>
               <li>
                 <a href="" v-on:click.self.prevent="loadDashboard()">
-                  <span class="las la-igloo"></span>
-                  <span v-on:click.self.prevent="loadDashboard()"> Dashboard</span>
+                  <span class="las la-igloo" v-on:click.self.prevent="loadDashboard()"></span>
+                  <span v-on:click.self.prevent="loadDashboard()">
+                    Dashboard</span
+                  >
                 </a>
               </li>
               <li>
                 <a href="" v-on:click.self.prevent="loadUsers()">
-                  <span class="las la-user-circle"></span>
-                  <span v-on:click.self.prevent="loadUsers()"> Usuarios [Beta]</span>
+                  <span class="las la-user-circle" v-on:click.self.prevent="loadUsers()"></span>
+                  <span v-on:click.self.prevent="loadUsers()"> Usuarios</span>
                 </a>
               </li>
               <li>
                 <a href="" v-on:click.self.prevent="loadStations()">
-                  <span class="las la-industry"></span>
-                  <span v-on:click.self.prevent="loadStations()"> Estaciones</span>
+                  <span class="las la-industry" v-on:click.self.prevent="loadStations()"></span>
+                  <span v-on:click.self.prevent="loadStations()">
+                    Estaciones</span
+                  >
                 </a>
               </li>
               <li>
                 <a href="" v-on:click.self.prevent="loadBikes()">
-                  <span class="las la-biking"></span>
+                  <span class="las la-biking" v-on:click.self.prevent="loadBikes()"></span>
                   <span v-on:click.self.prevent="loadBikes()"> Bicicletas</span>
                 </a>
               </li>
               <li>
-                <a href="" v-on:click="logOut">
-                  <span class="las la-power-off"></span>
-                  <span v-on:click="logOut"> Cerrar sesión</span>
+                <a href="" v-on:click.self="logOut">
+                  <span class="las la-power-off" v-on:click.self="logOut"></span>
+                  <span v-on:click.self="logOut"> Cerrar sesión</span>
                 </a>
               </li>
             </ul>
@@ -77,8 +86,6 @@
 <script>
 //Añadir efecto hovered para dejar en selección un item
 
-
-
 export default {
   name: "Home",
   components: {},
@@ -104,13 +111,9 @@ export default {
 
     logOut: function () {
       localStorage.clear();
-      alert("Sesión Cerrada");
-      this.verifyAuth();
     },
   },
 };
-
-
 </script>
 
 <style>
