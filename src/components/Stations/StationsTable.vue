@@ -28,20 +28,20 @@
       </thead>
       <tbody>
         <tr v-for="station in filterStationsByState" :key="station.e_id">
-          <td>{{ station.e_id }}</td>
-          <td>{{ station.e_nombre }}</td>
-          <td>{{ station.e_estado }}</td>
-          <td>{{ station.e_capacidad }}</td>
-          <td>
+          <td data-label="ID:">{{ station.e_id }}</td>
+          <td data-label="Nombre:">{{ station.e_nombre }}</td>
+          <td data-label="Estado:">{{ station.e_estado }}</td>
+          <td data-label="Capacidad:">{{ station.e_capacidad }}</td>
+          <td data-label="Ocupación:">
             {{
               Number(station.e_ocupacion * 100)
                 .toFixed(2)
                 .concat("%")
             }}
           </td>
-          <td>{{ station.e_bicicletasD }}</td>
-          <td>{{ station.e_bicicletasND }}</td>
-          <td>{{ station.e_bicicletasT }}</td>
+          <td data-label="Bicis. Disponibles:">{{ station.e_bicicletasD }}</td>
+          <td data-label="Bicis. No disponibles:">{{ station.e_bicicletasND }}</td>
+          <td data-label="Bicis. Totales:">{{ station.e_bicicletasT }}</td>
           <td><button class="btn-detail" v-on:click.self.prevent="renderDetail">Ver más</button></td>
         </tr>
       </tbody>
@@ -232,7 +232,7 @@ th:last-child {
 }
 
 tr:hover {
-  background-color: #6ee1ff;
+  background-color: #c4f0fc;
   font-weight: 700;
   transition: 0.5s;
 }
@@ -242,7 +242,7 @@ tr:nth-child(even) {
 }
 
 tr:nth-child(even):hover {
-  background-color: #6ee1ff;
+  background-color: #b5ecfc;
 }
 
 td {
@@ -298,7 +298,7 @@ td {
   }
 }
 
-@media only screen and (max-width: 670px) {
+@media only screen and (max-width: 750px) {
   .general-container {
     padding: 10px;
     margin-top: 20px;
@@ -320,6 +320,41 @@ td {
 .btn-register{
   margin-top:15px;
 }
+
+.table-stations thead{
+  display: none; 
+}
+
+
+.table-stations tbody,
+.table-stations tr,
+.table-stations td{
+  display: block;
+  width: 100%;
+  border:1px solid var(--main-color) ;
+}
+
+.table-stations tr{
+  margin-bottom: 15px;
+}
+
+.table-stations tbody tr td{
+  text-align: right;
+  padding-left:50%;
+  position: relative;
+}
+
+.table-stations td:before{
+  content:attr(data-label);
+  position: absolute;
+  left: 0;
+  width: 50%;
+  padding-left: 15px;
+  font-weight: 700;
+  text-align: left;
+  color: var(--main-color);
+}
+
 }
 
 </style>
