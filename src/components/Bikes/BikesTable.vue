@@ -33,10 +33,10 @@
           <td>{{ bicicleta.estacion_nombre }}</td>
           <td>
             <button class="btn-detail" v-on:click.self.prevent="renderUpdate">
-              <fa icon="edit" v-on:click="renderUpdate"/> Editar
+              <fa icon="edit" v-on:click="renderUpdate"/><h6> Editar</h6>
             </button>
-            <button class="btn-detail" v-on:click.self.prevent="renderDelete">
-              <fa icon="trash" v-on:click="renderDelete"/> Eliminar
+            <button class="btn-delete" v-on:click.self.prevent="renderDelete">
+              <fa icon="trash" v-on:click="renderDelete"/><h6> Eliminar</h6>
             </button>
           </td>
         </tr>
@@ -229,11 +229,41 @@ export default {
   font-weight: 600;
   color: var(--white);
   cursor: pointer;
+  
 }
 
 .btn-detail:hover {
   background-color: var(--white);
   color: #0081cf;
+}
+
+.btn-detail h6{
+  font-size: 13px;
+  display: inline;
+  visibility: visible;
+}
+.btn-delete {
+  padding: 10px 10px;
+  position: relative;
+  margin: 3px 8px 5px;
+  text-decoration: none;
+  background-color: #C34A36;
+  border: none;
+  border-radius: 7px;
+  font-weight: 600;
+  color: var(--white);
+  cursor: pointer;
+  visibility: visible;
+}
+
+.btn-delete:hover {
+  background-color: var(--white);
+  color: #C34A36;
+}
+
+.btn-delete h6{
+  font-size: 13px;
+  display: inline;
 }
 
 h1 {
@@ -267,7 +297,7 @@ th:last-child {
 }
 
 tr:hover {
-  background-color: #6ee1ff;
+  background-color: #b5ecfc;
   font-weight: 700;
   transition: 0.5s;
 }
@@ -277,7 +307,7 @@ tr:nth-child(even) {
 }
 
 tr:nth-child(even):hover {
-  background-color: #6ee1ff;
+  background-color: #b5ecfc;
 }
 
 td {
@@ -333,14 +363,13 @@ td {
   }
 }
 
-@media only screen and (max-width: 670px) {
+@media only screen and (max-width: 700px) {
   .general-container {
     padding: 10px;
     margin-top: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
     background-color: var(--white);
     border-radius: 20px;
+    width: 97%;
   }
 
   .filtroPorCondicion {
@@ -354,6 +383,24 @@ td {
 
 .btn-register{
   margin-top:15px;
+}
+
+.btn-detail{
+  width:40px;
+  height: 40px;
+}
+
+.btn-detail h6{
+  visibility: hidden;
+}
+
+.btn-delete{
+  width:40px;
+  height: 40px;
+}
+
+.btn-delete h6{
+  visibility: hidden;
 }
 }
 </style>
