@@ -1,105 +1,181 @@
 <template>
   <div class="general-container">
     <div class="form-container">
-      <div class="title"> <h1>Actualizar bicicleta</h1></div>
-    <form
-      name="form"
-      id="form"
-      method="post"
-      enctype="multipart/form-data"
-      v-on:submit.prevent="actualizar()"
-    >
-      
-      <br />
-      <div class="form-group">
-        <p>Condición:</p>
-        <input
-          type="radio"
-          name="condicion"
-          id="buena"
-          value="true"
-          v-model="condicion"
-        />
-        <label class="rad" for="buena">En buen estado</label>
+      <div class="title">
+        <h1>Actualizar bicicleta</h1>
+      </div>
+      <form
+        name="form"
+        id="form"
+        v-on:submit.prevent="updateBikes"
+      >
         <br />
-        <input
-          type="radio"
-          name="condicion"
-          id="averiada"
-          value="false"
-          v-model="condicion"
-        />
-        <label class="rad" for="averiada">Averiada</label>
-      </div>
-      <div class="form-group">
-        <p>Ubicación:</p>
+        <div class="form-group">
+          <p>ID: {{id}} </p>
+        </div>
+        <div class="form-group">
+          <p>Condición:</p>
+          <input
+            type="radio"
+            name="condicion"
+            id="buena"
+            value="true"
+            v-model="updateBike.b_condicion"
+          />
+          <label
+            class="rad"
+            for="buena"
+          >En buen estado</label>
+          <br />
+          <input
+            type="radio"
+            name="condicion"
+            id="averiada"
+            value="false"
+            v-model="updateBike.b_condicion"
+          />
+          <label
+            class="rad"
+            for="averiada"
+          >Averiada</label>
+        </div>
+        <div class="form-group">
+          <p>Ubicación:</p>
 
-        <select v-model="bikeCreation.creation_data.current_station">
-          <option disabled selected>Seleccione una estacion</option>
-          <option
-            v-for="station in stations"
-            :key="station.e_id"
-            :value="station.e_id"
+          <select v-model="updateBike.b_en_estacion">
+            <option>Seleccione una estacion</option>
+            <option
+              v-for="station in stations"
+              :key="station.e_id"
+              v-bind:value="station.e_id"
+            >
+              {{ station.e_nombre }}
+            </option>
+          </select>
+        </div>
+        <br />
+        <div class="botones">
+          <button class="boton_up" type="submit">
+            <fa
+              icon="edit"
+              class="edit"
+            />Actualizar
+          </button>
+          <button
+            class="boton_back"
+            v-on:click.self.prevent="renderStationsTable"
           >
-            {{ station.e_nombre }}
-          </option>
-        </select>
-      </div>
-      <br />
-      <div class="botones">
-      <button class="boton_back" v-on:click.self.prevent="renderStationsTable"><fa icon="undo" class="back"/>Volver</button>
-      <button class="boton_up"><fa icon="edit" class="edit"/>Actualizar</button>
-      </div>
-    </form>
+            <fa
+              icon="undo"
+              class="back"
+            />Volver
+          </button>
+          
+        </div>
+      </form>
     </div>
 
     <div class="imagen-container">
-    <p class="caja">
-      Haciendo seguimiento continuo a cada nodo para mejorar nuestro servicio y
-      la experiencia de usuario.
-    </p>
+      <p class="caja">
+        Haciendo seguimiento continuo a cada nodo para mejorar nuestro servicio y
+        la experiencia de usuario.
+      </p>
     </div>
   </div>
 </template>
 
 
 <script>
-import axios      from 'axios';
+import axios from 'axios';
 export default {
   name: "UpdateBike",
-  data: function() {
+  data: function () {
     return {
-      bikeCreation: {
-        b_id : 0,
-        creation_data: {
-          condicion: 0,
-          current_station : 0,
-        }
+      updateBike: {
+        b_condicion: true,
+        b_en_estacion: 0
       },
-      stations: [],
+      stations: {},
+      id: localStorage.getItem("idBikeToUpdate")
     }
   },
+
 
   methods: {
     renderStationsTable: function () {
       this.$emit("loadcomponent", "BikesTable");
     },
+
+    updateBikes: function () {
+      let url = "https://open-move-and-flow-be.herokuapp.com";
+      let token = localStorage.getItem("token")
+      axios
+        .patch(url + "/bicicletas/" + this.bicicleta.id + "/", this.updateBike, {
+          headers: {
+            Authorization: `bearer ${token}`
+          }
+        })
+        .then((result) => {
+          alert("Bicicleta ID: " + result.data.id +
+            " Ha sido modificada con estado: " + result.data.condicion +
+            " Y estacion: " + result.data.estacion_nombre);
+          console.log(result.data);
+          this.bicicleta = result.data;
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+    },
   },
+
+  created() {
+    let id = localStorage.getItem("idBikeToUpdate")
+    console.log(id)
+    let url = "https://open-move-and-flow-be.herokuapp.com";
+    axios
+      .get(url + "/bicicletas/" + id + "/")
+      .then((response) => {
+        console.log(response.data);
+        this.bicicleta = response.data;
+        this.updateBike.b_condicion = this.bicicleta.condicion === 'En buen estado';
+        this.updateBike.b_en_estacion = this.bicicleta.estación_id;
+        this.idBike = this.bicicleta.id;
+
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+
+    axios
+      .get("https://move-and-flow-be.herokuapp.com/estaciones/", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
+        },
+      })
+      .then((response) => {
+        this.stations = response.data;
+
+        console.log(this.stations)
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+  },
+
 };
 </script>
 
 <style scoped>
-
 .general-container {
-    height:35em;
-    width: 100%;
-    border-radius: 20px;
-    display: flex;
-    justify-content: space-between;
-    overflow: hidden;
-    background-image: url('../../assets/stations/UpdateBike2.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
+  height: 35em;
+  width: 100%;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  background-image: url("../../assets/stations/UpdateBike2.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .title {
@@ -110,26 +186,25 @@ export default {
   margin-top: 20px;
 }
 .form-container {
-    color: #5046af;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 0rem 1.5rem;
-    width: 350px;    
-    background-color: rgba(255, 255, 255, 0.822);
-    border-radius: 20px;
-    backdrop-filter: blur(30px);
-    margin: 20px;
-    align-items: center;
-    margin-left: 5%;
-    box-shadow: 0 0 10px rgb(103, 0, 124);
+  color: #5046af;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0rem 1.5rem;
+  width: 350px;
+  background-color: rgba(255, 255, 255, 0.822);
+  border-radius: 20px;
+  backdrop-filter: blur(30px);
+  margin: 20px;
+  align-items: center;
+  margin-left: 5%;
+  box-shadow: 0 0 10px rgb(103, 0, 124);
 }
 .imagen-container {
-    width: 55%;
-    box-sizing: border-box;
-    align-items: center;
-    background-color: transparent;
-    
+  width: 55%;
+  box-sizing: border-box;
+  align-items: center;
+  background-color: transparent;
 }
 
 /*------------Formulario------------*/
@@ -141,21 +216,21 @@ form {
   text-align: left;
   font-weight: 600;
 }
-.form-group{
+.form-group {
   margin-bottom: 15px;
 }
 
-.form-group label{
-  margin-left:10px;
+.form-group label {
+  margin-left: 10px;
   color: #0081cf;
 }
 
-.form-group input{
-  margin-left: 20px;  
+.form-group input {
+  margin-left: 20px;
   margin-bottom: 10px;
 }
 
-.form-group select{
+.form-group select {
   border: #5046af solid 2px;
   border-radius: 10px;
 }
@@ -167,7 +242,7 @@ form {
   font-size: 15px;
 }
 
-.botones{
+.botones {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -192,7 +267,7 @@ form {
   position: relative;
   margin: 3px 0px 5px;
   text-decoration: none;
-  background-color: #00C2A8;
+  background-color: #00c2a8;
   border: none;
   border-radius: 7px;
   font-weight: 600;
@@ -200,21 +275,21 @@ form {
   cursor: pointer;
 }
 
-.boton_back:hover{
+.boton_back:hover {
   background-color: var(--white);
-  color: #00C2A8;
+  color: #00c2a8;
 }
 
-.boton_up:hover{
+.boton_up:hover {
   background-color: var(--white);
   color: #0081cf;
 }
 
-.back{
+.back {
   margin-right: 5px;
 }
 
-.edit{
+.edit {
   margin-right: 5px;
 }
 /*------------Mensaje--------------*/
@@ -227,36 +302,36 @@ form {
   margin-left: 10%;
   margin-top: 60px;
   overflow: hidden;
-  color:#f2fcff;
+  color: #f2fcff;
 }
 
 @media only screen and (max-width: 950px) {
-.caja {
-  font-family: sans-serif;
-  font-weight: 600;
-  font-size: 20px;
-  font-style: italic;
-  width: 200px;
-  margin-top: 60px;
-  overflow: hidden;
-  color:#f2fcff;
-}
+  .caja {
+    font-family: sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    font-style: italic;
+    width: 200px;
+    margin-top: 60px;
+    overflow: hidden;
+    color: #f2fcff;
+  }
 
-.botones{
-  flex-direction: column;
-}
+  .botones {
+    flex-direction: column;
+  }
 }
 
 @media only screen and (max-width: 650px) {
-.imagen-container {
-  display: none;
-}
+  .imagen-container {
+    display: none;
+  }
 
-.form-container{
-  width:100%;
-}
-.botones{
-  flex-direction: column;
-}
+  .form-container {
+    width: 100%;
+  }
+  .botones {
+    flex-direction: column;
+  }
 }
 </style>
