@@ -7,7 +7,7 @@
       id="form"
       method="post"
       enctype="multipart/form-data"
-      v-on:submit.prevent="actualizar()"
+      v-on:submit.prevent="actualizar"
     >
       <div class="form-group">
        <p> Alias:</p>
@@ -125,7 +125,7 @@ export default {
 
     },
 
-    nuevoUsuariof: function () {
+    actualizar: function () {
       let url = "https://move-and-flow-be.herokuapp.com";
       let token = localStorage.getItem("token");
 

@@ -1,7 +1,12 @@
 <template>
-  <div class="general-container" v-if="loaded">
+  <div
+    class="general-container"
+    v-if="loaded"
+  >
     <div class="title-container">
-      <div class="title"><h1>Bicicletas</h1></div>
+      <div class="title">
+        <h1>Bicicletas</h1>
+      </div>
     </div>
     <div class="filtroPorCondicion">
       <h4>Filtrar</h4>
@@ -10,38 +15,58 @@
         <option value="En buen estado">En buen estado</option>
         <option value="Averiada">Averiada</option>
       </select>
-      <button class="btn-register" v-on:click.self.prevent="renderCreate">
+      <button
+        class="btn-register"
+        v-on:click.self.prevent="renderCreate"
+      >
         Registrar Bicicleta
       </button>
     </div>
-    <table class="table-bikes">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Condición</th>
-          <th>Ubicación</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="bicicleta in filterBikeListByCondition"
-          :key="bicicleta.b_id"
-        >
-          <td>{{ bicicleta.id }}</td>
-          <td>{{ bicicleta.condicion }}</td>
-          <td>{{ bicicleta.estacion_nombre }}</td>
-          <td>
-            <button class="btn-detail" v-on:click.self.prevent="renderUpdate(bicicleta)">
-              <fa icon="edit" v-on:click="renderUpdate(bicicleta)"/><h6 v-on:click.self.prevent="renderUpdate(bicicleta)"> Editar</h6>
-            </button>
-            <button class="btn-delete" v-on:click.self.prevent="renderDelete(bicicleta)">
-              <fa icon="trash" v-on:click="renderDelete(bicicleta)"/><h6 v-on:click.self.prevent="renderDelete(bicicleta)"> Eliminar</h6>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="scroll">
+
+      <table class="table-bikes scroll">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Condición</th>
+            <th>Ubicación</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="bicicleta in filterBikeListByCondition"
+            :key="bicicleta.b_id"
+          >
+            <td>{{ bicicleta.id }}</td>
+            <td>{{ bicicleta.condicion }}</td>
+            <td>{{ bicicleta.estacion_nombre }}</td>
+            <td>
+              <button
+                class="btn-detail"
+                v-on:click.self.prevent="renderUpdate(bicicleta)"
+              >
+                <fa
+                  icon="edit"
+                  v-on:click="renderUpdate(bicicleta)"
+                />
+                <h6 v-on:click.self.prevent="renderUpdate(bicicleta)"> Editar</h6>
+              </button>
+              <button
+                class="btn-delete"
+                v-on:click.self.prevent="renderDelete(bicicleta)"
+              >
+                <fa
+                  icon="trash"
+                  v-on:click="renderDelete(bicicleta)"
+                />
+                <h6 v-on:click.self.prevent="renderDelete(bicicleta)"> Eliminar</h6>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -101,7 +126,7 @@ export default {
 
     renderDelete: function (bike) {
       localStorage.setItem("idBikeToDelete", bike.id)
-        this.$emit("loadcomponent", "DeleteBike");
+      this.$emit("loadcomponent", "DeleteBike");
 
     },
 
@@ -158,6 +183,11 @@ export default {
   --main-color: #5046af;
   --text-grey: #8390a2;
   --white: #fff;
+}
+
+.scroll {
+  overflow: scroll;
+  height: 500px;
 }
 
 .general-container {
@@ -233,7 +263,6 @@ export default {
   font-weight: 600;
   color: var(--white);
   cursor: pointer;
-  
 }
 
 .btn-detail:hover {
@@ -241,7 +270,7 @@ export default {
   color: #0081cf;
 }
 
-.btn-detail h6{
+.btn-detail h6 {
   font-size: 13px;
   display: inline;
   visibility: visible;
@@ -251,7 +280,7 @@ export default {
   position: relative;
   margin: 3px 8px 5px;
   text-decoration: none;
-  background-color: #C34A36;
+  background-color: #c34a36;
   border: none;
   border-radius: 7px;
   font-weight: 600;
@@ -262,10 +291,10 @@ export default {
 
 .btn-delete:hover {
   background-color: var(--white);
-  color: #C34A36;
+  color: #c34a36;
 }
 
-.btn-delete h6{
+.btn-delete h6 {
   font-size: 13px;
   display: inline;
 }
@@ -320,7 +349,7 @@ td {
 }
 
 @media only screen and (max-width: 950px) {
-   .general-container {
+  .general-container {
     padding: 10px;
     margin-top: 20px;
     margin-left: 10px;
@@ -377,34 +406,34 @@ td {
   }
 
   .filtroPorCondicion {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding-bottom: 30px;
-  margin-top: 20px;
-}
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding-bottom: 30px;
+    margin-top: 20px;
+  }
 
-.btn-register{
-  margin-top:15px;
-}
+  .btn-register {
+    margin-top: 15px;
+  }
 
-.btn-detail{
-  width:40px;
-  height: 40px;
-}
+  .btn-detail {
+    width: 40px;
+    height: 40px;
+  }
 
-.btn-detail h6{
-  visibility: hidden;
-}
+  .btn-detail h6 {
+    visibility: hidden;
+  }
 
-.btn-delete{
-  width:40px;
-  height: 40px;
-}
+  .btn-delete {
+    width: 40px;
+    height: 40px;
+  }
 
-.btn-delete h6{
-  visibility: hidden;
-}
+  .btn-delete h6 {
+    visibility: hidden;
+  }
 }
 </style>
