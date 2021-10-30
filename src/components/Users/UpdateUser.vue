@@ -7,8 +7,7 @@
         id="form"
         method="post"
         enctype="multipart/form-data"
-        v-on:submit.prevent="actualizar()"
-      >
+        v-on:submit.prevent="updateUserf">      >
         <div class="form-group">
           <p>Alias:</p>
           <input
@@ -59,7 +58,7 @@
           <button class="boton_back" v-on:click.self.prevent="renderUsersTable">
             <fa icon="undo" class="back" />Volver
           </button>
-          <button class="boton_up">
+          <button class="boton_up" type="submit">
             <fa icon="edit" class="edit" />Actualizar
           </button>
         </div>
@@ -79,10 +78,11 @@
 import axios from "axios"
 
 export default {
-  name: "DeleteUser",
+  name: "UpdateUser",
   data() {
     return {
       updateUser: {
+        id: "",
         name: "",
         username: "",
         password: "",
@@ -130,31 +130,24 @@ export default {
 
     },
 
-    updateUser: function () {
-      let url = "https://open-move-and-flow-be.herokuapp.com";
+    updateUserf: function () {
+      let url = "https://move-and-flow-be.herokuapp.com";
       let token = localStorage.getItem("token");
 
       axios
         .patch(
-          url + "/bicicletas/" + this.bicicleta.id + "/",
-          this.updateBike,
+          url + "/users/" + this.updateUser.id + "/",
+          this.updateUser,
           {
             headers: {
-              Authorization: `bearer ${token}`,
-            },
+            Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
+          },
           }
         )
         .then((result) => {
-          alert(
-            "Bicicleta ID: " +
-              result.data.id +
-              " Ha sido modificada con estado: " +
-              result.data.condicion +
-              " Y estacion: " +
-              result.data.estacion_nombre
-          );
+          alert('Actualización Exitosa')
           console.log(result.data);
-          this.bicicleta = result.data;
+          this.updateUser = result.data;
         })
         .catch((error) => {
           console.log(error.response);
