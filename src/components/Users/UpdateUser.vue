@@ -1,5 +1,5 @@
 <template>
-  <div class="general-container">
+  <div class="general-container" v-if="loaded">
     <div class="form-container">
       <div class="general-title"> <h1>Actualizar Usuario</h1></div>
     <form
@@ -44,7 +44,6 @@
           <input
             type="email"
             name="u_email"
-            placeholder="Email"
             class="form-control"
             v-model="nuevoUsuario.email"
         />
@@ -71,17 +70,21 @@
 
 
 <script>
+import axios from "axios"
+
 export default {
-  name: "DeleteUser",
+  name: "UpdateUser",
   data() {
     return {
-      nuevoUsuario: {
+      updateUser: {
+        id: "",
         name: "",
         username: "",
         password: "",
         email: "",
-        rol: "Admin"
+        rol: "Admin",
       },
+      loaded: false
     };
   },
 
@@ -89,6 +92,94 @@ export default {
     renderUsersTable: function () {
       this.$emit("loadcomponent", "UsersTable");
     },
+
+    getData: async function () {
+      await this.verifyToken();
+
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        return;
+      }
+
+      let id = localStorage.getItem("idUserToUpdate");
+      console.log(id);
+      let url = "https://move-and-flow-be.herokuapp.com";
+
+      axios
+        .get(url + "/users/" + id + "/", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
+          },
+        })
+        .then((response) => {
+          console.log("Inside Users");
+          this.updateUser = response.data;
+          this.loaded=true;
+          
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+
+    },
+
+    updateUserf: function () {
+      let url = "https://move-and-flow-be.herokuapp.com";
+      let token = localStorage.getItem("token");
+
+      axios
+        .patch(
+          url + "/users/" + this.updateUser.id + "/",
+          this.updateUser,
+          {
+            headers: {
+            Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
+          },
+          }
+        )
+        .then((result) => {
+          alert('Actualización Exitosa')
+          console.log(result.data);
+          this.updateUser = result.data;
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+    },
+
+    verifyToken: async function () {
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        this.accessDenied();
+        return;
+      }
+
+      return axios
+        .post(
+          "https://move-and-flow-be.herokuapp.com/refresh/",
+          { refresh: localStorage.getItem("tokenRefresh") },
+          { headers: {} }
+        )
+        .then((result) => {
+          localStorage.setItem("tokenAccess", result.data.access);
+        })
+        .catch((error) => {
+          this.accessDenied();
+        });
+    },
+    accessDenied: function () {
+      localStorage.clear();
+      alert("Acceso Denegado. Vuelve a iniciar sesión.");
+      this.$router.push({ name: "Login" });
+    },
+  },
+
+  created: async function () {
+    await this.getData();
   },
 };
 </script>
@@ -166,7 +257,7 @@ form p{
   color: #5046af;
 }
 
-.form-group select{
+.form-group select {
   border: #5046af solid 2px;
   border-radius: 10px;
 }
