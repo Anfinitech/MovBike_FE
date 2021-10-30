@@ -27,11 +27,11 @@
           <td data-label="Email:">{{ user.email }}</td>
           <td data-label="Rol:">{{ user.role }}</td>
           <td>
-            <button class="btn-detail" v-on:click.self.prevent="renderUpdate">
-              <fa icon="edit" v-on:click="renderUpdate"/><h6 v-on:click="renderUpdate"> Editar</h6>
+            <button class="btn-detail" v-on:click.self.prevent="renderUpdate(user)">
+              <fa icon="edit" v-on:click="renderUpdate(user)"/><h6 v-on:click="renderUpdate(user)"> Editar</h6>
             </button>
-            <button class="btn-delete" v-on:click.self.prevent="renderDelete">
-              <fa icon="trash" v-on:click="renderDelete"/><h6 v-on:click="renderDelete"> Eliminar</h6>
+            <button class="btn-delete" v-on:click.self.prevent="renderDelete(user)">
+              <fa icon="trash" v-on:click="renderDelete(user)"/><h6 v-on:click="renderDelete(user)"> Eliminar</h6>
             </button>
           </td>
         </tr>
@@ -89,11 +89,13 @@ export default {
       this.$emit("loadcomponent", "CreateUser");
     },
     
-    renderUpdate: function () {
+    renderUpdate: function (user) {
+      localStorage.setItem("idUserToUpdate", user.id)
       this.$emit("loadcomponent", "UpdateUser");
     },
 
-    renderDelete: function () {
+    renderDelete: function (user) {
+      localStorage.setItem("idUserToDelete", user.id)
       this.$emit("loadcomponent", "DeleteUser");
     },
 
