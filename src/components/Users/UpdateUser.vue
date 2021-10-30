@@ -51,13 +51,9 @@
       </div>
       <div class="form-group">
         <p>Rol: </p>
-        <input
-          type="text"
-          name="u_rol"
-          placeholder="Rol"
-          class="form-control"
-          v-model="nuevoUsuario.rol"
-        />
+        <select name="rol" id="rol" v-model="nuevoUsuario.rol">
+          <option value="Admin" selected>Administrador</option>
+        </select>
       </div>
       <br />
       <div class="botones">
@@ -86,7 +82,7 @@ export default {
         username: "",
         password: "",
         email: "",
-        rol: ","
+        rol: "Admin"
       },
     };
   },
@@ -169,6 +165,8 @@ form {
   border: #5046af solid 2px;
   border-radius: 10px;
 }
+
+
 
 .form-control {
   width: 200px;
