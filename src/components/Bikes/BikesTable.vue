@@ -32,11 +32,11 @@
           <td>{{ bicicleta.condicion }}</td>
           <td>{{ bicicleta.estacion_nombre }}</td>
           <td>
-            <button class="btn-detail" v-on:click.self.prevent="renderUpdate">
-              <fa icon="edit" v-on:click="renderUpdate"/><h6 v-on:click.self.prevent="renderUpdate"> Editar</h6>
+            <button class="btn-detail" v-on:click.self.prevent="renderUpdate(bicicleta)">
+              <fa icon="edit" v-on:click="renderUpdate(bicicleta)"/><h6 v-on:click.self.prevent="renderUpdate(bicicleta)"> Editar</h6>
             </button>
-            <button class="btn-delete" v-on:click.self.prevent="renderDelete">
-              <fa icon="trash" v-on:click="renderDelete"/><h6 v-on:click.self.prevent="renderDelete"> Eliminar</h6>
+            <button class="btn-delete" v-on:click.self.prevent="renderDelete(bicicleta)">
+              <fa icon="trash" v-on:click="renderDelete(bicicleta)"/><h6 v-on:click.self.prevent="renderDelete(bicicleta)"> Eliminar</h6>
             </button>
           </td>
         </tr>
@@ -94,11 +94,15 @@ export default {
     renderCreate: function () {
       this.$emit("loadcomponent", "CreateBike");
     },
-    renderUpdate: function () {
+    renderUpdate: function (bike) {
+      localStorage.setItem("idBikeToUpdate", bike.id)
       this.$emit("loadcomponent", "UpdateBike");
     },
-    renderDelete: function () {
-      this.$emit("loadcomponent", "DeleteBike");
+
+    renderDelete: function (bike) {
+      localStorage.setItem("idBikeToDelete", bike.id)
+        this.$emit("loadcomponent", "DeleteBike");
+
     },
 
     verifyToken: async function () {
