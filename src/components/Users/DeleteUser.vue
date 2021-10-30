@@ -1,42 +1,39 @@
 <template>
-  <div>
-
-    <div class="general-container">
-      <div class="p-container">
-        <div class="general-title">
-          <h1>Eliminar usuario</h1>
-        </div>
-        <div class="prevention">
-          <p>¿Esta seguro de eliminar la siguiente información?</p>
-        </div>
-        <div class="group">
-          <p class="sub-title">ID: {{deleteUser.id}} </p>
-          <p class="sub-title">Alias: {{deleteUser.username}} </p>
-          <p class="sub-title">Nombre: {{deleteUser.name}} </p>
-          <p class="sub-title">Correo Electrónico: {{deleteUser.email}} </p>
-          <p class="sub-title">Rol: {{deleteUser.role}} </p>
-        </div>
-        <br />
-        <div class="botones">
-          <button
-            class="boton_delete"
-            v-on:click.self.prevent="deleteUsers"
-          >
-            <fa
-              icon="trash"
-              class="icon"
-            />Eliminar
-          </button>
-          <button
-            class="boton_back"
-            v-on:click.self.prevent="renderUsersTable"
-          >
-            <fa
-              icon="undo"
-              class="icon"
-            />Volver
-          </button>
-        </div>
+  <div class="general-container">
+    <div class="p-container">
+      <div class="general-title">
+        <h1>Eliminar usuario</h1>
+      </div>
+      <div class="prevention">
+        <p>¿Esta seguro de eliminar la siguiente información?</p>
+      </div>
+      <div class="group">
+        <p class="sub-title">ID: {{deleteUser.id}} </p>
+        <p class="sub-title">Alias: {{deleteUser.username}}</p>
+        <p class="sub-title">Nombre: {{deleteUser.name}} </p>
+        <p class="sub-title">Correo Electrónico: {{deleteUser.email}} </p>
+        <p class="sub-title">Rol:{{deleteUser.role}} </p>
+      </div>
+      <br />
+      <div class="botones">
+        <button
+          class="boton_delete"
+          v-on:click="deleteUsers"
+        >
+          <fa
+            icon="trash"
+            class="icon"
+          />Eliminar
+        </button>
+        <button
+          class="boton_back"
+          v-on:click.self.prevent="renderUsersTable"
+        >
+          <fa
+            icon="undo"
+            class="icon"
+          />Volver
+        </button>
       </div>
     </div>
   </div>
@@ -100,6 +97,7 @@ export default {
         })
         .then((response) => {
           console.log("Inside Users");
+          console.log(response.data);
           this.deleteUser = response.data;
           console.log(this.deleteUser)
           this.loaded = true;
