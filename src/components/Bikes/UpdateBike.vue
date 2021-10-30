@@ -55,6 +55,12 @@
         </div>
         <br />
         <div class="botones">
+          <button class="boton_up" type="submit">
+            <fa
+              icon="edit"
+              class="edit"
+            />Actualizar
+          </button>
           <button
             class="boton_back"
             v-on:click.self.prevent="renderStationsTable"
@@ -64,12 +70,7 @@
               class="back"
             />Volver
           </button>
-          <button class="boton_up" type="submit">
-            <fa
-              icon="edit"
-              class="edit"
-            />Actualizar
-          </button>
+          
         </div>
       </form>
     </div>
