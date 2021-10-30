@@ -11,6 +11,9 @@
       >
         <br />
         <div class="form-group">
+          <p>ID: {{id}} </p>
+        </div>
+        <div class="form-group">
           <p>Condición:</p>
           <input
             type="radio"
@@ -36,7 +39,6 @@
             for="averiada"
           >Averiada</label>
         </div>
-        {{ updateBike.b_condicion}}
         <div class="form-group">
           <p>Ubicación:</p>
 
@@ -51,7 +53,6 @@
             </option>
           </select>
         </div>
-            {{ updateBike.b_en_estacion}}
         <br />
         <div class="botones">
           <button
@@ -94,6 +95,7 @@ export default {
         b_en_estacion: 0
       },
       stations: {},
+      id: localStorage.getItem("idBikeToUpdate")
     }
   },
 
