@@ -50,9 +50,14 @@
           </button>
           <button
             class="boton_back"
+            type="button"
             v-on:click.self.prevent="renderStationsTable"
           >
-            <fa icon="undo" class="back" />Volver
+            <fa
+              icon="undo"
+              class="back"
+              v-on:click.self.prevent="renderStationsTable"
+            />Volver
           </button>
         </div>
       </form>
@@ -90,8 +95,6 @@ export default {
     },
 
     getData: async function () {
-      
-
       await this.verifyToken();
 
       if (
@@ -112,7 +115,7 @@ export default {
           },
         })
         .then((response) => {
-          console.log('Inside bikes');
+          console.log("Inside bikes");
           this.bicicleta = response.data;
           this.updateBike.b_condicion =
             this.bicicleta.condicion === "En buen estado";
@@ -131,9 +134,9 @@ export default {
         })
         .then((response) => {
           this.stations = response.data;
-          console.log('Inside stations');
+          console.log("Inside stations");
           this.loaded = true;
-          
+
           console.log(this.stations);
         })
         .catch((error) => {

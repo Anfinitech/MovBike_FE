@@ -16,11 +16,12 @@
           <div class="sidebar-menu">
             <ul>
               <li>
-                <a href="" v-on:click.self.prevent="loadDashboard()">
+                  <a href="" v-on:click.self.prevent="loadDashboard()">
                   <span class="las la-igloo" v-on:click.self.prevent="loadDashboard()"></span>
                   <span v-on:click.self.prevent="loadDashboard()">
-                    Dashboard</span
-                  >
+                    Dashboard
+                     </span>
+                     
                 </a>
               </li>
               <li>

@@ -48,9 +48,9 @@
           <td data-label="Bicis. Totales:">{{ station.e_bicicletasT }}</td>
           <td>
             <button class="btn-detail" v-on:click.self.prevent="renderUpdate(station.e_id)">
-              Editar</button
-            ><button class="btn-detail" v-on:click.self.prevent="renderDelete(station.e_id)">
-              Eliminar
+             <fa icon="edit" class="icon"/><h6>Editar</h6></button
+            ><button class="btn-delete" v-on:click.self.prevent="renderDelete(station.e_id)">
+            <fa icon="trash" class="icon"/><h6>Eliminar</h6>
             </button>
           </td>
         </tr>
@@ -180,9 +180,7 @@ export default {
 
 .general-container {
   padding: 10px;
-  margin-top: 20px;
-  margin-left: 100px;
-  margin-right: 100px;
+  margin-top: 20px; 
   background-color: var(--white);
   border-radius: 20px;
 }
@@ -251,11 +249,41 @@ export default {
   font-weight: 600;
   color: var(--white);
   cursor: pointer;
+  
 }
 
 .btn-detail:hover {
   background-color: var(--white);
   color: #0081cf;
+}
+
+.btn-detail h6{
+  font-size: 13px;
+  display: inline;
+  visibility: visible;
+}
+.btn-delete {
+  padding: 10px 10px;
+  position: relative;
+  margin: 3px 8px 5px;
+  text-decoration: none;
+  background-color: #C34A36;
+  border: none;
+  border-radius: 7px;
+  font-weight: 600;
+  color: var(--white);
+  cursor: pointer;
+  visibility: visible;
+}
+
+.btn-delete:hover {
+  background-color: var(--white);
+  color: #C34A36;
+}
+
+.btn-delete h6{
+  font-size: 13px;
+  display: inline;
 }
 
 h1 {
@@ -307,12 +335,18 @@ td {
   padding: 6px;
 }
 
-@media only screen and (max-width: 1020px) {
+.icon{
+  display: inline;
+  font-size: 14px;
+  text-align: center;
+  flex-direction: row;
+  margin-right: 5px;
+}
+
+@media only screen and (max-width: 960px) {
   .general-container {
     padding: 10px;
     margin-top: 20px;
-    margin-left: 10px;
-    margin-right: 10px;
     background-color: var(--white);
     border-radius: 20px;
   }
@@ -353,6 +387,24 @@ td {
     color: white;
     text-align: center;
   }
+
+  .btn-delete h6{
+  display: none;
+  margin-right: 0;
+}
+
+.btn-delete .icon{
+  margin-right:0;;
+}
+
+ .btn-detail h6{
+  display: none;
+  margin-right: 0;
+}
+
+.btn-detail .icon{
+  margin-right:0;;
+}
 }
 
 @media only screen and (max-width: 750px) {
@@ -410,5 +462,25 @@ td {
     text-align: left;
     color: var(--main-color);
   }
+
+  .btn-detail h6{
+  font-size: 13px;
+  display: inline;
+  visibility: visible;
+}
+
+.btn-detail .icon{
+  margin-right:5px;;
+}
+
+.btn-delete h6{
+  font-size: 13px;
+  display: inline;
+  visibility: visible;
+}
+
+.btn-delete .icon{
+  margin-right:5px;;
+}
 }
 </style>
