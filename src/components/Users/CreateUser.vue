@@ -46,13 +46,9 @@
       </p>
       <div class="form-group">
         <p>Rol:</p>
-        <input
-          type="text"
-          name="u_rol"
-          placeholder="Rol"
-          class="form-control"
-          v-model="nuevoUsuario.rol"
-        />
+        <select name="rol" id="rol" v-model="nuevoUsuario.rol">
+          <option value="Admin" selected>Administrador</option>
+        </select>
       </div>
       <br />
       <button type="submit" class="boton">Registrar</button>
@@ -82,7 +78,7 @@ export default {
         username: "",
         password: "",
         email: "",
-        rol: "",
+        role: "Admin",
       },
     };
   },
@@ -90,32 +86,37 @@ export default {
     renderUsersTable: function () {
       this.$emit("loadcomponent", "UsersTable");
     },
+
     createUser: async function () {
       await this.verifyToken();
-
+      console.log("Hola después del verify");
       if (
         localStorage.getItem("tokenRefresh") === null ||
         localStorage.getItem("tokenAccess") === null
       ) {
         return;
       }
+      console.log("Hola después del empty token");
 
       let url = "https://move-and-flow-be.herokuapp.com";
       axios
-        .post(url + "/users/", this.nuevoUsuario, {
+        .post(url + "/register/", this.nuevoUsuario, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
           },
         })
         .then((response) => {
+          console.log("Hola dentro del then");
           alert(response.data);
           console.log(response.data);
         })
         .catch((error) => {
+          console.log("Hola dentro del catch");
           console.log(error.response);
 
           if (error.response.status == "401") {
-            this.accessDenied();
+            /*this.accessDenied();*/
+            alert(error);
           } else if (error.response.status == "400") {
             alert("BAD REQUEST [400]");
           } else {
@@ -152,6 +153,7 @@ export default {
       this.$router.push({ name: "Login" });
     },
   },
+
 };
 </script>
 
