@@ -3,7 +3,7 @@
     <div class="title-container">
       <div class="title"><h1>Usuarios</h1></div>
     </div>
-    <div class="filtroPorCondicion">
+    <div class="filtros">
       <h4>Filtrar</h4>
       <select v-model="filtroPorCondicion">
         <option value="">Todas</option>
@@ -27,11 +27,11 @@
       </thead>
       <tbody>
         <tr v-for="user in usersList" :key="user.id">
-          <td>{{ user.id }}</td>
-          <td>{{ user.username }}</td>
-          <td>{{ user.name }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.role }}</td>
+          <td data-label="ID:">{{ user.id }}</td>
+          <td data-label="Usuario:">{{ user.username }}</td>
+          <td data-label="Nombre:">{{ user.name }}</td>
+          <td data-label="Email:">{{ user.email }}</td>
+          <td data-label="Rol:">{{ user.role }}</td>
           <td>
             <button class="btn-detail" v-on:click.self.prevent="renderUpdate">
               <fa icon="edit" v-on:click="renderUpdate"/><h6 v-on:click="renderUpdate"> Editar</h6>
@@ -152,10 +152,9 @@ export default {
 .general-container {
   padding: 10px;
   margin-top: 20px;
-  margin-left: 100px;
-  margin-right: 100px;
   background-color: var(--white);
   border-radius: 20px;
+  width: 100%;
 }
 .title-container {
   display: flex;
@@ -185,7 +184,7 @@ export default {
   color: var(--main-color);
 }
 
-.filtroPorCondicion {
+.filtros {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -194,12 +193,12 @@ export default {
   margin-top: 20px;
 }
 
-.filtroPorCondicion h4 {
+.filtros h4 {
   padding-right: 5px;
   color: var(--main-color);
 }
 
-.filtroPorCondicion select {
+.filtros select {
   border-radius: 7px;
   cursor: pointer;
   border: #5046af solid 2px;
@@ -207,7 +206,7 @@ export default {
   justify-content: space-between;
 }
 
-.filtroPorCondicion select option:hover {
+.filtros select option:hover {
   background-color: #6ee1ff !important;
 }
 
@@ -308,12 +307,18 @@ td {
   padding: 6px;
 }
 
-@media only screen and (max-width: 950px) {
-   .general-container {
+.icon{
+  display: inline;
+  font-size: 14px;
+  text-align: center;
+  flex-direction: row;
+  margin-right: 5px;
+}
+
+@media only screen and (max-width: 1020px) {
+  .general-container {
     padding: 10px;
     margin-top: 20px;
-    margin-left: 10px;
-    margin-right: 10px;
     background-color: var(--white);
     border-radius: 20px;
   }
@@ -349,51 +354,103 @@ td {
     transition: 0.3s;
   }
 
-  .table-bikes thead {
+  .table-users thead {
     background-color: var(--main-color);
     color: white;
     text-align: center;
   }
+
+  .btn-delete h6{
+  display: none;
+  margin-right: 0;
 }
 
-@media only screen and (max-width: 700px) {
+.btn-delete .icon{
+  margin-right:0;;
+}
+
+ .btn-detail h6{
+  display: none;
+  margin-right: 0;
+}
+
+.btn-detail .icon{
+  margin-right:0;;
+}
+}
+
+@media only screen and (max-width: 820px) {
   .general-container {
     padding: 10px;
     margin-top: 20px;
     background-color: var(--white);
     border-radius: 20px;
-    width: 97%;
   }
 
-  .filtroPorCondicion {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding-bottom: 30px;
-  margin-top: 20px;
+  .filtros {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding-bottom: 30px;
+    margin-top: 20px;
+  }
+
+  .btn-register {
+    margin-top: 15px;
+  }
+
+  .table-users thead {
+    display: none;
+  }
+
+  .table-users tbody,
+  .table-users tr,
+  .table-users td {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--main-color);
+  }
+
+  .table-users tr {
+    margin-bottom: 15px;
+  }
+
+  .table-users tbody tr td {
+    text-align: right;
+    padding-left: 20%;
+    position: relative;
+  }
+
+  .table-users td:before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 50%;
+    padding-left: 15px;
+    font-weight: 700;
+    text-align: left;
+    color: var(--main-color);
+  }
+
+  .btn-detail h6{
+  font-size: 13px;
+  display: inline;
+  visibility: visible;
 }
 
-.btn-register{
-  margin-top:15px;
-}
-
-.btn-detail{
-  width:40px;
-  height: 40px;
-}
-
-.btn-detail h6{
-  visibility: hidden;
-}
-
-.btn-delete{
-  width:40px;
-  height: 40px;
+.btn-detail .icon{
+  margin-right:5px;;
 }
 
 .btn-delete h6{
-  visibility: hidden;
+  font-size: 13px;
+  display: inline;
+  visibility: visible;
+}
+
+.btn-delete .icon{
+  margin-right:5px;;
 }
 }
 </style>
