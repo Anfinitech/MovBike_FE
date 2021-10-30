@@ -274,7 +274,7 @@ form {
   color:#f2fcff;
 }
 /*--------------Media-------------*/
-@media only screen and (max-width: 950px) {
+@media only screen and (max-width: 1050px) {
   .caja {
     font-family: sans-serif;
     font-weight: 600;
