@@ -2,7 +2,7 @@
   <div class="general-container">
     <div class="form-container">
     <div class="title"><h1>Registrar bicicleta</h1></div>
-    <form name="form" id="form" v-on:submit.prevent="createBike()">
+    <form name="form" id="form" v-on:submit.prevent="createBikes">
       <h3 class="title">Nueva Bicicleta</h3>
       <br />
     <div class="form-group">
@@ -11,8 +11,8 @@
         type="radio"
         name="condicion"
         id="buena"
-        value="true"
-        v-model="condicion"
+        value= true
+        v-model="newBike.b_condicion"
       />
       <label class="rad" for="buena">En buen estado</label>
       <br />
@@ -20,21 +20,28 @@
         type="radio"
         name="condicion"
         id="averiada"
-        value="false"
-        v-model="condicion"
+        value= false
+        v-model="newBike.b_condicion"
       />
       <label class="rad" for="averiada">Averiada</label>
+      <br>
+      <span>
+        {{newBike.b_condicion}}
+      </span>
     </div>
       <br />
     <div class="form-group">
       <p>Ubicación:</p>
       
-        <select v-model="bikeCreation.creation_data.current_station">
+        <select v-model="newBike.b_en_estacion">
           <option disabled selected>Seleccione una estacion</option>
-          <option v-for="station in stations" :key="station.e_id" :value="station.e_id">{{ station.e_nombre }}</option>        
+          <option v-for="station in stations" :key="station.e_id" v-bind:value="station.e_id">{{ station.e_nombre }}</option>        
         </select>
-    </div>
         
+    </div>
+    <span>
+      {{newBike.b_en_estacion}}
+    </span>
       <br />
       <div class="botones">
       <button class="boton_register" type="submit"><fa icon="clipboard" class="icon"/>Registrar</button>
@@ -51,90 +58,73 @@
   </div>
 </template>
 
+
 <script>
-import axios      from 'axios';
+import axios from 'axios';
 
 export default {
+
   name: "CreateBike",
-  data: function() {
+
+  data: function () {
     return {
-      bikeCreation: {
-        b_id : 0,
-        creation_data: {
-          condicion: 0,
-          current_station : 0,
-        }
+      newBike: {
+        b_condicion: true,
+        b_en_estacion: 0
       },
-      stations: [],
+      stations:{}
     }
   },
 
   methods: {
-    getAllStations: async function () {
-      await this.verifyToken();
 
-      if (
-        localStorage.getItem("tokenRefresh") === null ||
-        localStorage.getItem("tokenAccess") === null
-      ) {
-        return;
-      }
-
-      axios
-        .get("https://move-and-flow-be.herokuapp.com/estaciones/", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
-          },
-        })
-        .then((response) => {
-          this.stations = response.data;
-          this.loaded = true;
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.log(error.response);
-          if (error.response.status == "401") {
-            this.accessDenied();
-          }
-        });
-    },
-    createBike: async function () {
+    createBikes: async function () {
       let url = "https://move-and-flow-be.herokuapp.com";
       axios
-        .post(url + "/bicicletas/", this.nuevaBicicleta, {
+        .post(url + "/bicicletas/", this.newBike, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
           },
         })
         .then((response) => {
           alert(response.data);
-          console.log(response.data);
           /* this.loaded = true; */
         })
         .catch((error) => {
+          console.log(this.newBike)
           console.log(error.response);
           if (error.response.status == "401") {
             /* this.accessDenied(); */
           }
         });
     },
+
     renderBikesTable: function () {
       this.$emit("loadcomponent", "BikesTable");
     },
-    created: async function() {
-      this.getAllStations();
-    },
-    verifyToken: async function () {
-      if (
-        localStorage.getItem("tokenRefresh") === null ||
-        localStorage.getItem("tokenAccess") === null
-      ) {
-        this.accessDenied();
-        return;
-      }
-    },
   },
+
+  created: function () {
+    axios
+      .get("https://move-and-flow-be.herokuapp.com/estaciones/", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
+        },
+      })
+      .then((response) => {
+        /*console.log(response.data) */
+        this.listStations = response.data;
+        this.stations = response.data;
+        console.log(this.stations)
+
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+  },
+  
 };
+
 </script>
 
 <style scoped>
