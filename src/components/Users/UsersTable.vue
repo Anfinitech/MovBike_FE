@@ -4,12 +4,6 @@
       <div class="title"><h1>Usuarios</h1></div>
     </div>
     <div class="filtros">
-      <h4>Filtrar</h4>
-      <select v-model="filtroPorCondicion">
-        <option value="">Todas</option>
-        <option value="En buen estado">En buen estado</option>
-        <option value="Averiada">Averiada</option>
-      </select>
       <button class="btn-register" v-on:click.self.prevent="renderCreate">
         Registrar Usuario
       </button>

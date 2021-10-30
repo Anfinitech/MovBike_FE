@@ -46,13 +46,9 @@
       </p>
       <div class="form-group">
         <p class="sub-title">Rol: </p>
-        <input
-          type="text"
-          name="u_rol"
-          placeholder="Rol"
-          class="form-control"
-          v-model="nuevoUsuario.rol"
-        />
+        <select name="rol" id="rol" v-model="nuevoUsuario.role">
+          <option value="Admin" selected>Administrador</option>
+        </select>
       </div>
 
       <div class="botones">
@@ -232,6 +228,11 @@ form p{
 
 .form-group .sub-title {
   color: #5046af;
+}
+
+.form-group select{
+  border: #5046af solid 2px;
+  border-radius: 10px;
 }
 
 .form-group input {
