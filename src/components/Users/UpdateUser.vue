@@ -1,89 +1,95 @@
 <template>
-  <div class="general-container">
+  <div class="general-container" v-if="loaded">
     <div class="form-container">
-      <div class="title"> <h1>Actualizar Usuario</h1></div>
-    <form
-      name="form"
-      id="form"
-      method="post"
-      enctype="multipart/form-data"
-      v-on:submit.prevent="actualizar()"
-    >
-      <div class="form-group">
-       <p> Alias:</p>
-        <input
-          type="text"
-          name="u_alias"
-          placeholder="Username"
-          class="form-control"
-          v-model="nuevoUsuario.username"
-        />
-      </div>
-      <div class="form-group">
-      <p>Nueva Contraseña:</p>
-         <input
-          type="password"
-          name="u_password"
-          placeholder="Password"
-          class="form-control"
-          v-model="nuevoUsuario.password"
-        />
-      </div>
-      <div class="form-group">
-        <p>Nombre: </p>
-        <input
-          type="text"
-          name="u_nombre"
-          placeholder="Nombre"
-          class="form-control"
-          v-model="nuevoUsuario.name"
-        />
-      </div>
-      <div class="form-group">
-          <p>Correo Electrónico: </p>
+      <div class="title"><h1>Actualizar Usuario</h1></div>
+      <form
+        name="form"
+        id="form"
+        method="post"
+        enctype="multipart/form-data"
+        v-on:submit.prevent="updateUserf">      >
+        <div class="form-group">
+          <p>Alias:</p>
+          <input
+            type="text"
+            name="u_alias"
+            v-bind:placeholder="updateUser.username"
+            class="form-control"
+            v-model="updateUser.username"
+          />
+        </div>
+        <div class="form-group">
+          <p>Nueva Contraseña:</p>
+          <input
+            type="password"
+            name="u_password"
+            placeholder="Password"
+            class="form-control"
+            v-model="updateUser.password"
+          />
+        </div>
+        <div class="form-group">
+          <p>Nombre:</p>
+          <input
+            type="text"
+            name="u_nombre"
+            placeholder="Nombre"
+            class="form-control"
+            v-model="updateUser.name"
+          />
+        </div>
+        <div class="form-group">
+          <p>Correo Electrónico:</p>
           <input
             type="email"
             name="u_email"
-            placeholder="Email"
             class="form-control"
-            v-model="nuevoUsuario.email"
-        />
-      </div>
-      <div class="form-group">
-        <p>Rol: </p>
-        <select name="rol" id="rol" v-model="nuevoUsuario.rol">
-          <option value="Admin" selected>Administrador</option>
-        </select>
-      </div>
-      <br />
-      <div class="botones">
-        <button class="boton_back" v-on:click.self.prevent="renderUsersTable"><fa icon="undo" class="back"/>Volver</button>
-        <button class="boton_up"><fa icon="edit" class="edit"/>Actualizar</button>
-      </div>
-    </form>
-</div>
-<div class="image-container">
-    <p class="caja">
-      Haciendo seguimiento continuo a cada nodo para mejorar nuestro servicio y
-      la experiencia de usuario.
-    </p>
+            v-model="updateUser.email"
+          />
+        </div>
+        <div class="form-group">
+          <p>Rol:</p>
+          <select name="rol" id="rol" v-model="updateUser.rol">
+            <option value="Admin" selected>Administrador</option>
+          </select>
+        </div>
+        <br />
+        <div class="botones">
+          <button class="boton_back" v-on:click.self.prevent="renderUsersTable">
+            <fa icon="undo" class="back" />Volver
+          </button>
+          <button class="boton_up" type="submit">
+            <fa icon="edit" class="edit" />Actualizar
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="image-container">
+      <p class="caja">
+        Haciendo seguimiento continuo a cada nodo para mejorar nuestro servicio
+        y la experiencia de usuario.
+      </p>
     </div>
   </div>
 </template>
 
 
 <script>
+import axios from "axios"
+
 export default {
-  name: "DeleteUser",
+  name: "UpdateUser",
   data() {
     return {
-      nuevoUsuario: {
+      updateUser: {
+        id: "",
         name: "",
         username: "",
         password: "",
         email: "",
-        rol: "Admin"
+        rol: "Admin",
       },
+      loaded: false
     };
   },
 
@@ -91,22 +97,109 @@ export default {
     renderUsersTable: function () {
       this.$emit("loadcomponent", "UsersTable");
     },
+
+    getData: async function () {
+      await this.verifyToken();
+
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        return;
+      }
+
+      let id = localStorage.getItem("idUserToUpdate");
+      console.log(id);
+      let url = "https://move-and-flow-be.herokuapp.com";
+
+      axios
+        .get(url + "/users/" + id + "/", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
+          },
+        })
+        .then((response) => {
+          console.log("Inside Users");
+          this.updateUser = response.data;
+          this.loaded=true;
+          
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+
+    },
+
+    updateUserf: function () {
+      let url = "https://move-and-flow-be.herokuapp.com";
+      let token = localStorage.getItem("token");
+
+      axios
+        .patch(
+          url + "/users/" + this.updateUser.id + "/",
+          this.updateUser,
+          {
+            headers: {
+            Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
+          },
+          }
+        )
+        .then((result) => {
+          alert('Actualización Exitosa')
+          console.log(result.data);
+          this.updateUser = result.data;
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+    },
+
+    verifyToken: async function () {
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        this.accessDenied();
+        return;
+      }
+
+      return axios
+        .post(
+          "https://move-and-flow-be.herokuapp.com/refresh/",
+          { refresh: localStorage.getItem("tokenRefresh") },
+          { headers: {} }
+        )
+        .then((result) => {
+          localStorage.setItem("tokenAccess", result.data.access);
+        })
+        .catch((error) => {
+          this.accessDenied();
+        });
+    },
+    accessDenied: function () {
+      localStorage.clear();
+      alert("Acceso Denegado. Vuelve a iniciar sesión.");
+      this.$router.push({ name: "Login" });
+    },
+  },
+
+  created: async function () {
+    await this.getData();
   },
 };
 </script>
 
 <style scoped>
-
 .general-container {
-    height:45em;
-    width: 100%;
-    border-radius: 20px;
-    display: flex;
-    justify-content: space-between;
-    overflow: hidden;
-    background-image: url('../../assets/stations/UpdateBike2.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
+  height: 45em;
+  width: 100%;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  background-image: url("../../assets/stations/UpdateBike2.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .title {
@@ -117,25 +210,25 @@ export default {
   margin-top: 20px;
 }
 .form-container {
-    color: #5046af;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 1.5rem 1.5rem;
-    width: 350px;    
-    background-color: rgba(255, 255, 255, 0.822);
-    border-radius: 20px;
-    backdrop-filter: blur(20px);
-    margin: 20px;
-    align-items: center;
-    margin-left: 5%;
-    box-shadow: 0 0 10px rgb(103, 0, 124);
+  color: #5046af;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem 1.5rem;
+  width: 350px;
+  background-color: rgba(255, 255, 255, 0.822);
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  margin: 20px;
+  align-items: center;
+  margin-left: 5%;
+  box-shadow: 0 0 10px rgb(103, 0, 124);
 }
 .image-container {
-    width: 55%;
-    box-sizing: border-box;
-    align-items: center;
-    background-color: transparent;
+  width: 55%;
+  box-sizing: border-box;
+  align-items: center;
+  background-color: transparent;
 }
 
 /*------------Formulario------------*/
@@ -147,26 +240,24 @@ form {
   text-align: left;
   font-weight: 600;
 }
-.form-group{
+.form-group {
   margin-bottom: 15px;
 }
 
-.form-group label{
-  margin-left:10px;
+.form-group label {
+  margin-left: 10px;
   color: #0081cf;
 }
 
-.form-group input{
-  margin-left: 10px;  
+.form-group input {
+  margin-left: 10px;
   margin-bottom: 10px;
 }
 
-.form-group select{
+.form-group select {
   border: #5046af solid 2px;
   border-radius: 10px;
 }
-
-
 
 .form-control {
   width: 200px;
@@ -175,7 +266,7 @@ form {
   font-size: 15px;
 }
 
-.botones{
+.botones {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -200,7 +291,7 @@ form {
   position: relative;
   margin: 3px 0px 5px;
   text-decoration: none;
-  background-color: #00C2A8;
+  background-color: #00c2a8;
   border: none;
   border-radius: 7px;
   font-weight: 600;
@@ -208,21 +299,21 @@ form {
   cursor: pointer;
 }
 
-.boton_back:hover{
+.boton_back:hover {
   background-color: var(--white);
-  color: #00C2A8;
+  color: #00c2a8;
 }
 
-.boton_up:hover{
+.boton_up:hover {
   background-color: var(--white);
   color: #0081cf;
 }
 
-.back{
+.back {
   margin-right: 5px;
 }
 
-.edit{
+.edit {
   margin-right: 5px;
 }
 /*------------Mensaje--------------*/
@@ -235,36 +326,36 @@ form {
   margin-left: 10%;
   margin-top: 60px;
   overflow: hidden;
-  color:#f2fcff;
+  color: #f2fcff;
 }
 
 @media only screen and (max-width: 950px) {
-.caja {
-  font-family: sans-serif;
-  font-weight: 600;
-  font-size: 20px;
-  font-style: italic;
-  width: 200px;
-  margin-top: 60px;
-  overflow: hidden;
-  color:#f2fcff;
-}
+  .caja {
+    font-family: sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    font-style: italic;
+    width: 200px;
+    margin-top: 60px;
+    overflow: hidden;
+    color: #f2fcff;
+  }
 
-.botones{
-  flex-direction: column;
-}
+  .botones {
+    flex-direction: column;
+  }
 }
 
 @media only screen and (max-width: 650px) {
-.image-container {
-  display: none;
-}
+  .image-container {
+    display: none;
+  }
 
-.form-container{
-  width:100%;
-}
-.botones{
-  flex-direction: column;
-}
+  .form-container {
+    width: 100%;
+  }
+  .botones {
+    flex-direction: column;
+  }
 }
 </style>
