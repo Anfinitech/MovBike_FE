@@ -64,7 +64,7 @@
               class="back"
             />Volver
           </button>
-          <button class="boton_up">
+          <button class="boton_up" type="submit">
             <fa
               icon="edit"
               class="edit"
@@ -132,7 +132,7 @@ export default {
     console.log(id)
     let url = "https://open-move-and-flow-be.herokuapp.com";
     axios
-      .get(url + "/bicicletas/" + id)
+      .get(url + "/bicicletas/" + id + "/")
       .then((response) => {
         console.log(response.data);
         this.bicicleta = response.data;

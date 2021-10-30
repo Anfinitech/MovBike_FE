@@ -40,6 +40,7 @@ export default {
         })
         .then((response) => {
           console.log(response);
+          alert(response.data)
           this.$emit("loadcomponent", "BikesTable");
         })
         .catch((error) => {
@@ -52,7 +53,7 @@ export default {
     let id = localStorage.getItem("idBikeToDelete")
     let url = "https://open-move-and-flow-be.herokuapp.com";
     axios
-      .get(url + "/bicicletas/" + id)
+      .get(url + "/bicicletas/" + id + "/")
       .then((response) => {
         console.log(response.data);
         this.bicicleta = response.data;
