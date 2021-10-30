@@ -76,7 +76,7 @@ export default {
   name: "UpdateUser",
   data() {
     return {
-      updateUser: {
+      nuevoUsuario: {
         id: "",
         name: "",
         username: "",
@@ -115,7 +115,7 @@ export default {
         })
         .then((response) => {
           console.log("Inside Users");
-          this.updateUser = response.data;
+          this.nuevoUsuario = response.data;
           this.loaded=true;
           
         })
@@ -125,14 +125,14 @@ export default {
 
     },
 
-    updateUserf: function () {
+    nuevoUsuariof: function () {
       let url = "https://move-and-flow-be.herokuapp.com";
       let token = localStorage.getItem("token");
 
       axios
         .patch(
-          url + "/users/" + this.updateUser.id + "/",
-          this.updateUser,
+          url + "/users/" + this.nuevoUsuario.id + "/",
+          this.nuevoUsuario,
           {
             headers: {
             Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
@@ -142,7 +142,7 @@ export default {
         .then((result) => {
           alert('Actualización Exitosa')
           console.log(result.data);
-          this.updateUser = result.data;
+          this.nuevoUsuario = result.data;
         })
         .catch((error) => {
           console.log(error.response);
