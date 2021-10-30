@@ -1,6 +1,7 @@
 <template>
   <div class="general-container">
-    <h1>Registrar bicicleta</h1>
+    <div class="form-container">
+    <div class="title"><h1>Registrar bicicleta</h1></div>
     <form name="form" id="form" v-on:submit.prevent="createBike()">
       <h3 class="title">Nueva Bicicleta</h3>
       <br />
@@ -35,16 +36,18 @@
     </div>
         
       <br />
-      <button class="boton" type="submit">Registrar</button>
-      <button class="boton" v-on:click.self.prevent="renderBikesTable">Volver</button>
-      
+      <div class="botones">
+      <button class="boton_register" type="submit"><fa icon="clipboard" class="icon"/>Registrar</button>
+      <button class="boton_back" v-on:click.self.prevent="renderBikesTable"><fa icon="undo" class="icon"/>Volver</button>
+      </div>
     </form>
+    </div>
+
+    <div class="info-container">
     <p class="caja">
       Una nueva bici a tu servicio.
     </p>
-    <v-container fluid>
-      <img src="@/assets/stations/images.jpg" alt="" />
-    </v-container>
+    </div>
   </div>
 </template>
 
@@ -135,15 +138,74 @@ export default {
 </script>
 
 <style scoped>
+
+.general-container {
+    height:35em;
+    width: 100%;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    background-image: url('../../assets/bikes/RegisterBike.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.title {
+  display: flex;
+  justify-content: space-around;
+  position: initial;
+  padding-bottom: 30px;
+  margin-top: 20px;
+}
+.form-container {
+    color: #5046af;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0rem 1.5rem;
+    width: 350px;    
+    background-color: rgba(255, 255, 255, 0.24);
+    border-radius: 20px;
+    backdrop-filter: blur(30px);
+    margin: 20px;
+    align-items: center;
+    margin-left: 5%;
+    box-shadow: 0 0 10px rgb(100, 100, 100);
+}
+.info-container {
+    width: 55%;
+    box-sizing: border-box;
+    align-items: center;
+    background-color: transparent;
+    
+}
 /*------------Formulario------------*/
 form {
-  width: 370px;
-  padding: 30px;
+  padding-left: 30px;
   font-size: 18px;
-  float: right;
   margin-right: 10%;
-  border: 2px double purple;
-  margin-top: 3%;
+  border: none;
+  text-align: left;
+  font-weight: 600;
+}
+.form-group{
+  margin-bottom: 15px;
+}
+
+.form-group label{
+  margin-left:10px;
+  color: #0081cf;
+}
+
+.form-group input{
+  margin-left: 20px;  
+  margin-bottom: 10px;
+}
+
+.form-group select{
+  border: #5046af solid 2px;
+  border-radius: 10px;
 }
 
 .form-control {
@@ -152,23 +214,114 @@ form {
 .rad {
   font-size: 15px;
 }
-.boton {
-  width: 80px;
-  font-size: 12px;
-  height: 22px;
+
+.botones{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.boton_register {
+  padding: 10px 10px;
+  position: relative;
+  margin: 3px 0px 5px;
+  text-decoration: none;
+  background-color: #0081cf;
+  border: none;
+  border-radius: 7px;
+  font-weight: 600;
+  color: var(--white);
+  cursor: pointer;
+  display: inline;
+}
+
+.boton_back {
+  padding: 10px 24px;
+  position: relative;
+  margin: 3px 0px 5px;
+  text-decoration: none;
+  background-color: #00C2A8;
+  border: none;
+  border-radius: 7px;
+  font-weight: 600;
+  color: var(--white);
+  cursor: pointer;
+}
+
+.boton_back:hover{
+  background-color: var(--white);
+  color: #00C2A8;
+}
+
+.boton_register:hover{
+  background-color: var(--white);
+  color: #0081cf;
+}
+
+.icon{
+  margin-right: 5px;
 }
 /*------------Mensaje--------------*/
 .caja {
   font-family: sans-serif;
-  font-size: 20px;
-  width: 500px;
+  font-weight: 600;
+  font-size: 40px;
+  font-style: italic;
+  width: 400px;
   margin-left: 10%;
-  margin-top: 30px;
+  margin-top: 80px;
   overflow: hidden;
+  color:#f2fcff;
 }
-/*--------------Imagen-------------*/
-v-container {
-  margin-left: 10%;
-  
+/*--------------Media-------------*/
+@media only screen and (max-width: 1050px) {
+  .caja {
+    font-family: sans-serif;
+    font-weight: 600;
+    font-size: 40px;
+    font-style: italic;
+    width: 200px;
+    margin-top: 100px;
+    overflow: hidden;
+    color: #f2fcff;
+  }
+
+  .form-container {
+    width: 450px;
+  }
+
+  .general-title {
+    padding-bottom: 5px;
+  }
+
+  .botones {
+    flex-direction: column;
+    margin-top: 0;
+  }
+
+  .form-group {
+    margin-bottom: 0;
+  }
+
+  .title{
+    padding-bottom: 5px ;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .info-container {
+    display: none;
+  }
+
+  .form-container {
+    width: 100%;
+  }
+  .botones {
+    flex-direction: column;
+  }
+
+  .title{
+    padding-bottom: 5px ;
+  }
 }
 </style>
