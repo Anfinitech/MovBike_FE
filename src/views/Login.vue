@@ -31,7 +31,7 @@
               v-model="user.password"
             />
             <button class="btn" type="submit">Iniciar sesión</button>
-            <p id="forgot"><span class="span">Olvidaste la contraseña</span></p>
+            <p v-on:click="forgetPassword" id="forgot"><span class="span">Olvidaste la contraseña</span></p>
           </form>
         </div>
       </div>
@@ -75,6 +75,11 @@ export default {
             alert("ERROR 401: Credenciales Incorrectas.");
         });
     },
+
+    forgetPassword: function () {
+      alert("Comuniquese con el administrador del sistema, por favor.")
+
+    }
   },
 };
 </script>
