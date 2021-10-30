@@ -44,6 +44,16 @@
           v-model="nuevoUsuario.email"
         />
       </p>
+      <div class="form-group">
+        <p>Rol: </p>
+        <input
+          type="text"
+          name="u_rol"
+          placeholder="Rol"
+          class="form-control"
+          v-model="nuevoUsuario.rol"
+        />
+      </div>
       <br />
       <button type="submit" class="boton">Registrar</button>
       <button class="boton" v-on:click.self.prevent="renderUsersTable">
@@ -72,6 +82,7 @@ export default {
         username: "",
         password: "",
         email: "",
+        rol: "",
       },
     };
   },

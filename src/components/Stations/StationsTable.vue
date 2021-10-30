@@ -10,7 +10,9 @@
         <option value="Abierta">Abierta</option>
         <option value="Cerrada">Cerrada</option>
       </select>
-      <button class="btn-register" v-on:click.self.prevent="renderCreate">Registrar Estación</button>
+      <button class="btn-register" v-on:click.self.prevent="renderCreate">
+        Registrar Estación
+      </button>
     </div>
     <table class="table-stations">
       <thead>
@@ -40,11 +42,17 @@
             }}
           </td>
           <td data-label="Bicis. Disponibles:">{{ station.e_bicicletasD }}</td>
-          <td data-label="Bicis. No disponibles:">{{ station.e_bicicletasND }}</td>
+          <td data-label="Bicis. No disponibles:">
+            {{ station.e_bicicletasND }}
+          </td>
           <td data-label="Bicis. Totales:">{{ station.e_bicicletasT }}</td>
-          <td><button class="btn-detail" v-on:click.self.prevent="renderUpdate">Editar</button><button class="btn-detail" v-on:click.self.prevent="renderDelete">
+          <td>
+            <button class="btn-detail" v-on:click.self.prevent="renderUpdate(station.e_id)">
+              Editar</button
+            ><button class="btn-detail" v-on:click.self.prevent="renderDelete(station.e_id)">
               Eliminar
-            </button></td>
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -106,10 +114,12 @@ export default {
     renderCreate: function () {
       this.$emit("loadcomponent", "CreateStation");
     },
-    renderUpdate: function () {
+    renderUpdate: function (id) {
+      localStorage.setItem("StationIdToUpdate", id);
       this.$emit("loadcomponent", "UpdateStation");
     },
-    renderDelete: function () {
+    renderDelete: function (id) {
+      localStorage.setItem("StationIdToDelete", id);
       this.$emit("loadcomponent", "DeleteStation");
     },
 
@@ -298,7 +308,7 @@ td {
 }
 
 @media only screen and (max-width: 1020px) {
-   .general-container {
+  .general-container {
     padding: 10px;
     margin-top: 20px;
     margin-left: 10px;
@@ -355,53 +365,50 @@ td {
     border-radius: 20px;
   }
 
-  .filtros{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding-bottom: 30px;
-  margin-top: 20px;
+  .filtros {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding-bottom: 30px;
+    margin-top: 20px;
+  }
+
+  .btn-register {
+    margin-top: 15px;
+  }
+
+  .table-stations thead {
+    display: none;
+  }
+
+  .table-stations tbody,
+  .table-stations tr,
+  .table-stations td {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--main-color);
+  }
+
+  .table-stations tr {
+    margin-bottom: 15px;
+  }
+
+  .table-stations tbody tr td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  .table-stations td:before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 50%;
+    padding-left: 15px;
+    font-weight: 700;
+    text-align: left;
+    color: var(--main-color);
+  }
 }
-
-.btn-register{
-  margin-top:15px;
-}
-
-.table-stations thead{
-  display: none; 
-}
-
-
-.table-stations tbody,
-.table-stations tr,
-.table-stations td{
-  display: block;
-  width: 100%;
-  border:1px solid var(--main-color) ;
-}
-
-.table-stations tr{
-  margin-bottom: 15px;
-}
-
-.table-stations tbody tr td{
-  text-align: right;
-  padding-left:50%;
-  position: relative;
-}
-
-.table-stations td:before{
-  content:attr(data-label);
-  position: absolute;
-  left: 0;
-  width: 50%;
-  padding-left: 15px;
-  font-weight: 700;
-  text-align: left;
-  color: var(--main-color);
-}
-
-}
-
 </style>
