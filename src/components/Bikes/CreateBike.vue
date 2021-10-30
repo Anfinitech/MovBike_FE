@@ -4,7 +4,6 @@
     <div class="title"><h1>Registrar bicicleta</h1></div>
     <form name="form" id="form" v-on:submit.prevent="createBikes">
       <h3 class="title">Nueva Bicicleta</h3>
-      <br />
     <div class="form-group">
       <p>Condición:</p>
       <input
@@ -25,23 +24,15 @@
       />
       <label class="rad" for="averiada">Averiada</label>
       <br>
-      <span>
-        {{newBike.b_condicion}}
-      </span>
     </div>
-      <br />
+
     <div class="form-group">
       <p>Ubicación:</p>
-      
         <select v-model="newBike.b_en_estacion">
           <option disabled selected>Seleccione una estacion</option>
           <option v-for="station in stations" :key="station.e_id" v-bind:value="station.e_id">{{ station.e_nombre }}</option>        
         </select>
-        
     </div>
-    <span>
-      {{newBike.b_en_estacion}}
-    </span>
       <br />
       <div class="botones">
       <button class="boton_register" type="submit"><fa icon="clipboard" class="icon"/>Registrar</button>
