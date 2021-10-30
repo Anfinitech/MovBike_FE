@@ -1,17 +1,13 @@
 <template>
-  <div class="general-container">
+  <div class="general-container" v-if="loaded">
     <div class="form-container">
       <div class="title">
         <h1>Actualizar bicicleta</h1>
       </div>
-      <form
-        name="form"
-        id="form"
-        v-on:submit.prevent="updateBikes"
-      >
+      <form name="form" id="form" v-on:submit.prevent="updateBikes">
         <br />
         <div class="form-group">
-          <p>ID: {{id}} </p>
+          <p>ID: {{ id }}</p>
         </div>
         <div class="form-group">
           <p>Condición:</p>
@@ -22,10 +18,7 @@
             value="true"
             v-model="updateBike.b_condicion"
           />
-          <label
-            class="rad"
-            for="buena"
-          >En buen estado</label>
+          <label class="rad" for="buena">En buen estado</label>
           <br />
           <input
             type="radio"
@@ -34,10 +27,7 @@
             value="false"
             v-model="updateBike.b_condicion"
           />
-          <label
-            class="rad"
-            for="averiada"
-          >Averiada</label>
+          <label class="rad" for="averiada">Averiada</label>
         </div>
         <div class="form-group">
           <p>Ubicación:</p>
@@ -56,29 +46,22 @@
         <br />
         <div class="botones">
           <button class="boton_up" type="submit">
-            <fa
-              icon="edit"
-              class="edit"
-            />Actualizar
+            <fa icon="edit" class="edit" />Actualizar
           </button>
           <button
             class="boton_back"
             v-on:click.self.prevent="renderStationsTable"
           >
-            <fa
-              icon="undo"
-              class="back"
-            />Volver
+            <fa icon="undo" class="back" />Volver
           </button>
-          
         </div>
       </form>
     </div>
 
     <div class="imagen-container">
       <p class="caja">
-        Haciendo seguimiento continuo a cada nodo para mejorar nuestro servicio y
-        la experiencia de usuario.
+        Haciendo seguimiento continuo a cada nodo para mejorar nuestro servicio
+        y la experiencia de usuario.
       </p>
     </div>
   </div>
@@ -86,39 +69,101 @@
 
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 export default {
   name: "UpdateBike",
   data: function () {
     return {
       updateBike: {
         b_condicion: true,
-        b_en_estacion: 0
+        b_en_estacion: 0,
       },
       stations: {},
-      id: localStorage.getItem("idBikeToUpdate")
-    }
+      id: localStorage.getItem("idBikeToUpdate"),
+      loaded: false,
+    };
   },
-
 
   methods: {
     renderStationsTable: function () {
       this.$emit("loadcomponent", "BikesTable");
     },
 
+    getData: async function () {
+      
+
+      await this.verifyToken();
+
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        return;
+      }
+
+      let id = localStorage.getItem("idBikeToUpdate");
+      console.log(id);
+      let url = "https://move-and-flow-be.herokuapp.com";
+
+      axios
+        .get(url + "/bicicletas/" + id + "/", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
+          },
+        })
+        .then((response) => {
+          console.log('Inside bikes');
+          this.bicicleta = response.data;
+          this.updateBike.b_condicion =
+            this.bicicleta.condicion === "En buen estado";
+          this.updateBike.b_en_estacion = this.bicicleta.estación_id;
+          this.idBike = this.bicicleta.id;
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+
+      axios
+        .get("https://move-and-flow-be.herokuapp.com/estaciones/", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
+          },
+        })
+        .then((response) => {
+          this.stations = response.data;
+          console.log('Inside stations');
+          this.loaded = true;
+          
+          console.log(this.stations);
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+    },
+
     updateBikes: function () {
       let url = "https://open-move-and-flow-be.herokuapp.com";
-      let token = localStorage.getItem("token")
+      let token = localStorage.getItem("token");
+
       axios
-        .patch(url + "/bicicletas/" + this.bicicleta.id + "/", this.updateBike, {
-          headers: {
-            Authorization: `bearer ${token}`
+        .patch(
+          url + "/bicicletas/" + this.bicicleta.id + "/",
+          this.updateBike,
+          {
+            headers: {
+              Authorization: `bearer ${token}`,
+            },
           }
-        })
+        )
         .then((result) => {
-          alert("Bicicleta ID: " + result.data.id +
-            " Ha sido modificada con estado: " + result.data.condicion +
-            " Y estacion: " + result.data.estacion_nombre);
+          alert(
+            "Bicicleta ID: " +
+              result.data.id +
+              " Ha sido modificada con estado: " +
+              result.data.condicion +
+              " Y estacion: " +
+              result.data.estacion_nombre
+          );
           console.log(result.data);
           this.bicicleta = result.data;
         })
@@ -126,42 +171,39 @@ export default {
           console.log(error.response);
         });
     },
+
+    verifyToken: async function () {
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        this.accessDenied();
+        return;
+      }
+
+      return axios
+        .post(
+          "https://move-and-flow-be.herokuapp.com/refresh/",
+          { refresh: localStorage.getItem("tokenRefresh") },
+          { headers: {} }
+        )
+        .then((result) => {
+          localStorage.setItem("tokenAccess", result.data.access);
+        })
+        .catch((error) => {
+          this.accessDenied();
+        });
+    },
+    accessDenied: function () {
+      localStorage.clear();
+      alert("Acceso Denegado. Vuelve a iniciar sesión.");
+      this.$router.push({ name: "Login" });
+    },
   },
 
-  created() {
-    let id = localStorage.getItem("idBikeToUpdate")
-    console.log(id)
-    let url = "https://open-move-and-flow-be.herokuapp.com";
-    axios
-      .get(url + "/bicicletas/" + id + "/")
-      .then((response) => {
-        console.log(response.data);
-        this.bicicleta = response.data;
-        this.updateBike.b_condicion = this.bicicleta.condicion === 'En buen estado';
-        this.updateBike.b_en_estacion = this.bicicleta.estación_id;
-        this.idBike = this.bicicleta.id;
-
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
-
-    axios
-      .get("https://move-and-flow-be.herokuapp.com/estaciones/", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
-        },
-      })
-      .then((response) => {
-        this.stations = response.data;
-
-        console.log(this.stations)
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
+  created: async function () {
+    await this.getData();
   },
-
 };
 </script>
 
