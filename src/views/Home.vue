@@ -69,7 +69,7 @@
               />
               <div>
                 <h4>{{ username }}</h4>
-                <small>Super admin</small>
+                <small>Administrador</small>
               </div>
             </div>
           </header>
