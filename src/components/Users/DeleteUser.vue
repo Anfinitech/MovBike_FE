@@ -1,18 +1,18 @@
 <template>
-  <div class="general-container">
+  <div class="general-container" v-if="loaded">
     <div class="p-container">
       <div class="general-title">
         <h1>Eliminar usuario</h1>
       </div>
       <div class="prevention">
-        <p>¿Esta seguro de eliminar la siguiente información?</p>
+        <p>¿Esta seguro que desea eliminar al siguiente usuario?</p>
       </div>
       <div class="group">
         <p class="sub-title">ID: {{deleteUser.id}} </p>
         <p class="sub-title">Alias: {{deleteUser.username}}</p>
         <p class="sub-title">Nombre: {{deleteUser.name}} </p>
         <p class="sub-title">Correo Electrónico: {{deleteUser.email}} </p>
-        <p class="sub-title">Rol:{{deleteUser.role}} </p>
+        <p class="sub-title">Rol: {{deleteUser.role}} </p>
       </div>
       <br />
       <div class="botones">
@@ -47,7 +47,8 @@ export default {
 
   data() {
     return {
-      deleteUser: {}
+      deleteUser: {},
+      loaded: false
     }
   },
 

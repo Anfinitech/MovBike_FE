@@ -3,7 +3,7 @@
 <div v-if="loaded">
   <div class="p-container">
   <div class="general-title"><h1>Eliminar una bicicleta</h1></div>
-  <div class="prevention"><p>¿Esta seguro de eliminar la siguiente información?</p></div>
+  <div class="prevention"><p>¿Esta seguro de eliminar la siguiente bicicleta?</p></div>
   <div class="group">
     <p class="sub-title">ID: {{ bicicleta.id }}</p>
     <p class="sub-title">Condición: {{ bicicleta.condicion }}</p>

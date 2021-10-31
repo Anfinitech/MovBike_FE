@@ -3,7 +3,7 @@
   <div v-if="loaded">
     <div class="p-container">
     <div class="general-title"><h1>Eliminar una estación</h1></div>
-    <div class="prevention"><p>¿Esta seguro de eliminar la estación {{estacion.e_nombre}}?</p></div>
+    <div class="prevention"><p>¿Esta seguro que desea eliminar la siguiente estación?</p></div>
     <div class="group">
       <p class="sub-title">>ID: {{ estacion.e_id }} </p>
       <p class="sub-title">>Nombre: {{ estacion.e_nombre }} </p>
