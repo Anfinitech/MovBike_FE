@@ -165,7 +165,7 @@ export default {
           alert(
             "La bicicleta con ID '" +
               result.data.id +
-              "' ha sido modificada, se encuentra en '" +
+              "' ha sido modificada, se encuentra '" +
               result.data.condicion +
               "' y está ubicada en la estacion '" +
               result.data.estacion_nombre +
