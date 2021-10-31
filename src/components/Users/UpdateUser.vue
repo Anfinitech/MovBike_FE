@@ -125,7 +125,7 @@ export default {
         });
     },
 
-    actualizar: function () {
+    actualizar: async function () {
       await this.verifyToken();
 
       if (

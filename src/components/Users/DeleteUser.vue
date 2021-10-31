@@ -56,7 +56,7 @@ export default {
       this.$emit("loadcomponent", "UsersTable");
     },
 
-    deleteUsers: function () {
+    deleteUsers: async function () {
       await this.verifyToken();
 
       if (
