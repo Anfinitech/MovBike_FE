@@ -57,6 +57,15 @@ export default {
     },
 
     deleteUsers: function () {
+      await this.verifyToken();
+
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        return;
+      }
+
       let url = "https://move-and-flow-be.herokuapp.com";
       let id = localStorage.getItem("idUserToDelete");
       axios

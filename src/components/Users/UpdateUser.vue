@@ -1,76 +1,78 @@
 <template>
   <div class="general-container" v-if="loaded">
     <div class="form-container">
-      <div class="general-title"> <h1>Actualizar Usuario</h1></div>
-    <form
-      name="form"
-      id="form"
-      method="post"
-      enctype="multipart/form-data"
-      v-on:submit.prevent="actualizar"
-    >
-      <div class="form-group">
-       <p> Alias:</p>
-        <input
-          type="text"
-          name="u_alias"
-          placeholder="Username"
-          class="form-control"
-          v-model="nuevoUsuario.username"
-        />
-      </div>
-      <div class="form-group">
-      <p class="sub-title">Nueva Contraseña:</p>
-         <input
-          type="password"
-          name="u_password"
-          placeholder="Password"
-          class="form-control"
-          v-model="nuevoUsuario.password"
-        />
-      </div>
-      <div class="form-group">
-        <p class="sub-title">Nombre: </p>
-        <input
-          type="text"
-          name="u_nombre"
-          placeholder="Nombre"
-          class="form-control"
-          v-model="nuevoUsuario.name"
-        />
-      </div>
-      <div class="form-group">
-          <p class="sub-title">Correo Electrónico: </p>
+      <div class="general-title"><h1>Actualizar Usuario</h1></div>
+      <form
+        name="form"
+        id="form"
+        method="post"
+        enctype="multipart/form-data"
+        v-on:submit.prevent="actualizar"
+      >
+        <div class="form-group">
+          <p>Alias:</p>
+          <input
+            type="text"
+            name="u_alias"
+            placeholder="Username"
+            class="form-control"
+            v-model="nuevoUsuario.username"
+          />
+        </div>
+        <div class="form-group">
+          <p class="sub-title">Nueva Contraseña:</p>
+          <input
+            type="password"
+            name="u_password"
+            placeholder="Password"
+            class="form-control"
+            v-model="nuevoUsuario.password"
+          />
+        </div>
+        <div class="form-group">
+          <p class="sub-title">Nombre:</p>
+          <input
+            type="text"
+            name="u_nombre"
+            placeholder="Nombre"
+            class="form-control"
+            v-model="nuevoUsuario.name"
+          />
+        </div>
+        <div class="form-group">
+          <p class="sub-title">Correo Electrónico:</p>
           <input
             type="email"
             name="u_email"
             class="form-control"
             v-model="nuevoUsuario.email"
-        />
-      </div>
-      <div class="form-group">
-        <p class="sub-title">Rol: </p>
-        <select name="rol" id="rol" v-model="nuevoUsuario.rol">
-          <option value="Admin" selected>Administrador</option>
-        </select>
-      </div>
-      <div class="botones">
-        <button class="boton_back" v-on:click.self.prevent="renderUsersTable"><fa icon="undo" class="icon"/>Volver</button>
-        <button class="boton_up"><fa icon="edit" class="icon"/>Actualizar</button>
-      </div>
-    </form>
-</div>
-<div class="info-container">
-    <p class="caja">
-      Move Bike. Una familia, una tendencia.
-    </p>
+          />
+        </div>
+        <div class="form-group">
+          <p class="sub-title">Rol:</p>
+          <select name="rol" id="rol" v-model="nuevoUsuario.rol">
+            <option value="Admin" selected>Administrador</option>
+          </select>
+        </div>
+        <div class="botones">
+          <button class="boton_back" v-on:click.self.prevent="renderUsersTable">
+            <fa icon="undo" class="icon" />Volver
+          </button>
+          <button class="boton_up">
+            <fa icon="edit" class="icon" />Actualizar
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="info-container">
+      <p class="caja">Move Bike. Una familia, una tendencia.</p>
     </div>
   </div>
 </template>
 
 
 <script>
-import axios from "axios"
+import axios from "axios";
 
 export default {
   name: "UpdateUser",
@@ -84,7 +86,7 @@ export default {
         email: "",
         rol: "Admin",
       },
-      loaded: false
+      loaded: false,
     };
   },
 
@@ -116,16 +118,23 @@ export default {
         .then((response) => {
           console.log("Inside Users");
           this.nuevoUsuario = response.data;
-          this.loaded=true;
-          
+          this.loaded = true;
         })
         .catch((error) => {
           console.log(error.response);
         });
-
     },
 
     actualizar: function () {
+      await this.verifyToken();
+
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        return;
+      }
+
       let url = "https://move-and-flow-be.herokuapp.com";
       let token = localStorage.getItem("token");
 
@@ -135,12 +144,12 @@ export default {
           this.nuevoUsuario,
           {
             headers: {
-            Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
-          },
+              Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
+            },
           }
         )
         .then((result) => {
-          alert('Actualización Exitosa')
+          alert("Actualización Exitosa");
           console.log(result.data);
           this.nuevoUsuario = result.data;
         })
@@ -185,8 +194,6 @@ export default {
 </script>
 
 <style scoped>
-
-
 .general-container {
   height: 100%;
   width: 100%;
@@ -198,7 +205,6 @@ export default {
   background-size: cover;
   background-repeat: no-repeat;
 }
-
 
 .general-title {
   display: flex;
@@ -236,14 +242,12 @@ form {
   margin-right: 10%;
   border: none;
   text-align: left;
-  font-weight: 600; 
-  
+  font-weight: 600;
 }
 
-form p{
+form p {
   margin-top: 10px;
 }
-
 
 .form-group {
   margin-bottom: 15px;
@@ -280,23 +284,23 @@ form p{
   font-size: 15px;
 }
 
-form label{
+form label {
   color: #0081cf;
 }
 
-form p input{
+form p input {
   border: #5046af solid 2px;
   border-radius: 10px;
   font-size: 18px;
-  font-weight:600;
-  padding-left:15px;
-  margin-top:10px;
+  font-weight: 600;
+  padding-left: 15px;
+  margin-top: 10px;
   color: #0081cf;
 }
 
-::placeholder{
+::placeholder {
   color: #93d4ff;
-  padding-left:10px;
+  padding-left: 10px;
   font-weight: 600;
 }
 
@@ -345,7 +349,7 @@ form p input{
   color: #0081cf;
 }
 
-.icon{
+.icon {
   margin-right: 5px;
 }
 /*------------Mensaje--------------*/

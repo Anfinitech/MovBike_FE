@@ -90,7 +90,7 @@ export default {
 
     createUser: async function () {
       await this.verifyToken();
-      console.log("Hola después del verify");
+
       if (
         localStorage.getItem("tokenRefresh") === null ||
         localStorage.getItem("tokenAccess") === null
