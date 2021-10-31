@@ -73,13 +73,16 @@ export default {
           this.$emit("completedLogIn", dataLogIn);
         })
         .catch((error) => {
-          if (error.response.status == "401")
+          if (error.response.status == "401") {
             alert("ERROR 401: Credenciales Incorrectas.");
+          } else {
+            console.log(error);
+          }
         });
     },
 
     forgetPassword: function () {
-      alert("Comuniquese con el administrador del sistema, por favor.");
+      alert("Por favor comuníquese con el administrador del sistema.");
     },
   },
 };
