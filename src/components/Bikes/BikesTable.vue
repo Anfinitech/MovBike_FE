@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="general-container"
-    v-if="loaded"
-  >
+  <div class="general-container" v-if="loaded">
     <div class="title-container">
       <div class="title">
         <h1>Bicicletas</h1>
@@ -15,15 +12,11 @@
         <option value="En buen estado">En buen estado</option>
         <option value="Averiada">Averiada</option>
       </select>
-      <button
-        class="btn-register"
-        v-on:click.self.prevent="renderCreate"
-      >
+      <button class="btn-register" v-on:click.self.prevent="renderCreate">
         Registrar Bicicleta
       </button>
     </div>
     <div class="scroll">
-
       <table class="table-bikes scroll">
         <thead>
           <tr>
@@ -46,21 +39,19 @@
                 class="btn-detail"
                 v-on:click.self.prevent="renderUpdate(bicicleta)"
               >
-                <fa
-                  icon="edit"
-                  v-on:click="renderUpdate(bicicleta)"
-                />
-                <h6 v-on:click.self.prevent="renderUpdate(bicicleta)"> Editar</h6>
+                <fa icon="edit" v-on:click="renderUpdate(bicicleta)" />
+                <h6 v-on:click.self.prevent="renderUpdate(bicicleta)">
+                  Editar
+                </h6>
               </button>
               <button
                 class="btn-delete"
                 v-on:click.self.prevent="renderDelete(bicicleta)"
               >
-                <fa
-                  icon="trash"
-                  v-on:click="renderDelete(bicicleta)"
-                />
-                <h6 v-on:click.self.prevent="renderDelete(bicicleta)"> Eliminar</h6>
+                <fa icon="trash" v-on:click="renderDelete(bicicleta)" />
+                <h6 v-on:click.self.prevent="renderDelete(bicicleta)">
+                  Eliminar
+                </h6>
               </button>
             </td>
           </tr>
@@ -105,11 +96,10 @@ export default {
         })
         .then((response) => {
           this.bicicletas = response.data;
-          console.log(response.data);
           this.loaded = true;
         })
         .catch((error) => {
-          console.log(error.response);
+          console.log(error);
           if (error.response.status == "401") {
             this.accessDenied();
           }
@@ -120,14 +110,13 @@ export default {
       this.$emit("loadcomponent", "CreateBike");
     },
     renderUpdate: function (bike) {
-      localStorage.setItem("idBikeToUpdate", bike.id)
+      localStorage.setItem("idBikeToUpdate", bike.id);
       this.$emit("loadcomponent", "UpdateBike");
     },
 
     renderDelete: function (bike) {
-      localStorage.setItem("idBikeToDelete", bike.id)
+      localStorage.setItem("idBikeToDelete", bike.id);
       this.$emit("loadcomponent", "DeleteBike");
-
     },
 
     verifyToken: async function () {
@@ -154,7 +143,7 @@ export default {
     },
     accessDenied: function () {
       localStorage.clear();
-      alert("Acceso Denegado. Vuelve a iniciar sesión.");
+      alert("Acceso Denegado. Vuelva a iniciar sesión.");
       this.$router.push({ name: "Login" });
     },
   },
@@ -162,7 +151,6 @@ export default {
   computed: {
     filterBikeListByCondition() {
       return this.bicicletas.filter((bicicleta) => {
-        /* console.log(bicicleta) */
         return !bicicleta.condicion.indexOf(this.filtroPorCondicion);
       });
     },

@@ -26,15 +26,7 @@
                   </span>
                 </a>
               </li>
-              <li v-on:click.self.prevent="loadUsers()">
-                <a href="" v-on:click.self.prevent="loadUsers()">
-                  <span
-                    class="las la-user-circle"
-                    v-on:click.self.prevent="loadUsers()"
-                  ></span>
-                  <span v-on:click.self.prevent="loadUsers()"> Usuarios</span>
-                </a>
-              </li>
+
               <li v-on:click.self.prevent="loadStations()">
                 <a href="" v-on:click.self.prevent="loadStations()">
                   <span
@@ -53,6 +45,15 @@
                     v-on:click.self.prevent="loadBikes()"
                   ></span>
                   <span v-on:click.self.prevent="loadBikes()"> Bicicletas</span>
+                </a>
+              </li>
+              <li v-on:click.self.prevent="loadUsers()">
+                <a href="" v-on:click.self.prevent="loadUsers()">
+                  <span
+                    class="las la-user-circle"
+                    v-on:click.self.prevent="loadUsers()"
+                  ></span>
+                  <span v-on:click.self.prevent="loadUsers()"> Usuarios</span>
                 </a>
               </li>
               <li v-on:click.self="logOut">
@@ -80,10 +81,11 @@
                 width="50px"
                 height="50px"
                 alt=""
+                @click.self.prevent="loadUsers()"
               />
-              <div>
-                <h4>{{ username }}</h4>
-                <small>Administrador</small>
+              <div v-on:click.self.prevent="loadUsers()">
+                <h4 v-on:click.self.prevent="loadUsers()">{{ username }}</h4>
+                <small v-on:click.self.prevent="loadUsers()">Administrador</small>
               </div>
             </div>
           </header>

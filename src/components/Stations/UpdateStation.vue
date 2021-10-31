@@ -7,9 +7,8 @@
         id="form"
         method="post"
         enctype="multipart/form-data"
-        v-on:submit.prevent="actualizar()"
+        v-on:submit.prevent="updateStation()"
       >
-        <h3 class="title">Estación {{ station.e_nombre }}</h3>
         <br />
         <div class="form-group">
           <label for="nombre" class="txt_negrita">Nombre:</label>
@@ -58,14 +57,23 @@
         <br />
 
         <div class="botones">
-          <button class="boton_up" v-on:click.self.prevent="updateStation()">
-            <fa icon="edit" class="edit" />Actualizar
+          <button class="boton_up" type="submit">
+            <fa
+              icon="edit"
+              class="edit"
+              v-on:click.self.prevent="updateStation()"
+            />Actualizar
           </button>
           <button
             class="boton_back"
             v-on:click.self.prevent="renderStationsTable"
           >
-            <fa icon="undo" class="back" /> Volver
+            <fa
+              icon="undo"
+              class="back"
+              v-on:click.self.prevent="renderStationsTable"
+            />
+            Volver
           </button>
         </div>
       </form>
@@ -113,12 +121,11 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response.data);
           this.station = response.data;
           this.loaded = true;
         })
         .catch((error) => {
-          console.log(error.response);
+          console.log(error);
         });
     },
 
@@ -138,8 +145,6 @@ export default {
         e_capacidad: this.station.e_capacidad,
       };
 
-      console.log(estacionUpdate);
-
       axios
         .patch(url + "/estaciones/" + this.station.e_id + "/", estacionUpdate, {
           headers: {
@@ -148,13 +153,9 @@ export default {
         })
         .then((result) => {
           alert("Actualización exitosa.");
-          console.log(estacionUpdate);
-          console.log(result.data);
-          this.renderStationsTable();
         })
         .catch((error) => {
-          console.log(estacionUpdate);
-          console.log(error.response);
+          console.log(error);
         });
     },
 
@@ -182,7 +183,7 @@ export default {
     },
     accessDenied: function () {
       localStorage.clear();
-      alert("Acceso Denegado. Vuelve a iniciar sesión.");
+      alert("Acceso Denegado. Vuelva a iniciar sesión.");
       this.$router.push({ name: "Login" });
     },
   },

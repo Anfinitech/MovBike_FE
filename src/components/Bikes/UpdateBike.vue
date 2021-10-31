@@ -16,7 +16,7 @@
             name="condicion"
             id="buena"
             value="true"
-            v-model="updateBike.b_condicion"
+            v-model="updatedBike.b_condicion"
           />
           <label class="rad" for="buena">En buen estado</label>
           <br />
@@ -25,14 +25,14 @@
             name="condicion"
             id="averiada"
             value="false"
-            v-model="updateBike.b_condicion"
+            v-model="updatedBike.b_condicion"
           />
           <label class="rad" for="averiada">Averiada</label>
         </div>
         <div class="form-group">
           <p>Ubicación:</p>
 
-          <select v-model="updateBike.b_en_estacion">
+          <select v-model="updatedBike.b_en_estacion">
             <option>Seleccione una estacion</option>
             <option
               v-for="station in stations"
@@ -76,10 +76,10 @@
 <script>
 import axios from "axios";
 export default {
-  name: "UpdateBike",
+  name: "updatedBike",
   data: function () {
     return {
-      updateBike: {
+      updatedBike: {
         b_condicion: true,
         b_en_estacion: 0,
       },
@@ -105,7 +105,6 @@ export default {
       }
 
       let id = localStorage.getItem("idBikeToUpdate");
-      console.log(id);
       let url = "https://move-and-flow-be.herokuapp.com";
 
       axios
@@ -115,15 +114,14 @@ export default {
           },
         })
         .then((response) => {
-          console.log("Inside bikes");
           this.bicicleta = response.data;
-          this.updateBike.b_condicion =
+          this.updatedBike.b_condicion =
             this.bicicleta.condicion === "En buen estado";
-          this.updateBike.b_en_estacion = this.bicicleta.estación_id;
+          this.updatedBike.b_en_estacion = this.bicicleta.estación_id;
           this.idBike = this.bicicleta.id;
         })
         .catch((error) => {
-          console.log(error.response);
+          console.log(error);
         });
 
       axios
@@ -134,44 +132,49 @@ export default {
         })
         .then((response) => {
           this.stations = response.data;
-          console.log("Inside stations");
           this.loaded = true;
-
-          console.log(this.stations);
         })
         .catch((error) => {
-          console.log(error.response);
+          console.log(error);
         });
     },
 
-    updateBikes: function () {
-      let url = "https://open-move-and-flow-be.herokuapp.com";
-      let token = localStorage.getItem("token");
+    updateBikes: async function () {
+      await this.verifyToken();
+
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        return;
+      }
+
+      let url = "https://move-and-flow-be.herokuapp.com";
 
       axios
         .patch(
           url + "/bicicletas/" + this.bicicleta.id + "/",
-          this.updateBike,
+          this.updatedBike,
           {
             headers: {
-              Authorization: `bearer ${token}`,
+              Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
             },
           }
         )
         .then((result) => {
           alert(
-            "Bicicleta ID: " +
+            "La bicicleta con ID '" +
               result.data.id +
-              " Ha sido modificada con estado: " +
+              "' ha sido modificada, se encuentra en '" +
               result.data.condicion +
-              " Y estacion: " +
-              result.data.estacion_nombre
+              "' y está ubicada en la estacion '" +
+              result.data.estacion_nombre +
+              "'."
           );
-          console.log(result.data);
           this.bicicleta = result.data;
         })
         .catch((error) => {
-          console.log(error.response);
+          console.log(error);
         });
     },
 
@@ -199,7 +202,7 @@ export default {
     },
     accessDenied: function () {
       localStorage.clear();
-      alert("Acceso Denegado. Vuelve a iniciar sesión.");
+      alert("Acceso Denegado. Vuelva a iniciar sesión.");
       this.$router.push({ name: "Login" });
     },
   },
