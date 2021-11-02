@@ -50,22 +50,22 @@
         </div>
         <div class="form-group">
           <p class="sub-title">Rol:</p>
-          <select name="rol" id="rol" v-model="nuevoUsuario.rol">
-            <option value="Admin" selected>Administrador</option>
+          <select name="rol" id="rol">
+            <option value="Admin">Administrador</option>
           </select>
         </div>
         <div class="botones">
-          <button class="boton_back" v-on:click.self.prevent="renderUsersTable">
-            <fa icon="undo" class="icon" />Volver
-          </button>
-          <button class="boton_up">
+          <button class="boton_up" type="submit">
             <fa icon="edit" class="icon" />Actualizar
+          </button>
+          <button class="boton_back" v-on:click.self.prevent="renderUsersTable">
+            <fa icon="undo" class="icon" v-on:click.self.prevent="renderUsersTable"/>Volver
           </button>
         </div>
       </form>
     </div>
     <div class="info-container">
-      <p class="caja">Move Bike. Una familia, una tendencia.</p>
+      <p class="caja">MovBike. Una familia, una tendencia.</p>
     </div>
   </div>
 </template>
@@ -106,7 +106,6 @@ export default {
       }
 
       let id = localStorage.getItem("idUserToUpdate");
-      console.log(id);
       let url = "https://move-and-flow-be.herokuapp.com";
 
       axios
@@ -116,12 +115,11 @@ export default {
           },
         })
         .then((response) => {
-          console.log("Inside Users");
           this.nuevoUsuario = response.data;
           this.loaded = true;
         })
         .catch((error) => {
-          console.log(error.response);
+          console.log(error);
         });
     },
 
@@ -136,7 +134,6 @@ export default {
       }
 
       let url = "https://move-and-flow-be.herokuapp.com";
-      let token = localStorage.getItem("token");
 
       axios
         .patch(
@@ -150,11 +147,10 @@ export default {
         )
         .then((result) => {
           alert("Actualización Exitosa");
-          console.log(result.data);
           this.nuevoUsuario = result.data;
         })
         .catch((error) => {
-          console.log(error.response);
+          console.log(error);
         });
     },
 
@@ -182,7 +178,7 @@ export default {
     },
     accessDenied: function () {
       localStorage.clear();
-      alert("Acceso Denegado. Vuelve a iniciar sesión.");
+      alert("Acceso Denegado. Vuelva a iniciar sesión.");
       this.$router.push({ name: "Login" });
     },
   },

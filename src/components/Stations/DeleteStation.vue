@@ -1,28 +1,45 @@
 <template>
-<div class="general-container">
-  <div v-if="loaded">
-    <div class="p-container">
-    <div class="general-title"><h1>Eliminar una estación</h1></div>
-    <div class="prevention"><p>¿Esta seguro que desea eliminar la siguiente estación?</p></div>
-    <div class="group">
-      <p class="sub-title">>ID: {{ estacion.e_id }} </p>
-      <p class="sub-title">>Nombre: {{ estacion.e_nombre }} </p>
-      <p class="sub-title">>Estado: {{ estacion.e_estado }} </p>
-      <p class="sub-title">>Capacidad: {{ estacion.e_capacidad }} </p>
-      <p class="sub-title">>Ocupación:{{ estacion.e_ocupacion }} </p>
-      <p class="sub-title">>Bicis D: {{ estacion.e_bicicletasD }} </p>
-      <p class="sub-title">>Bicis ND: {{ estacion.e_bicicletasND }} </p>
-      <p class="sub-title">>Bicis T: {{ estacion.e_bicicletasT }} </p>
+  <div class="general-container">
+    <div v-if="loaded">
+      <div class="p-container">
+        <div class="general-title"><h1>Eliminar una estación</h1></div>
+        <div class="prevention">
+          <p>¿Está seguro que desea eliminar la siguiente estación?</p>
+        </div>
+        <div class="group">
+          <p class="sub-title">>ID: {{ estacion.e_id }}</p>
+          <p class="sub-title">>Nombre: {{ estacion.e_nombre }}</p>
+          <p class="sub-title">>Estado: {{ estacion.e_estado }}</p>
+          <p class="sub-title">>Capacidad: {{ estacion.e_capacidad }}</p>
+          <p class="sub-title">>Ocupación:{{ estacion.e_ocupacion }}</p>
+          <p class="sub-title">>Bicis D: {{ estacion.e_bicicletasD }}</p>
+          <p class="sub-title">>Bicis ND: {{ estacion.e_bicicletasND }}</p>
+          <p class="sub-title">>Bicis T: {{ estacion.e_bicicletasT }}</p>
 
-    <br />
-    <div class="botones">
-    <button class="boton_delete" v-on:click="deleteStation"><fa icon="trash" class="icon"/>Eliminar</button>
-    <button class="boton_back" v-on:click.self.prevent="renderStationsTable"><fa icon="undo" class="icon"/>Volver</button>
-    </div>
-    </div>
+          <br />
+          <div class="botones">
+            <button class="boton_delete" v-on:click="deleteStation">
+              <fa
+                icon="trash"
+                class="icon"
+                v-on:click="deleteStation"
+              />Eliminar
+            </button>
+            <button
+              class="boton_back"
+              v-on:click.self.prevent="renderStationsTable"
+            >
+              <fa
+                icon="undo"
+                class="icon"
+                v-on:click.self.prevent="renderStationsTable"
+              />Volver
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 </template>
 
 
@@ -63,16 +80,15 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response.data);
           this.estacion = response.data;
           this.loaded = true;
         })
         .catch((error) => {
-          console.log(error.response);
+          console.log(error);
         });
     },
 
-    deleteStation: async function() {
+    deleteStation: async function () {
       await this.verifyToken();
 
       if (
@@ -91,11 +107,10 @@ export default {
         })
         .then((response) => {
           alert(response.data);
-          console.log(response);
           this.renderStationsTable();
         })
         .catch((error) => {
-          console.log(error.response);
+          console.log(error);
         });
     },
 
@@ -124,19 +139,18 @@ export default {
 
     accessDenied: function () {
       localStorage.clear();
-      alert("Acceso Denegado. Vuelve a iniciar sesión.");
+      alert("Acceso Denegado. Vuelva a iniciar sesión.");
       this.$router.push({ name: "Login" });
     },
   },
 
-  created: async function() {
+  created: async function () {
     this.getData();
   },
 };
 </script>
 
 <style scoped>
-
 .general-container {
   height: 100%;
   width: 100%;
@@ -149,7 +163,6 @@ export default {
   background-repeat: no-repeat;
   padding: 1rem;
 }
-
 
 .general-title {
   display: flex;
@@ -173,26 +186,25 @@ export default {
   box-shadow: 0 0 10px rgb(190, 190, 190);
 }
 
-.prevention{
+.prevention {
   text-align: center;
   margin-bottom: 15px;
 }
 
-.prevention p{
+.prevention p {
   color: crimson;
   font-weight: 600;
 }
 
-.group .sub-title{
+.group .sub-title {
   color: #5046af;
   font-weight: 600;
 }
 
-
 .botones {
   display: flex;
   flex-direction: row;
-  justify-content:center;
+  justify-content: center;
   margin-top: 15px;
 }
 
@@ -233,7 +245,7 @@ export default {
   color: crimson;
 }
 
-.icon{
+.icon {
   margin-right: 5px;
 }
 </style>
