@@ -16,37 +16,61 @@
           <div class="sidebar-menu">
             <ul>
               <li>
-                  <a href="" v-on:click.self.prevent="loadDashboard()">
-                  <span class="las la-igloo" v-on:click.self.prevent="loadDashboard()"></span>
+                <a href="" v-on:click.self.prevent="loadDashboard()">
+                  <span
+                    class="las la-igloo"
+                    v-on:click.self.prevent="loadDashboard()"
+                  ></span>
                   <span v-on:click.self.prevent="loadDashboard()">
                     Dashboard
-                     </span>
-                     
+                  </span>
                 </a>
               </li>
-              <li>
-                <a href="" v-on:click.self.prevent="loadUsers()">
-                  <span class="las la-user-circle" v-on:click.self.prevent="loadUsers()"></span>
-                  <span v-on:click.self.prevent="loadUsers()"> Usuarios</span>
-                </a>
-              </li>
-              <li>
+
+              <li v-on:click.self.prevent="loadStations()">
                 <a href="" v-on:click.self.prevent="loadStations()">
-                  <span class="las la-industry" v-on:click.self.prevent="loadStations()"></span>
+                  <span
+                    class="las la-industry"
+                    v-on:click.self.prevent="loadStations()"
+                  ></span>
                   <span v-on:click.self.prevent="loadStations()">
                     Estaciones</span
                   >
                 </a>
               </li>
-              <li>
+              <li v-on:click.self.prevent="loadBikes()">
                 <a href="" v-on:click.self.prevent="loadBikes()">
-                  <span class="las la-biking" v-on:click.self.prevent="loadBikes()"></span>
+                  <span
+                    class="las la-biking"
+                    v-on:click.self.prevent="loadBikes()"
+                  ></span>
                   <span v-on:click.self.prevent="loadBikes()"> Bicicletas</span>
                 </a>
               </li>
-              <li>
+              <li v-on:click.self.prevent="loadUsers()">
+                <a href="" v-on:click.self.prevent="loadUsers()">
+                  <span
+                    class="las la-user-circle"
+                    v-on:click.self.prevent="loadUsers()"
+                  ></span>
+                  <span v-on:click.self.prevent="loadUsers()"> Usuarios</span>
+                </a>
+              </li>
+              <li v-on:click.self.prevent="loadOurTeam()">
+                <a href="" v-on:click.self.prevent="loadOurTeam()">
+                  <span
+                    class="las la-barcode"
+                    v-on:click.self.prevent="loadOurTeam()"
+                  ></span>
+                  <span v-on:click.self.prevent="loadOurTeam()"> Nuestro Equipo</span>
+                </a>
+              </li>
+              <li v-on:click.self="logOut">
                 <a href="" v-on:click.self="logOut">
-                  <span class="las la-power-off" v-on:click.self="logOut"></span>
+                  <span
+                    class="las la-power-off"
+                    v-on:click.self="logOut"
+                  ></span>
                   <span v-on:click.self="logOut"> Cerrar sesión</span>
                 </a>
               </li>
@@ -66,10 +90,11 @@
                 width="50px"
                 height="50px"
                 alt=""
+                @click.self.prevent="loadUsers()"
               />
-              <div>
-                <h4>{{ username }}</h4>
-                <small>Administrador</small>
+              <div v-on:click.self.prevent="loadUsers()">
+                <h4 v-on:click.self.prevent="loadUsers()">{{ username }}</h4>
+                <small v-on:click.self.prevent="loadUsers()">Administrador</small>
               </div>
             </div>
           </header>
@@ -109,9 +134,13 @@ export default {
     loadBikes: function () {
       this.$router.push({ name: "Bikes" });
     },
+    loadOurTeam: function () {
+      this.$router.push({ name: "OurTeam" });
+    },
 
     logOut: function () {
       localStorage.clear();
+      this.$router.push({ name: "Login" });
     },
   },
 };
