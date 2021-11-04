@@ -5,41 +5,28 @@
         <h1>Eliminar usuario</h1>
       </div>
       <div class="prevention">
-        <p>¿Esta seguro que desea eliminar al siguiente usuario?</p>
+        <p>¿Está seguro que desea eliminar al siguiente usuario?</p>
       </div>
       <div class="group">
-        <p class="sub-title">ID: {{deleteUser.id}} </p>
-        <p class="sub-title">Alias: {{deleteUser.username}}</p>
-        <p class="sub-title">Nombre: {{deleteUser.name}} </p>
-        <p class="sub-title">Correo Electrónico: {{deleteUser.email}} </p>
-        <p class="sub-title">Rol: {{deleteUser.role}} </p>
+        <p class="sub-title">ID: {{ deleteUser.id }}</p>
+        <p class="sub-title">Alias: {{ deleteUser.username }}</p>
+        <p class="sub-title">Nombre: {{ deleteUser.name }}</p>
+        <p class="sub-title">Correo Electrónico: {{ deleteUser.email }}</p>
+        <p class="sub-title">Rol: {{ deleteUser.role }}</p>
       </div>
       <br />
       <div class="botones">
-        <button
-          class="boton_delete"
-          v-on:click="deleteUsers"
-        >
-          <fa
-            icon="trash"
-            class="icon"
-          />Eliminar
+        <button class="boton_delete" v-on:click="deleteUsers">
+          <fa icon="trash" class="icon" />Eliminar
         </button>
-        <button
-          class="boton_back"
-          v-on:click.self.prevent="renderUsersTable"
-        >
-          <fa
-            icon="undo"
-            class="icon"
-          />Volver
+        <button class="boton_back" v-on:click.self.prevent="renderUsersTable">
+          <fa icon="undo" class="icon" v-on:click.self.prevent="renderUsersTable"/>Volver
         </button>
       </div>
     </div>
   </div>
 </template>
 <script>
-
 import axios from "axios";
 
 export default {
@@ -48,8 +35,8 @@ export default {
   data() {
     return {
       deleteUser: {},
-      loaded: false
-    }
+      loaded: false,
+    };
   },
 
   methods: {
@@ -76,12 +63,11 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response);
           alert(response.data);
           this.$emit("loadcomponent", "UsersTable");
         })
         .catch((error) => {
-          console.log(error.response);
+          console.log(error);
         });
     },
 
@@ -96,7 +82,6 @@ export default {
       }
 
       let id = localStorage.getItem("idUserToDelete");
-      console.log(id);
       let url = "https://move-and-flow-be.herokuapp.com";
 
       axios
@@ -106,18 +91,13 @@ export default {
           },
         })
         .then((response) => {
-          console.log("Inside Users");
-          console.log(response.data);
           this.deleteUser = response.data;
-          console.log(this.deleteUser)
           this.loaded = true;
-
         })
         .catch((error) => {
-          console.log(error.response);
+          console.log(error);
         });
     },
-
 
     verifyToken: async function () {
       if (
@@ -143,7 +123,7 @@ export default {
     },
     accessDenied: function () {
       localStorage.clear();
-      alert("Acceso Denegado. Vuelve a iniciar sesión.");
+      alert("Acceso Denegado. Vuelva a iniciar sesión.");
       this.$router.push({ name: "Login" });
     },
   },
@@ -151,7 +131,6 @@ export default {
   created: async function () {
     await this.getData();
   },
-
 };
 </script>
 

@@ -47,10 +47,30 @@
           </td>
           <td data-label="Bicis. Totales:">{{ station.e_bicicletasT }}</td>
           <td>
-            <button class="btn-detail" v-on:click.self.prevent="renderUpdate(station.e_id)">
-             <fa icon="edit" class="icon"/><h6>Editar</h6></button
-            ><button class="btn-delete" v-on:click.self.prevent="renderDelete(station.e_id)">
-            <fa icon="trash" class="icon"/><h6>Eliminar</h6>
+            <button
+              class="btn-detail"
+              v-on:click.self.prevent="renderUpdate(station.e_id)"
+            >
+              <fa
+                icon="edit"
+                class="icon"
+                v-on:click.self.prevent="renderUpdate(station.e_id)"
+              />
+              <h6 v-on:click.self.prevent="renderUpdate(station.e_id)">
+                Editar
+              </h6></button
+            ><button
+              class="btn-delete"
+              v-on:click.self.prevent="renderDelete(station.e_id)"
+            >
+              <fa
+                icon="trash"
+                class="icon"
+                v-on:click.self.prevent="renderDelete(station.e_id)"
+              />
+              <h6 v-on:click.self.prevent="renderDelete(station.e_id)">
+                Eliminar
+              </h6>
             </button>
           </td>
         </tr>
@@ -102,12 +122,12 @@ export default {
         .then((response) => {
           this.listStations = response.data;
           this.loaded = true;
-          console.log(response.data);
         })
         .catch((error) => {
-          console.log(error.response);
           if (error.response.status == "401") {
             this.accessDenied();
+          } else {
+            console.log(error);
           }
         });
     },
@@ -147,7 +167,7 @@ export default {
     },
     accessDenied: function () {
       localStorage.clear();
-      alert("Acceso Denegado. Vuelve a iniciar sesión.");
+      alert("Acceso Denegado. Vuelva a iniciar sesión.");
       this.$router.push({ name: "Login" });
     },
   },
@@ -155,7 +175,6 @@ export default {
   computed: {
     filterStationsByState() {
       return this.listStations.filter((estacion) => {
-        /* console.log(estacion) */
         return !estacion.e_estado.indexOf(this.filterByState);
       });
     },
@@ -180,7 +199,7 @@ export default {
 
 .general-container {
   padding: 10px;
-  margin-top: 20px; 
+  margin-top: 20px;
   background-color: var(--white);
   border-radius: 20px;
 }
@@ -249,7 +268,6 @@ export default {
   font-weight: 600;
   color: var(--white);
   cursor: pointer;
-  
 }
 
 .btn-detail:hover {
@@ -257,7 +275,7 @@ export default {
   color: #0081cf;
 }
 
-.btn-detail h6{
+.btn-detail h6 {
   font-size: 13px;
   display: inline;
   visibility: visible;
@@ -267,7 +285,7 @@ export default {
   position: relative;
   margin: 3px 8px 5px;
   text-decoration: none;
-  background-color: #C34A36;
+  background-color: #c34a36;
   border: none;
   border-radius: 7px;
   font-weight: 600;
@@ -278,10 +296,10 @@ export default {
 
 .btn-delete:hover {
   background-color: var(--white);
-  color: #C34A36;
+  color: #c34a36;
 }
 
-.btn-delete h6{
+.btn-delete h6 {
   font-size: 13px;
   display: inline;
 }
@@ -335,7 +353,7 @@ td {
   padding: 6px;
 }
 
-.icon{
+.icon {
   display: inline;
   font-size: 14px;
   text-align: center;
@@ -388,23 +406,23 @@ td {
     text-align: center;
   }
 
-  .btn-delete h6{
-  display: none;
-  margin-right: 0;
-}
+  .btn-delete h6 {
+    display: none;
+    margin-right: 0;
+  }
 
-.btn-delete .icon{
-  margin-right:0;;
-}
+  .btn-delete .icon {
+    margin-right: 0;
+  }
 
- .btn-detail h6{
-  display: none;
-  margin-right: 0;
-}
+  .btn-detail h6 {
+    display: none;
+    margin-right: 0;
+  }
 
-.btn-detail .icon{
-  margin-right:0;;
-}
+  .btn-detail .icon {
+    margin-right: 0;
+  }
 }
 
 @media only screen and (max-width: 750px) {
@@ -463,24 +481,24 @@ td {
     color: var(--main-color);
   }
 
-  .btn-detail h6{
-  font-size: 13px;
-  display: inline;
-  visibility: visible;
-}
+  .btn-detail h6 {
+    font-size: 13px;
+    display: inline;
+    visibility: visible;
+  }
 
-.btn-detail .icon{
-  margin-right:5px;;
-}
+  .btn-detail .icon {
+    margin-right: 5px;
+  }
 
-.btn-delete h6{
-  font-size: 13px;
-  display: inline;
-  visibility: visible;
-}
+  .btn-delete h6 {
+    font-size: 13px;
+    display: inline;
+    visibility: visible;
+  }
 
-.btn-delete .icon{
-  margin-right:5px;;
-}
+  .btn-delete .icon {
+    margin-right: 5px;
+  }
 }
 </style>

@@ -1,60 +1,63 @@
 <template>
   <div class="general-container">
     <div class="form-container">
-    <div class="general-title"><h1>Registrar Estación</h1></div>
-    <form name="form" id="form" v-on:submit.prevent="createStation()">
-      <h3 class="title">Nueva Estación</h3>
-      <p>
-        Nombre:
+      <div class="general-title"><h1>Registrar Estación</h1></div>
+      <form name="form" id="form" v-on:submit.prevent="createStation()">
+        <p>
+          Nombre:
+          <input
+            type="text"
+            name="e_nombre"
+            class="form-control"
+            v-model="nuevaEstacion.e_nombre"
+            required
+          />
+        </p>
+        <p class="sub-title">
+          Capacidad:
+          <input
+            type="number"
+            name="e_capacidad"
+            placeholder="Capacidad"
+            class="form-control"
+            v-model="nuevaEstacion.e_capacidad"
+            required
+          />
+        </p>
+        <p class="sub-title">Estado:</p>
         <input
-          type="text"
-          name="e_nombre"
-          class="form-control"
-          v-model="nuevaEstacion.e_nombre"
-          required
+          type="radio"
+          name="estado"
+          id="abierta"
+          value="true"
+          v-model="nuevaEstacion.e_estado"
         />
-      </p>
-      <p class="sub-title" >
-        Capacidad:
+        <label class="rad" for="abierta">Abierta</label>
+        <br />
         <input
-          type="number"
-          name="e_capacidad"
-          placeholder="Capacidad"
-          class="form-control"
-          v-model="nuevaEstacion.e_capacidad"
-          required
+          type="radio"
+          name="estado"
+          id="cerrada"
+          value="false"
+          v-model="nuevaEstacion.e_estado"
         />
-      </p>
-      <p class="sub-title" >Estado:</p>
-      <input
-        type="radio"
-        name="estado"
-        id="abierta"
-        value="true"
-        v-model="nuevaEstacion.e_estado"
-      />
-      <label class="rad" for="abierta">Abierta</label>
-      <br />
-      <input
-        type="radio"
-        name="estado"
-        id="cerrada"
-        value="false"
-        v-model="nuevaEstacion.e_estado"
-      />
-      <label class="rad" for="cerrada">Cerrada</label>
+        <label class="rad" for="cerrada">Cerrada</label>
 
-      <br />
-      <div class="botones">
-      <button class="boton_register"> <fa icon="clipboard" class="icon"/>Registrar</button>
-      <button class="boton_back" v-on:click="renderStationsTable"><fa icon="undo" class="icon"/>Volver</button>
-      </div>
-    </form>
+        <br />
+        <div class="botones">
+          <button class="boton_register" type="submit">
+            <fa icon="clipboard" class="icon" />Registrar
+          </button>
+          <button class="boton_back" v-on:click="renderStationsTable">
+            <fa icon="undo" class="icon" />Volver
+          </button>
+        </div>
+      </form>
     </div>
     <div class="info-container">
-    <p class="caja">
-      Construyendo un nodo de bienestar para nuestra comunidad.
-    </p>
+      <p class="caja">
+        Construyendo un nodo de bienestar para nuestra comunidad.
+      </p>
     </div>
   </div>
 </template>
@@ -97,11 +100,8 @@ export default {
         })
         .then((response) => {
           alert(response.data);
-          console.log(response.data);
         })
         .catch((error) => {
-          console.log(error.response);
-
           if (error.response.status == "401") {
             this.accessDenied();
           } else if (error.response.status == "400") {
@@ -136,7 +136,7 @@ export default {
     },
     accessDenied: function () {
       localStorage.clear();
-      alert("Acceso Denegado. Vuelve a iniciar sesión.");
+      alert("Acceso Denegado. Vuelva a iniciar sesión.");
       this.$router.push({ name: "Login" });
     },
   },
@@ -145,7 +145,6 @@ export default {
 
 
 <style scoped>
-
 .general-container {
   height: 35em;
   width: 100%;
@@ -157,7 +156,6 @@ export default {
   background-size: cover;
   background-repeat: no-repeat;
 }
-
 
 .general-title {
   display: flex;
@@ -195,14 +193,12 @@ form {
   margin-right: 10%;
   border: none;
   text-align: left;
-  font-weight: 600; 
-  
+  font-weight: 600;
 }
 
-form p{
+form p {
   margin-top: 15px;
 }
-
 
 .form-group {
   margin-bottom: 15px;
@@ -234,21 +230,21 @@ form p{
   font-size: 15px;
 }
 
-form label{
+form label {
   color: #0081cf;
 }
 
-form p input{
+form p input {
   border: #5046af solid 2px;
   border-radius: 10px;
   font-size: 18px;
-  font-weight:600;
-  padding-left:15px;
-  margin-top:10px;
+  font-weight: 600;
+  padding-left: 15px;
+  margin-top: 10px;
   color: #0081cf;
 }
 
-::placeholder{
+::placeholder {
   color: #93d4ff;
 }
 
@@ -296,7 +292,7 @@ form p input{
   color: #0081cf;
 }
 
-.icon{
+.icon {
   margin-right: 5px;
 }
 /*------------Mensaje--------------*/
