@@ -239,6 +239,11 @@ main {
     padding-right: 10px;
 }
 
+.card-single:hover p{
+    color: var(--white);
+    padding-right: 10px;
+}
+
 
 /*======== Responsive de ventana 1200px ===========*/
 
