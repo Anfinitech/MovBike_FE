@@ -1,87 +1,84 @@
 <template>
   <div class="general-container" v-if="loaded">
     <div class="form-container">
-      <div class="title"><h1>Actualizar Usuario</h1></div>
+      <div class="general-title"><h1>Actualizar Usuario</h1></div>
       <form
         name="form"
         id="form"
         method="post"
         enctype="multipart/form-data"
-        v-on:submit.prevent="updateUserf">      >
+        v-on:submit.prevent="actualizar"
+      >
         <div class="form-group">
           <p>Alias:</p>
           <input
             type="text"
             name="u_alias"
-            v-bind:placeholder="updateUser.username"
+            placeholder="Username"
             class="form-control"
-            v-model="updateUser.username"
+            v-model="nuevoUsuario.username"
           />
         </div>
         <div class="form-group">
-          <p>Nueva Contraseña:</p>
+          <p class="sub-title">Nueva Contraseña:</p>
           <input
             type="password"
             name="u_password"
             placeholder="Password"
             class="form-control"
-            v-model="updateUser.password"
+            v-model="nuevoUsuario.password"
           />
         </div>
         <div class="form-group">
-          <p>Nombre:</p>
+          <p class="sub-title">Nombre:</p>
           <input
             type="text"
             name="u_nombre"
             placeholder="Nombre"
             class="form-control"
-            v-model="updateUser.name"
+            v-model="nuevoUsuario.name"
           />
         </div>
         <div class="form-group">
-          <p>Correo Electrónico:</p>
+          <p class="sub-title">Correo Electrónico:</p>
           <input
             type="email"
             name="u_email"
             class="form-control"
-            v-model="updateUser.email"
+            v-model="nuevoUsuario.email"
           />
         </div>
         <div class="form-group">
-          <p>Rol:</p>
-          <select name="rol" id="rol" v-model="updateUser.rol">
-            <option value="Admin" selected>Administrador</option>
+          <p class="sub-title">Rol:</p>
+          <select name="rol" id="rol">
+            <option value="Admin">Administrador</option>
           </select>
         </div>
-        <br />
         <div class="botones">
-          <button class="boton_back" v-on:click.self.prevent="renderUsersTable">
-            <fa icon="undo" class="back" />Volver
-          </button>
           <button class="boton_up" type="submit">
-            <fa icon="edit" class="edit" />Actualizar
+            <fa icon="edit" class="icon" />Actualizar
+          </button>
+          <button class="boton_back" v-on:click.self.prevent="renderUsersTable">
+            <fa icon="undo" class="icon" v-on:click.self.prevent="renderUsersTable"/>Volver
           </button>
         </div>
       </form>
     </div>
-    <div class="image-container">
-      <p class="caja">
-        Haciendo seguimiento continuo a cada nodo para mejorar nuestro servicio
-        y la experiencia de usuario.
-      </p>
+    <div class="info-container">
+      <p class="caja">MovBike. Una familia, una tendencia.</p>
     </div>
   </div>
 </template>
 
 
 <script>
-import axios from "axios"
+import axios from "axios";
 
 export default {
   name: "UpdateUser",
   data() {
     return {
-      updateUser: {
+      nuevoUsuario: {
         id: "",
         name: "",
         username: "",
@@ -89,7 +86,7 @@ export default {
         email: "",
         rol: "Admin",
       },
-      loaded: false
+      loaded: false,
     };
   },
 
@@ -109,7 +106,6 @@ export default {
       }
 
       let id = localStorage.getItem("idUserToUpdate");
-      console.log(id);
       let url = "https://move-and-flow-be.herokuapp.com";
 
       axios
@@ -119,38 +115,42 @@ export default {
           },
         })
         .then((response) => {
-          console.log("Inside Users");
-          this.updateUser = response.data;
-          this.loaded=true;
-          
+          this.nuevoUsuario = response.data;
+          this.loaded = true;
         })
         .catch((error) => {
-          console.log(error.response);
+          console.log(error);
         });
-
     },
 
-    updateUserf: function () {
+    actualizar: async function () {
+      await this.verifyToken();
+
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        return;
+      }
+
       let url = "https://move-and-flow-be.herokuapp.com";
-      let token = localStorage.getItem("token");
 
       axios
         .patch(
-          url + "/users/" + this.updateUser.id + "/",
-          this.updateUser,
+          url + "/users/" + this.nuevoUsuario.id + "/",
+          this.nuevoUsuario,
           {
             headers: {
-            Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
-          },
+              Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
+            },
           }
         )
         .then((result) => {
-          alert('Actualización Exitosa')
-          console.log(result.data);
-          this.updateUser = result.data;
+          alert("Actualización Exitosa");
+          this.nuevoUsuario = result.data;
         })
         .catch((error) => {
-          console.log(error.response);
+          console.log(error);
         });
     },
 
@@ -178,7 +178,7 @@ export default {
     },
     accessDenied: function () {
       localStorage.clear();
-      alert("Acceso Denegado. Vuelve a iniciar sesión.");
+      alert("Acceso Denegado. Vuelva a iniciar sesión.");
       this.$router.push({ name: "Login" });
     },
   },
@@ -191,67 +191,70 @@ export default {
 
 <style scoped>
 .general-container {
-  height: 45em;
+  height: 100%;
   width: 100%;
   border-radius: 20px;
   display: flex;
   justify-content: space-between;
   overflow: hidden;
-  background-image: url("../../assets/stations/UpdateBike2.jpg");
+  background-image: url("../../assets/users/UpUser.jpg");
   background-size: cover;
   background-repeat: no-repeat;
 }
 
-.title {
+.general-title {
   display: flex;
   justify-content: space-around;
   position: initial;
-  padding-bottom: 30px;
+  padding-bottom: 15px;
   margin-top: 20px;
 }
+
 .form-container {
   color: #5046af;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 1.5rem 1.5rem;
-  width: 350px;
-  background-color: rgba(255, 255, 255, 0.822);
+  padding: 0rem 1.5rem;
+  width: 410px;
+  background-color: rgba(233, 233, 233, 0.623);
   border-radius: 20px;
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(10px);
   margin: 20px;
   align-items: center;
   margin-left: 5%;
-  box-shadow: 0 0 10px rgb(103, 0, 124);
+  box-shadow: 0 0 10px rgb(190, 190, 190);
 }
-.image-container {
-  width: 55%;
+.info-container {
+  width: 50%;
   box-sizing: border-box;
   align-items: center;
   background-color: transparent;
 }
-
 /*------------Formulario------------*/
 form {
-  padding-left: 30px;
+  padding-left: 15px;
   font-size: 18px;
   margin-right: 10%;
   border: none;
   text-align: left;
   font-weight: 600;
 }
+
+form p {
+  margin-top: 10px;
+}
+
 .form-group {
   margin-bottom: 15px;
 }
 
 .form-group label {
-  margin-left: 10px;
   color: #0081cf;
 }
 
-.form-group input {
-  margin-left: 10px;
-  margin-bottom: 10px;
+.form-group .sub-title {
+  color: #5046af;
 }
 
 .form-group select {
@@ -259,17 +262,50 @@ form {
   border-radius: 10px;
 }
 
+.form-group input {
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: #5046af solid 2px;
+  outline: none;
+}
+
+.rad {
+  margin-left: 10px;
+}
+
 .form-control {
-  width: 200px;
+  width: 300px;
 }
 .rad {
   font-size: 15px;
+}
+
+form label {
+  color: #0081cf;
+}
+
+form p input {
+  border: #5046af solid 2px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  padding-left: 15px;
+  margin-top: 10px;
+  color: #0081cf;
+}
+
+::placeholder {
+  color: #93d4ff;
+  padding-left: 10px;
+  font-weight: 600;
 }
 
 .botones {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-top: 15px;
+  margin-bottom: 25px;
 }
 
 .boton_up {
@@ -287,7 +323,7 @@ form {
 }
 
 .boton_back {
-  padding: 10px 24px;
+  padding: 10px 10px;
   position: relative;
   margin: 3px 0px 5px;
   text-decoration: none;
@@ -309,45 +345,25 @@ form {
   color: #0081cf;
 }
 
-.back {
-  margin-right: 5px;
-}
-
-.edit {
+.icon {
   margin-right: 5px;
 }
 /*------------Mensaje--------------*/
 .caja {
   font-family: sans-serif;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 30px;
   font-style: italic;
   width: 400px;
   margin-left: 10%;
-  margin-top: 60px;
+  margin-top: 40px;
   overflow: hidden;
-  color: #f2fcff;
-}
-
-@media only screen and (max-width: 950px) {
-  .caja {
-    font-family: sans-serif;
-    font-weight: 600;
-    font-size: 20px;
-    font-style: italic;
-    width: 200px;
-    margin-top: 60px;
-    overflow: hidden;
-    color: #f2fcff;
-  }
-
-  .botones {
-    flex-direction: column;
-  }
+  color: #ffffff;
+  text-align: left;
 }
 
 @media only screen and (max-width: 650px) {
-  .image-container {
+  .info-container {
     display: none;
   }
 

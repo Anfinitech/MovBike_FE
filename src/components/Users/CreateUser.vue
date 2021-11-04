@@ -1,68 +1,68 @@
 <template>
   <div class="general-container">
     <div class="form-container">
-    <div class="general-title"><h1>Registrar un nuevo usuario</h1></div>
-    <form name="form" id="form" v-on:submit.prevent="createUser()">
-      <h3 class="title">Nuevo Usuario</h3>
-      <p>
-        Nombre:
-        <input
-          type="text"
-          name="u_nombre"
-          placeholder="Nombre"
-          class="form-control"
-          v-model="nuevoUsuario.name"
-        />
-      </p>
-      <p class="sub-title">
-        Username:
-        <input
-          type="text"
-          name="u_alias"
-          placeholder="Username"
-          class="form-control"
-          v-model="nuevoUsuario.username"
-        />
-      </p>
-      <p class="sub-title">
-        Password:
-        <input
-          type="password"
-          name="u_password"
-          placeholder="Password"
-          class="form-control"
-          v-model="nuevoUsuario.password"
-        />
-      </p>
-      <p class="sub-title">
-        Email:
-        <input
-          type="email"
-          name="u_email"
-          placeholder="Email"
-          class="form-control"
-          v-model="nuevoUsuario.email"
-        />
-      </p>
-      <div class="form-group">
-        <p class="sub-title">Rol: </p>
-        <select name="rol" id="rol" v-model="nuevoUsuario.role">
-          <option value="Admin" selected>Administrador</option>
-        </select>
-      </div>
+      <div class="general-title"><h1>Registrar un nuevo usuario</h1></div>
+      <form name="form" id="form" v-on:submit.prevent="createUser()">
+        <h3 class="title">Nuevo Usuario</h3>
+        <p>
+          Nombre:
+          <input
+            type="text"
+            name="u_nombre"
+            placeholder="Nombre"
+            class="form-control"
+            v-model="nuevoUsuario.name"
+          />
+        </p>
+        <p class="sub-title">
+          Username:
+          <input
+            type="text"
+            name="u_alias"
+            placeholder="Username"
+            class="form-control"
+            v-model="nuevoUsuario.username"
+          />
+        </p>
+        <p class="sub-title">
+          Password:
+          <input
+            type="password"
+            name="u_password"
+            placeholder="Password"
+            class="form-control"
+            v-model="nuevoUsuario.password"
+          />
+        </p>
+        <p class="sub-title">
+          Email:
+          <input
+            type="email"
+            name="u_email"
+            placeholder="Email"
+            class="form-control"
+            v-model="nuevoUsuario.email"
+          />
+        </p>
+        <div class="form-group">
+          <p class="sub-title">Rol:</p>
+          <select name="rol" id="rol" v-model="nuevoUsuario.role">
+            <option value="Admin" selected>Administrador</option>
+          </select>
+        </div>
 
-      <div class="botones">
-      <button type="submit" class="boton_register"><fa icon="clipboard" class="icon"/>Registrar</button>
-      <button class="boton_back" v-on:click.self.prevent="renderUsersTable">
-        <fa icon="undo" class="icon"/>Volver
-      </button>
-      </div>
-    </form>
+        <div class="botones">
+          <button type="submit" class="boton_register">
+            <fa icon="clipboard" class="icon" />Registrar
+          </button>
+          <button class="boton_back" v-on:click.self.prevent="renderUsersTable">
+            <fa icon="undo" class="icon" />Volver
+          </button>
+        </div>
+      </form>
     </div>
     <div class="info-container">
-    <p class="caja">
-      Bienvenido a esta gran familia llamada Move Bike.
-    </p>
+      <p class="caja">Bienvenido a esta gran familia llamada MovBike.</p>
     </div>
   </div>
 </template>
@@ -72,6 +72,7 @@ import axios from "axios";
 
 export default {
   name: "CreateUser",
+
   data() {
     return {
       nuevoUsuario: {
@@ -90,14 +91,13 @@ export default {
 
     createUser: async function () {
       await this.verifyToken();
-      console.log("Hola después del verify");
+
       if (
         localStorage.getItem("tokenRefresh") === null ||
         localStorage.getItem("tokenAccess") === null
       ) {
         return;
       }
-      console.log("Hola después del empty token");
 
       let url = "https://move-and-flow-be.herokuapp.com";
       axios
@@ -107,21 +107,15 @@ export default {
           },
         })
         .then((response) => {
-          console.log("Hola dentro del then");
           alert(response.data);
-          console.log(response.data);
         })
         .catch((error) => {
-          console.log("Hola dentro del catch");
-          console.log(error.response);
-
           if (error.response.status == "401") {
-            /*this.accessDenied();*/
-            alert(error);
+            this.accessDenied();
           } else if (error.response.status == "400") {
             alert("BAD REQUEST [400]");
           } else {
-            alert(error);
+            console.log(error);
           }
         });
     },
@@ -150,16 +144,14 @@ export default {
     },
     accessDenied: function () {
       localStorage.clear();
-      alert("Acceso Denegado. Vuelve a iniciar sesión.");
+      alert("Acceso Denegado. Vuelva a iniciar sesión.");
       this.$router.push({ name: "Login" });
     },
   },
-
 };
 </script>
 
 <style scoped>
-
 .general-container {
   height: 45em;
   width: 100%;
@@ -171,7 +163,6 @@ export default {
   background-size: cover;
   background-repeat: no-repeat;
 }
-
 
 .general-title {
   display: flex;
@@ -209,14 +200,12 @@ form {
   margin-right: 10%;
   border: none;
   text-align: left;
-  font-weight: 600; 
-  
+  font-weight: 600;
 }
 
-form p{
+form p {
   margin-top: 10px;
 }
-
 
 .form-group {
   margin-bottom: 15px;
@@ -230,7 +219,7 @@ form p{
   color: #5046af;
 }
 
-.form-group select{
+.form-group select {
   border: #5046af solid 2px;
   border-radius: 10px;
 }
@@ -253,21 +242,21 @@ form p{
   font-size: 15px;
 }
 
-form label{
+form label {
   color: #0081cf;
 }
 
-form p input{
+form p input {
   border: #5046af solid 2px;
   border-radius: 10px;
   font-size: 18px;
-  font-weight:600;
-  padding-left:15px;
-  margin-top:10px;
+  font-weight: 600;
+  padding-left: 15px;
+  margin-top: 10px;
   color: #0081cf;
 }
 
-::placeholder{
+::placeholder {
   color: #93d4ff;
 }
 
@@ -315,7 +304,7 @@ form p input{
   color: #0081cf;
 }
 
-.icon{
+.icon {
   margin-right: 5px;
 }
 /*------------Mensaje--------------*/
@@ -344,7 +333,6 @@ form p input{
     flex-direction: column;
   }
 }
-
 </style>
 
 

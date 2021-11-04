@@ -31,7 +31,9 @@
               v-model="user.password"
             />
             <button class="btn" type="submit">Iniciar sesión</button>
-            <p v-on:click="forgetPassword" id="forgot"><span class="span">Olvidaste la contraseña</span></p>
+            <p v-on:click="forgetPassword" id="forgot">
+              <span class="span">Olvidaste la contraseña</span>
+            </p>
           </form>
         </div>
       </div>
@@ -71,15 +73,17 @@ export default {
           this.$emit("completedLogIn", dataLogIn);
         })
         .catch((error) => {
-          if (error.response.status == "401")
+          if (error.response.status == "401") {
             alert("ERROR 401: Credenciales Incorrectas.");
+          } else {
+            console.log(error);
+          }
         });
     },
 
     forgetPassword: function () {
-      alert("Comuniquese con el administrador del sistema, por favor.")
-
-    }
+      alert("Por favor comuníquese con el administrador del sistema.");
+    },
   },
 };
 </script>

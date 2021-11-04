@@ -1,22 +1,31 @@
 <template>
-<div class="general-container">
-<div v-if="loaded">
-  <div class="p-container">
-  <div class="general-title"><h1>Eliminar una bicicleta</h1></div>
-  <div class="prevention"><p>¿Esta seguro de eliminar la siguiente información?</p></div>
-  <div class="group">
-    <p class="sub-title">ID: {{ bicicleta.id }}</p>
-    <p class="sub-title">Condición: {{ bicicleta.condicion }}</p>
-    <p class="sub-title">Ubicación: {{ bicicleta.estacion_nombre }}</p>
+  <div class="general-container">
+    <div v-if="loaded">
+      <div class="p-container">
+        <div class="general-title"><h1>Eliminar una bicicleta</h1></div>
+        <div class="prevention">
+          <p>¿Está seguro que desea eliminar la siguiente bicicleta?</p>
+        </div>
+        <div class="group">
+          <p class="sub-title">ID: {{ bicicleta.id }}</p>
+          <p class="sub-title">Condición: {{ bicicleta.condicion }}</p>
+          <p class="sub-title">Ubicación: {{ bicicleta.estacion_nombre }}</p>
+        </div>
+        <br />
+        <div class="botones">
+          <button class="boton_delete" v-on:click="deleteBike">
+            <fa icon="trash" class="icon" />Eliminar
+          </button>
+          <button
+            class="boton_back"
+            v-on:click.self.prevent="renderStationsTable"
+          >
+            <fa icon="undo" class="icon" />Volver
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
-  <br />
-  <div class="botones">
-  <button  class="boton_delete" v-on:click="deleteBike"><fa icon="trash" class="icon"/>Eliminar</button>
-  <button class="boton_back" v-on:click.self.prevent="renderStationsTable"><fa icon="undo" class="icon"/>Volver</button>
-  </div>
-  </div>
-</div>
-</div>
 </template>
 
 
@@ -35,9 +44,7 @@ export default {
 
   methods: {
     getData: async function () {
-      console.log('HOla mundo pre verify')
       await this.verifyToken();
-      console.log('HOla mundo pos verify')
 
       if (
         localStorage.getItem("tokenRefresh") === null ||
@@ -48,8 +55,6 @@ export default {
 
       let id = localStorage.getItem("idBikeToDelete");
       let url = "https://move-and-flow-be.herokuapp.com";
-      
-      console.log('HOla mundo pre get')
 
       axios
         .get(url + "/bicicletas/" + id + "/", {
@@ -58,12 +63,11 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response.data);
           this.bicicleta = response.data;
           this.loaded = true;
         })
         .catch((error) => {
-          console.log(error.response);
+          console.log(error);
         });
     },
 
@@ -90,12 +94,11 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response);
           alert(response.data);
           this.$emit("loadcomponent", "BikesTable");
         })
         .catch((error) => {
-          console.log(error.response);
+          console.log(error);
         });
     },
 
@@ -123,7 +126,7 @@ export default {
     },
     accessDenied: function () {
       localStorage.clear();
-      alert("Acceso Denegado. Vuelve a iniciar sesión.");
+      alert("Acceso Denegado. Vuelva a iniciar sesión.");
       this.$router.push({ name: "Login" });
     },
   },
@@ -135,7 +138,6 @@ export default {
 </script>
 
 <style scoped>
-
 .general-container {
   height: 100%;
   width: 100%;
@@ -148,7 +150,6 @@ export default {
   background-repeat: no-repeat;
   padding: 1rem;
 }
-
 
 .general-title {
   display: flex;
@@ -172,26 +173,25 @@ export default {
   box-shadow: 0 0 10px rgb(190, 190, 190);
 }
 
-.prevention{
+.prevention {
   text-align: center;
   margin-bottom: 15px;
 }
 
-.prevention p{
+.prevention p {
   color: crimson;
   font-weight: 600;
 }
 
-.group .sub-title{
+.group .sub-title {
   color: #5046af;
   font-weight: 600;
 }
 
-
 .botones {
   display: flex;
   flex-direction: row;
-  justify-content:center;
+  justify-content: center;
   margin-top: 15px;
 }
 
@@ -232,7 +232,7 @@ export default {
   color: crimson;
 }
 
-.icon{
+.icon {
   margin-right: 5px;
 }
 </style>

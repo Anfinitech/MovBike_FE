@@ -45,14 +45,18 @@
             <fa icon="clipboard" class="icon" />Registrar
           </button>
           <button class="boton_back" v-on:click.self.prevent="renderBikesTable">
-            <fa icon="undo" class="icon" />Volver
+            <fa
+              icon="undo"
+              class="icon"
+              v-on:click.self.prevent="renderBikesTable"
+            />Volver
           </button>
         </div>
       </form>
     </div>
 
     <div class="info-container">
-      <p class="caja">Una nueva bici a tu servicio.</p>
+      <p class="caja">Una nueva bici a su servicio.</p>
     </div>
   </div>
 </template>
@@ -96,10 +100,9 @@ export default {
           this.listStations = response.data;
           this.stations = response.data;
           this.loaded = true;
-          console.log(this.stations);
         })
         .catch((error) => {
-          console.log(error.response);
+          console.log(error);
         });
     },
 
@@ -124,10 +127,10 @@ export default {
           alert(response.data);
         })
         .catch((error) => {
-          console.log(this.newBike);
-          console.log(error.response);
           if (error.response.status == "401") {
             this.accessDenied();
+          } else {
+            console.log(error);
           }
         });
     },
@@ -156,7 +159,7 @@ export default {
     },
     accessDenied: function () {
       localStorage.clear();
-      alert("Acceso Denegado. Vuelve a iniciar sesión.");
+      alert("Acceso Denegado. Vuelva a iniciar sesión.");
       this.$router.push({ name: "Login" });
     },
 
