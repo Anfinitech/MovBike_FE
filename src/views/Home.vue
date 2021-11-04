@@ -56,7 +56,6 @@
                   <span v-on:click.self.prevent="loadUsers()"> Usuarios</span>
                 </a>
               </li>
-<<<<<<< HEAD
               <li v-on:click.self.prevent="loadOurTeam()">
                 <a href="" v-on:click.self.prevent="loadOurTeam()">
                   <span
@@ -66,8 +65,6 @@
                   <span v-on:click.self.prevent="loadOurTeam()"> Nuestro Equipo</span>
                 </a>
               </li>
-=======
->>>>>>> develop
               <li v-on:click.self="logOut">
                 <a href="" v-on:click.self="logOut">
                   <span
