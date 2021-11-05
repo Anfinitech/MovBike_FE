@@ -10,7 +10,7 @@
       <form
         name="form"
         id="form"
-        v-on:submit.prevent="createBikes"
+        v-on:submit.prevent="checkForm"
       >
         <h3 class="title">Nueva Bicicleta</h3>
         <div class="form-group">
@@ -19,7 +19,7 @@
             type="radio"
             name="condicion"
             id="buena"
-            value="true"
+            value=true
             v-model="newBike.b_condicion"
           />
           <label
@@ -31,7 +31,7 @@
             type="radio"
             name="condicion"
             id="averiada"
-            value="false"
+            value=false
             v-model="newBike.b_condicion"
           />
           <label
@@ -132,28 +132,33 @@ export default {
           console.log(error);
         });
     },
-    
-    checkForm: function (e) {
+
+    checkForm: function () {
       let msg = "";
+
+      this.newBike.b_condicion = this.newBike.b_condicion == "true";
+
       if (this.newBike.b_condicion && this.newBike.b_en_estacion) {
+        createBikes();
         return true;
       }
 
-      this.errors = [];
+
 
       if (!this.newBike.b_condicion) {
-       msg += "Debes crear una bicicleta en Buen Estado.\n";
+        msg += "Debes crear una bicicleta en Buen Estado.\n";
       }
+
       if (!this.newBike.b_en_estacion) {
         msg += 'Debes elegir una estación.';
       }
+
       alert(msg)
-      e.preventDefault();
+
     },
 
     createBikes: async function () {
       await this.verifyToken();
-      await this.checkForm();
 
       if (
         localStorage.getItem("tokenRefresh") === null ||
