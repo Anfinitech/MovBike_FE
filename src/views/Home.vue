@@ -56,6 +56,15 @@
                   <span v-on:click.self.prevent="loadUsers()"> Usuarios</span>
                 </a>
               </li>
+              <li v-on:click.self.prevent="loadOurTeam()">
+                <a href="" v-on:click.self.prevent="loadOurTeam()">
+                  <span
+                    class="las la-barcode"
+                    v-on:click.self.prevent="loadOurTeam()"
+                  ></span>
+                  <span v-on:click.self.prevent="loadOurTeam()"> Nuestro Equipo</span>
+                </a>
+              </li>
               <li v-on:click.self="logOut">
                 <a href="" v-on:click.self="logOut">
                   <span
@@ -124,6 +133,9 @@ export default {
     },
     loadBikes: function () {
       this.$router.push({ name: "Bikes" });
+    },
+    loadOurTeam: function () {
+      this.$router.push({ name: "OurTeam" });
     },
 
     logOut: function () {

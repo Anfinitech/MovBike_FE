@@ -26,6 +26,11 @@ const routes = [
       name: 'Bikes',
       component: () => import('./views/Bikes.vue')
     },
+    {
+      path: '/ourteam',
+      name: 'OurTeam',
+      component: () => import('./views/OurTeam.vue')
+    },
     ]
   },
   {
