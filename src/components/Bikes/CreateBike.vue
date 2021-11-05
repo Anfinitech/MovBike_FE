@@ -143,9 +143,7 @@ export default {
         return true;
       }
 
-
-
-      if (!this.newBike.b_condicion) {
+if (!this.newBike.b_condicion) {
         msg += "Debes crear una bicicleta en Buen Estado.\n";
       }
 

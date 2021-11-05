@@ -1,8 +1,14 @@
 <template>
   <div class="general-container">
     <div class="form-container">
-      <div class="general-title"><h1>Registrar Estación</h1></div>
-      <form name="form" id="form" v-on:submit.prevent="createStation()">
+      <div class="general-title">
+        <h1>Registrar Estación</h1>
+      </div>
+      <form
+        name="form"
+        id="form"
+        v-on:submit.prevent="checkForm()"
+      >
         <p>
           Nombre:
           <input
@@ -32,7 +38,10 @@
           value="true"
           v-model="nuevaEstacion.e_estado"
         />
-        <label class="rad" for="abierta">Abierta</label>
+        <label
+          class="rad"
+          for="abierta"
+        >Abierta</label>
         <br />
         <input
           type="radio"
@@ -41,15 +50,30 @@
           value="false"
           v-model="nuevaEstacion.e_estado"
         />
-        <label class="rad" for="cerrada">Cerrada</label>
+        <label
+          class="rad"
+          for="cerrada"
+        >Cerrada</label>
 
         <br />
         <div class="botones">
-          <button class="boton_register" type="submit">
-            <fa icon="clipboard" class="icon" />Registrar
+          <button
+            class="boton_register"
+            type="submit"
+          >
+            <fa
+              icon="clipboard"
+              class="icon"
+            />Registrar
           </button>
-          <button class="boton_back" v-on:click="renderStationsTable">
-            <fa icon="undo" class="icon" />Volver
+          <button
+            class="boton_back"
+            v-on:click="renderStationsTable"
+          >
+            <fa
+              icon="undo"
+              class="icon"
+            />Volver
           </button>
         </div>
       </form>
@@ -81,6 +105,36 @@ export default {
     renderStationsTable: function () {
       this.$emit("loadcomponent", "StationsTable");
     },
+
+    checkForm: function () {
+      let msg = "";
+
+      console.log(this.nuevaEstacion)
+
+      this.nuevaEstacion.e_estado = this.nuevaEstacion.e_estado == "true";
+
+      console.log(this.nuevaEstacion)
+
+      console.log(this.nuevaEstacion.e_nombre.trim() === '')
+
+      if (!(this.nuevaEstacion.e_nombre.trim() === '') && this.nuevaEstacion.e_capacidad > 0) {
+        this.createStation()
+        return true;
+      }
+
+      if (this.nuevaEstacion.e_nombre.trim() === '') {
+        msg += "El nombre no deberia estar en blanco. \n";
+      }
+
+      if (this.nuevaEstacion.e_capacidad < 1) {
+        this.nuevaEstacion.e_capacidad = 1;
+        msg += 'La capacidad debe ser un valor positivo.';
+      }
+
+      alert(msg)
+
+    },
+
     createStation: async function () {
       await this.verifyToken();
 
@@ -102,6 +156,7 @@ export default {
           alert(response.data);
         })
         .catch((error) => {
+          console.log(error.response)
           if (error.response.status == "401") {
             this.accessDenied();
           } else if (error.response.status == "400") {

@@ -33,7 +33,7 @@
           <p>Ubicación:</p>
 
           <select v-model="updatedBike.b_en_estacion">
-            <option>Seleccione una estacion</option>
+            <option disabled>Seleccione una estacion</option>
             <option
               v-for="station in stations"
               :key="station.e_id"
