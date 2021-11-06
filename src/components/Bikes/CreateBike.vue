@@ -135,7 +135,7 @@ export default {
         });
     },
 
-    verifyToken: async function () {
+    verifyToken: async function () {ad
       if (
         localStorage.getItem("tokenRefresh") === null ||
         localStorage.getItem("tokenAccess") === null

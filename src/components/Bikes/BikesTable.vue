@@ -1,5 +1,8 @@
 <template>
-  <div class="general-container" v-if="loaded">
+  <div
+    class="general-container"
+    v-if="loaded"
+  >
     <div class="title-container">
       <div class="title">
         <h1>Bicicletas</h1>
@@ -12,20 +15,26 @@
         <option value="En buen estado">En buen estado</option>
         <option value="Averiada">Averiada</option>
       </select>
-      <button class="btn-register" v-on:click.self.prevent="renderCreate">
+      <button
+        class="btn-register"
+        v-on:click.self.prevent="renderCreate"
+      >
         Registrar Bicicleta
       </button>
     </div>
+    <table class="table-bikes">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Condición</th>
+          <th>Ubicación</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+    </table>
+
     <div class="scroll">
-      <table class="table-bikes scroll">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Condición</th>
-            <th>Ubicación</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
+      <table class="table-bikes">
         <tbody>
           <tr
             v-for="bicicleta in filterBikeListByCondition"
@@ -39,7 +48,10 @@
                 class="btn-detail"
                 v-on:click.self.prevent="renderUpdate(bicicleta)"
               >
-                <fa icon="edit" v-on:click="renderUpdate(bicicleta)" />
+                <fa
+                  icon="edit"
+                  v-on:click="renderUpdate(bicicleta)"
+                />
                 <h6 v-on:click.self.prevent="renderUpdate(bicicleta)">
                   Editar
                 </h6>
@@ -48,7 +60,10 @@
                 class="btn-delete"
                 v-on:click.self.prevent="renderDelete(bicicleta)"
               >
-                <fa icon="trash" v-on:click="renderDelete(bicicleta)" />
+                <fa
+                  icon="trash"
+                  v-on:click="renderDelete(bicicleta)"
+                />
                 <h6 v-on:click.self.prevent="renderDelete(bicicleta)">
                   Eliminar
                 </h6>
@@ -171,12 +186,6 @@ export default {
   --main-color: #5046af;
   --text-grey: #8390a2;
   --white: #fff;
-}
-
-.scroll {
-  overflow: scroll;
-  height: 500px;
-  width: 100%;
 }
 
 .general-container {
@@ -335,6 +344,12 @@ tr:nth-child(even):hover {
 td {
   text-align: center;
   padding: 6px;
+}
+
+.scroll {
+  overflow: scroll;
+  height: 300px;
+  width: 100%;
 }
 
 @media only screen and (max-width: 950px) {
