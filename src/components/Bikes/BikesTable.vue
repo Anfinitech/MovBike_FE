@@ -176,6 +176,7 @@ export default {
 .scroll {
   overflow: scroll;
   height: 500px;
+  width: 100%;
 }
 
 .general-container {
