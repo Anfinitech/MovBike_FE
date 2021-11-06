@@ -138,13 +138,9 @@ export default {
 
       this.newBike.b_condicion = this.newBike.b_condicion == "true";
 
-      if (this.newBike.b_condicion && this.newBike.b_en_estacion) {
-        createBikes();
+      if (this.newBike.b_en_estacion) {
+        this.createBikes();
         return true;
-      }
-
-if (!this.newBike.b_condicion) {
-        msg += "Debes crear una bicicleta en Buen Estado.\n";
       }
 
       if (!this.newBike.b_en_estacion) {
