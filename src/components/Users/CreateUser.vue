@@ -2,7 +2,7 @@
   <div class="general-container">
     <div class="form-container">
       <div class="general-title"><h1>Registrar un nuevo usuario</h1></div>
-      <form name="form" id="form" v-on:submit.prevent="createUser()">
+      <form name="form" id="form" v-on:submit.prevent="checkForm()">
         <h3 class="title">Nuevo Usuario</h3>
         <p>
           Nombre:
@@ -89,6 +89,28 @@ export default {
       this.$emit("loadcomponent", "UsersTable");
     },
 
+    checkForm: function () {
+      let msg = "";
+
+      let banderaNombre = this.nuevoUsuario.name.trim() === '';
+      let banderaUsuario = !this.nuevoUsuario.username.trim() === '';
+      let banderaContraseña = !this.nuevoUsuario.password.trim() === '';
+      let banderaEmail = !this.nuevoUsuario.email.trim() === '';
+
+      if (!banderaNombre || banderaUsuario || banderaContraseña || banderaEmail) {
+        console.log(banderaNombre)
+        
+        this.createUser();
+        return true;
+      }
+
+      if (banderaNombre) {
+        msg += "Debes escribir un nombre.";
+      }
+
+      alert(msg);
+    },
+
     createUser: async function () {
       await this.verifyToken();
 
@@ -114,6 +136,7 @@ export default {
             this.accessDenied();
           } else if (error.response.status == "400") {
             alert("BAD REQUEST [400]");
+            console.log(error.response);
           } else {
             console.log(error);
           }
