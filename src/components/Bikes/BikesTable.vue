@@ -25,9 +25,9 @@
     <table class="table-bikes">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Condición</th>
-          <th>Ubicación</th>
+          <th class="idColumn">ID</th>
+          <th class="conditionColumn">Condición</th>
+          <th class="stationColumn">Ubicación</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -40,9 +40,9 @@
             v-for="bicicleta in filterBikeListByCondition"
             :key="bicicleta.b_id"
           >
-            <td>{{ bicicleta.id }}</td>
-            <td>{{ bicicleta.condicion }}</td>
-            <td>{{ bicicleta.estacion_nombre }}</td>
+            <td class="idColumn">{{ bicicleta.id }}</td>
+            <td class="conditionColumn">{{ bicicleta.condicion }}</td>
+            <td class="stationColumn">{{ bicicleta.estacion_nombre }}</td>
             <td>
               <button
                 class="btn-detail"
@@ -350,6 +350,19 @@ td {
   overflow: scroll;
   height: 300px;
   width: 100%;
+}
+
+.idColumn{
+  width:5vw;
+}
+
+.conditionColumn{
+  width: 15vw;
+}
+
+.stationColumn{
+  width:200px;
+
 }
 
 @media only screen and (max-width: 950px) {
