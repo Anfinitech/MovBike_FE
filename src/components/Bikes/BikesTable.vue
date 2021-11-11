@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="general-container"
-    v-if="loaded"
-  >
+  <div class="general-container" v-if="loaded">
     <div class="title-container">
       <div class="title">
         <h1>Bicicletas</h1>
@@ -15,10 +12,7 @@
         <option value="En buen estado">En buen estado</option>
         <option value="Averiada">Averiada</option>
       </select>
-      <button
-        class="btn-register"
-        v-on:click.self.prevent="renderCreate"
-      >
+      <button class="btn-register" v-on:click.self.prevent="renderCreate">
         Registrar Bicicleta
       </button>
     </div>
@@ -48,10 +42,7 @@
                 class="btn-detail"
                 v-on:click.self.prevent="renderUpdate(bicicleta)"
               >
-                <fa
-                  icon="edit"
-                  v-on:click="renderUpdate(bicicleta)"
-                />
+                <fa icon="edit" v-on:click="renderUpdate(bicicleta)" />
                 <h6 v-on:click.self.prevent="renderUpdate(bicicleta)">
                   Editar
                 </h6>
@@ -60,10 +51,7 @@
                 class="btn-delete"
                 v-on:click.self.prevent="renderDelete(bicicleta)"
               >
-                <fa
-                  icon="trash"
-                  v-on:click="renderDelete(bicicleta)"
-                />
+                <fa icon="trash" v-on:click="renderDelete(bicicleta)" />
                 <h6 v-on:click.self.prevent="renderDelete(bicicleta)">
                   Eliminar
                 </h6>
@@ -352,17 +340,16 @@ td {
   width: 100%;
 }
 
-.idColumn{
-  width:5vw;
+.idColumn {
+  width: 5vw;
 }
 
-.conditionColumn{
+.conditionColumn {
   width: 15vw;
 }
 
-.stationColumn{
-  width:200px;
-
+.stationColumn {
+  width: 200px;
 }
 
 @media only screen and (max-width: 950px) {
@@ -411,6 +398,14 @@ td {
     color: white;
     text-align: center;
   }
+
+  .idColumn {
+    width: 5vw;
+  }
+
+  .conditionColumn {
+    width: 15vw;
+  }
 }
 
 @media only screen and (max-width: 700px) {
@@ -451,6 +446,14 @@ td {
 
   .btn-delete h6 {
     visibility: hidden;
+  }
+
+  .idColumn {
+    width: 5vw;
+  }
+
+  .conditionColumn {
+    width: 15vw;
   }
 }
 </style>
