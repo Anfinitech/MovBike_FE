@@ -62,7 +62,9 @@
                     class="las la-barcode"
                     v-on:click.self.prevent="loadOurTeam()"
                   ></span>
-                  <span v-on:click.self.prevent="loadOurTeam()"> Nuestro Equipo</span>
+                  <span v-on:click.self.prevent="loadOurTeam()">
+                    Nuestro Equipo</span
+                  >
                 </a>
               </li>
               <li v-on:click.self="logOut">
@@ -94,7 +96,9 @@
               />
               <div v-on:click.self.prevent="loadUsers()">
                 <h4 v-on:click.self.prevent="loadUsers()">{{ username }}</h4>
-                <small v-on:click.self.prevent="loadUsers()">Administrador</small>
+                <small v-on:click.self.prevent="loadUsers()"
+                  >Administrador</small
+                >
               </div>
             </div>
           </header>
@@ -118,6 +122,7 @@ export default {
   data: function () {
     return {
       username: localStorage.getItem("username") || "none",
+      routeImage: "../assets/home/img/avatar.jpg",
     };
   },
 

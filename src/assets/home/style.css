@@ -1,13 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
 /*Colores principales del template*/
-:root{
+
+:root {
     --main-color: #5046AF;
-    --text-grey: #8390A2 ;
+    --text-grey: #8390A2;
     --white: #fff;
 }
 
-*{
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -16,7 +17,9 @@
     font-family: 'Poppins', sans-serif;
 }
 
+
 /*========== Barra lateral ==========*/
+
 .sidebar {
     width: 345px;
     position: fixed;
@@ -30,24 +33,31 @@
     overflow: hidden;
 }
 
+
 /*======= Contenedor del logo ==========*/
-.sidebar-brand{
+
+.sidebar-brand {
     height: 400px;
     padding: 1rem 0rem 1rem 2rem;
 }
 
+
 /*======= Logo ==========*/
-.siderbar-brand .brand{
+
+.siderbar-brand .brand {
     width: 200px;
     display: inline-block;
     padding-right: 1rem;
     margin: 20px 50px;
     transition: width 300ms;
+    cursor: pointer;
 }
 
+
 /*========= Efecto hover en los items el menu lateral ==========*/
+
 .sidebar-menu li:hover,
-.sidebar-menu li.hovered{
+.sidebar-menu li.hovered {
     background: #fff;
     padding-top: 1rem;
     padding-bottom: 1rem;
@@ -56,12 +66,12 @@
 }
 
 .sidebar-menu li:hover a,
-.sidebar-menu li.hovered a{
+.sidebar-menu li.hovered a {
     color: var(--main-color);
 }
 
 .sidebar-menu li:hover a::before,
-.sidebar-menu li.hovered a::before{
+.sidebar-menu li.hovered a::before {
     content: '';
     position: absolute;
     right: 0%;
@@ -75,7 +85,7 @@
 }
 
 .sidebar-menu li:hover a::after,
-.sidebar-menu li.hovered a::after{
+.sidebar-menu li.hovered a::after {
     content: '';
     position: absolute;
     right: 0%;
@@ -88,79 +98,78 @@
     pointer-events: none;
 }
 
-
-.sidebar-menu{
+.sidebar-menu {
     margin-top: 1rem;
 }
 
-.sidebar-menu li{
+.sidebar-menu li {
     width: 100%;
     margin-bottom: 1.7rem;
     padding-left: 1rem;
     position: relative;
 }
 
-
-.sidebar-menu a{
+.sidebar-menu a {
     padding-left: 1rem;
     display: block;
     color: #fff;
     font-size: 1.1rem;
-    
 }
 
+
 /*======= Efecto click del boton de despliegue del menú lateral =========*/
-#nav-toggle{
+
+#nav-toggle {
     display: none;
 }
 
-#nav-toggle:checked + .sidebar{
+#nav-toggle:checked+.sidebar {
     width: 70px;
 }
 
-#nav-toggle:checked + .sidebar .brand:last-child{
+#nav-toggle:checked+.sidebar .brand:last-child {
     width: 60px;
     margin: 20px 5px 0 10px !important;
 }
 
-
-#nav-toggle:checked + .sidebar li {
+#nav-toggle:checked+.sidebar li {
     padding-left: 1rem;
     text-align: center;
 }
 
-#nav-toggle:checked + .sidebar li a {
+#nav-toggle:checked+.sidebar li a {
     font-size: 1.8rem;
     padding-left: 0rem;
 }
 
-#nav-toggle:checked + .sidebar li a span{
+#nav-toggle:checked+.sidebar li a span {
     padding-right: 1rem;
 }
 
-#nav-toggle:checked + .sidebar li a span:last-child{
+#nav-toggle:checked+.sidebar li a span:last-child {
     display: none;
 }
 
-#nav-toggle:checked ~ .main-container{
+#nav-toggle:checked~.main-container {
     margin-left: 70px;
-   
 }
 
-#nav-toggle:checked ~ .main-container header{
+#nav-toggle:checked~.main-container header {
     width: calc(100% - 70px);
     left: 70px;
 }
 
 
 /*====== Contenedor de la cabecera =========*/
-.main-container{
+
+.main-container {
     margin-left: 345px;
     transition: margin-left 300ms;
 }
 
 
 /*========= Cabecera ==========*/
+
 header {
     display: flex;
     justify-content: space-between;
@@ -175,32 +184,35 @@ header {
     background-color: white;
 }
 
-
-header label span{
+header label span {
     font-size: 1.7rem;
     padding-right: 1rem;
 }
 
+
 /*======= Contenedor de la descripción e imagen del usuario ===========*/
-.user-wrapper{
+
+.user-wrapper {
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
-.user-wrapper img{
+.user-wrapper img {
     margin-right: 1rem;
     border-radius: 50%;
     width: 50px;
     height: 50px;
 }
 
-.user-wrapper small{
+.user-wrapper small {
     display: inline-block;
     color: var(--text-grey);
     margin-top: -3px !important;
 }
 
-    /*========= ♣♣♣ Contenedor Principal ♣♣♣ ==========*/
+
+/*========= ♣♣♣ Contenedor Principal ♣♣♣ ==========*/
 
 main {
     margin-top: 82px;
@@ -209,7 +221,9 @@ main {
     min-height: calc(100vh - 0px);
 }
 
+
 /*=========== Tarjetas de selección del dashboard ===========*/
+
 .cards {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -217,7 +231,7 @@ main {
     margin: 1rem 1rem;
 }
 
-.card-single{
+.card-single {
     display: flex;
     justify-content: space-between;
     background: #fff;
@@ -225,207 +239,182 @@ main {
     border-radius: 8px;
 }
 
-.card-single img{
+.card-single img {
     width: 180px;
     padding-top: 40px;
 }
 
-.card-single:hover{
+.card-single:hover {
     background: var(--main-color);
 }
 
-.card-single:hover h2{
+.card-single:hover h2 {
     color: var(--white);
     padding-right: 10px;
+}
+
+.card-single:hover p {
+    color: var(--white);
+    padding-right: 10px;
+}
+
+.card-single-b {
+    display: flex;
+    justify-content: space-between;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+}
+
+.card-single-b img {
+    width: 180px;
+    padding-top: 40px;
 }
 
 
 /*======== Responsive de ventana 1200px ===========*/
 
-@media only screen and (max-width: 1200px){
-    .sidebar{
+@media only screen and (max-width: 1200px) {
+    .sidebar {
         width: 70px;
     }
-    
-    .sidebar .brand{
+    .sidebar .brand {
         width: 60px;
         margin: 20px 5px 0 10px !important;
     }
-    
-    
     .sidebar li {
         padding-left: 1rem;
         text-align: center;
     }
-    
     .sidebar li a {
         font-size: 1.8rem;
         padding-left: 0rem;
     }
-    
-    .sidebar li a span{
+    .sidebar li a span {
         padding-right: 1rem;
     }
-    
-    .sidebar li a span:last-child{
+    .sidebar li a span:last-child {
         display: none;
     }
-    
-    .main-container{
+    .main-container {
         margin-left: 70px;
-       
     }
-    
-    .main-container header{
+    .main-container header {
         width: calc(100% - 70px);
         left: 70px;
     }
-
-
-/*============ Responsive utilizando hover de ventana de 1200px ============*/
-
-@media only screen and (max-width: 1200px){
-    .sidebar:hover{
-        width: 345px;
-        z-index: 200;
+    /*============ Responsive utilizando hover de ventana de 1200px ============*/
+    @media only screen and (max-width: 1200px) {
+        .sidebar:hover {
+            width: 345px;
+            z-index: 200;
+        }
+        .sidebar:hover li {
+            padding-left: 2rem;
+            text-align: left;
+        }
+        .sidebar:hover li a {
+            font-size: 1.1rem;
+            padding-left: 1rem;
+        }
+        .sidebar:hover li a span {
+            padding-right: 1rem;
+        }
+        .sidebar:hover li a span:last-child {
+            display: inline;
+        }
+        .sidebar:hover .siderbar-brand {
+            justify-content: center;
+            margin-left: 50px;
+            padding-right: 1rem;
+            padding-bottom: 1rem;
+            margin-top: 10px;
+        }
+        .sidebar:hover .siderbar-brand .brand {
+            width: 200px;
+            margin-left: 50px;
+        }
     }
-    
-        
-    .sidebar:hover li {
-        padding-left: 2rem;
-        text-align: left;
-    }
-    
-    .sidebar:hover li a {
-        font-size: 1.1rem;
-        padding-left: 1rem;
-    }
-    
-    .sidebar:hover li a span{
-        padding-right: 1rem;
-    }
-    
-    .sidebar:hover li a span:last-child{
-        display: inline;
-    }
-
-    .sidebar:hover .siderbar-brand {
-        justify-content: center;
-        margin-left: 50px;
-        padding-right: 1rem;
-        padding-bottom: 1rem;
-        margin-top: 10px;
-    }
-
-    .sidebar:hover .siderbar-brand .brand{
-        width: 200px;
-        margin-left: 50px;
-        
-    }
-    
-    
 }
-}
+
 
 /*========== Responsive cuando se clickea el boton del menú lateral en ventana de 1200px ========*/
 
-@media only screen and (max-width: 1200px){
-
-    #nav-toggle:checked + .sidebar {
+@media only screen and (max-width: 1200px) {
+    #nav-toggle:checked+.sidebar {
         left: 0 !important;
         width: 345px;
     }
-    
-        
-    #nav-toggle:checked + .sidebar li {
+    #nav-toggle:checked+.sidebar li {
         padding-left: 2rem;
         text-align: left;
     }
-    
-    #nav-toggle:checked + .sidebar li a {
+    #nav-toggle:checked+.sidebar li a {
         font-size: 1.1rem;
         padding-left: 1rem;
     }
-    
-    #nav-toggle:checked + .sidebar li a span{
+    #nav-toggle:checked+.sidebar li a span {
         padding-right: 1rem;
     }
-    
-    #nav-toggle:checked + .sidebar li a span:last-child{
+    #nav-toggle:checked+.sidebar li a span:last-child {
         display: inline;
     }
-
-    #nav-toggle:checked + .sidebar .siderbar-brand {
+    #nav-toggle:checked+.sidebar .siderbar-brand {
         justify-content: center;
         margin-left: 50px;
         padding-right: 1rem;
         padding-bottom: 1rem;
         margin-top: 10px;
     }
-
-    #nav-toggle:checked + .sidebar .siderbar-brand .brand{
+    #nav-toggle:checked+.sidebar .siderbar-brand .brand {
         width: 200px;
         margin-left: 50px;
-        
     }
-    
-    #nav-toggle:checked ~ .main-container{
+    #nav-toggle:checked~.main-container {
         margin-left: 0rem;
     }
-
-    
-    #nav-toggle:checked ~ .main-container header{
+    #nav-toggle:checked~.main-container header {
         width: calc(100% - 350px);
         left: 350px;
     }
-    
 }
+
 
 /*=============== Responsive ventana de 1049px ==============*/
 
-@media only screen and (max-width: 1049px){
+@media only screen and (max-width: 1049px) {
     .cards {
         grid-template-columns: repeat(1, 1fr);
     }
-
     .recent-grid {
         grid-template-columns: 60% 40%;
     }
-
-    .main-container{
+    .main-container {
         margin-left: 70px;
-       
     }
-    
-    .main-container header{
+    .main-container header {
         width: calc(100% - 70px);
         left: 70px;
     }
-
 }
+
 
 /*============ Responsive de ventana de 600px ============*/
 
-@media only screen and (max-width: 600px){
+@media only screen and (max-width: 600px) {
     .cards {
         grid-template-columns: 100%;
-        
     }
-
-    .card-single{
+    .card-single {
         display: block;
     }
-
-    .card-single img{
+    .card-single img {
         width: 180px;
         padding-top: 40px;
     }
-
-    
-    .sidebar{
+    .sidebar {
         left: -100% !important;
     }
-
     header h1 label {
         background: var(--main-color);
         text-align: center;
@@ -439,70 +428,55 @@ main {
         align-items: center;
         justify-content: center !important;
     }
-
     header h1 span {
         text-align: center;
         padding-right: 0rem;
     }
-
-    .main-container{
+    .main-container {
         width: 100%;
         margin-left: 0rem;
     }
-
     header {
         width: 100% !important;
         left: 0 !important;
         z-index: 300 !important;
     }
-
-
 }
+
 
 /*========== Responsive cuando se da click al botón del menú lateral en ventana de 600px ==========*/
 
-@media only screen and (max-width: 600px){
-
-    #nav-toggle:checked + .sidebar {
+@media only screen and (max-width: 600px) {
+    #nav-toggle:checked+.sidebar {
         left: 0 !important;
         width: 345px;
     }
-    
-        
-    #nav-toggle:checked + .sidebar li {
+    #nav-toggle:checked+.sidebar li {
         padding-left: 2rem;
         text-align: left;
     }
-    
-    #nav-toggle:checked + .sidebar li a {
+    #nav-toggle:checked+.sidebar li a {
         font-size: 1.1rem;
         padding-left: 1rem;
     }
-    
-    #nav-toggle:checked + .sidebar li a span{
+    #nav-toggle:checked+.sidebar li a span {
         padding-right: 1rem;
     }
-    
-    #nav-toggle:checked + .sidebar li a span:last-child{
+    #nav-toggle:checked+.sidebar li a span:last-child {
         display: inline;
     }
-
-    #nav-toggle:checked + .sidebar .siderbar-brand {
+    #nav-toggle:checked+.sidebar .siderbar-brand {
         justify-content: center;
         margin-left: 50px;
         padding-right: 1rem;
         padding-bottom: 1rem;
         margin-top: 10px;
     }
-
-    #nav-toggle:checked + .sidebar .siderbar-brand .brand{
+    #nav-toggle:checked+.sidebar .siderbar-brand .brand {
         width: 200px;
         margin-left: 50px;
-        
     }
-    
-    #nav-toggle:checked ~ .main-container{
+    #nav-toggle:checked~.main-container {
         margin-left: 0rem;
     }
-    
 }
