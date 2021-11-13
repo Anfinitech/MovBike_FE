@@ -88,7 +88,7 @@
             </h1>
             <div class="user-wrapper">
               <img
-                src="../assets/home/img/avatar.jpg"
+                src="../assets/home/img/avatar.png"
                 width="50px"
                 height="50px"
                 alt=""
@@ -122,7 +122,6 @@ export default {
   data: function () {
     return {
       username: localStorage.getItem("username") || "none",
-      routeImage: "../assets/home/img/avatar.jpg",
     };
   },
 

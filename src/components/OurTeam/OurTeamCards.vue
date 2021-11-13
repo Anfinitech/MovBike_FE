@@ -1,25 +1,20 @@
 <template>
   <div class="cards">
     <a
-      href="https://www.linkedin.com/in/ivonne-su%C3%A1rez-87191475/"
+      href="https://www.linkedin.com/in/anfmedinara/"
       target="_blank"
       rel="noreferrer noopener"
     >
       <div class="card-single">
         <div>
           <div cursor: pointer>
-            <a
-              href="https://www.linkedin.com/in/anfmedinara/ "
-              target="_blank"
-              rel="noreferrer noopener"
-              ><h2>Andrés F. Medina R.</h2></a
-            >
+            <h2>Andrés F. Medina R.</h2>
             <p>Psicólogo (Scrum Master)</p>
           </div>
           <div class="small-icons">
             <img src="@/assets/langIcons/Linkedin.png" />
             <a
-              href="https://interacpedia.com/user/andres-felipe-medina-ramirez?tab=profile"
+              href="https://interacpedia.com/user/andres-felipe-medina-ramirez"
               target="_blank"
               rel="noreferrer noopener"
             >
@@ -39,6 +34,11 @@
           <img src="@/assets/ourTeam/Andrés.png" width="150px" alt="" />
         </div></div
     ></a>
+    <a
+      href="http://linkedin.com/in/didieracm/"
+      target="_blank"
+      rel="noreferrer noopener"
+    >
     <div class="card-single">
       <div>
         <div>
@@ -49,7 +49,7 @@
           <img src="@/assets/langIcons/Linkedin.png"
           />
           <a
-            href="https://interacpedia.com/user/andres-felipe-medina-ramirez?tab=profile"
+            href="https://interacpedia.com/user/didier-alfonso-castaneda-moreno"
             target="_blank"
             rel="noreferrer noopener"
           >
@@ -69,6 +69,7 @@
         <img src="@/assets/ourTeam/Didier.png" width="150px" alt="" />
       </div>
     </div>
+    </a>
 <a
             href="https://www.linkedin.com/in/fabian-e-beltran-g/"
             target="_blank"
@@ -85,7 +86,7 @@
           <img src="@/assets/langIcons/Linkedin.png"
           />
           <a
-            href="https://interacpedia.com/user/andres-felipe-medina-ramirez?tab=profile"
+            href="https://interacpedia.com/user/fabian-esteban-beltran-gomez"
             target="_blank"
             rel="noreferrer noopener"
           >
@@ -102,35 +103,24 @@
         </div>
       </div>
       <div>
-        <a
-          href="https://www.linkedin.com/in/fabian-e-beltran-g/"
-          target="_blank"
-          rel="noreferrer noopener"
-          ><img src="@/assets/ourTeam/Fabián.png" width="150px" alt=""
-        /></a>
+        
+          <img src="@/assets/ourTeam/Fabián.png" width="150px" alt=""
+        />
       </div>
     </div></a>
+    <a
+            href="https://www.linkedin.com/in/gustavo-brice%C3%B1o-8bb60492/"
+            target="_blank"
+            rel="noreferrer noopener"
+            >
     <div class="card-single">
       <div>
         <div>
           <h2>Gustavo Briceño</h2>
           <p>Diseñador Gráfico</p>
         </div>
-
         <div class="small-icons">
-          <a
-            href="https://www.linkedin.com/in/anfmedinara/ "
-            target="_blank"
-            rel="noreferrer noopener"
-            ><img src="@/assets/langIcons/Linkedin.png"
-          /></a>
-          <a
-            href="https://interacpedia.com/user/andres-felipe-medina-ramirez?tab=profile"
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            <img src="@/assets/langIcons/Interacpedia.png" />
-          </a>
+          <img src="@/assets/langIcons/Linkedin.png"/>
         </div>
         <div class="icons">
           <p>Conocimientos en:</p>
@@ -145,6 +135,7 @@
         <img src="@/assets/ourTeam/Gustavo.png" width="250px" alt="" />
       </div>
     </div>
+    </a>
     <a
           href="https://www.linkedin.com/in/ivonne-su%C3%A1rez-87191475/"
           target="_blank"
@@ -153,20 +144,15 @@
     <div class="card-single">
       <div>
         <div>
-          <a
-            href="https://www.linkedin.com/in/ivonne-su%C3%A1rez-87191475/"
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            <h2>Ivonne Suárez G.</h2></a
-          >
+          
+            <h2>Ivonne Suárez G.</h2>
           <p>Ing. de Petróleos</p>
         </div>
         <div class="small-icons">
           <img src="@/assets/langIcons/Linkedin.png"
           />
           <a
-            href="https://interacpedia.com/user/andres-felipe-medina-ramirez?tab=profile"
+            href="https://interacpedia.com/user/ivonne-mariela-catherine-suarez-garcia"
             target="_blank"
             rel="noreferrer noopener"
           >
@@ -214,9 +200,9 @@ export default {
 </script>
 
 <style scoped>
-
-a:visited{
+a {
   text-decoration: none;
+
   color: black;
 }
 
