@@ -62,7 +62,9 @@
                     class="las la-barcode"
                     v-on:click.self.prevent="loadOurTeam()"
                   ></span>
-                  <span v-on:click.self.prevent="loadOurTeam()"> Nuestro Equipo</span>
+                  <span v-on:click.self.prevent="loadOurTeam()">
+                    Nuestro Equipo</span
+                  >
                 </a>
               </li>
               <li v-on:click.self="logOut">
@@ -86,7 +88,7 @@
             </h1>
             <div class="user-wrapper">
               <img
-                src="../assets/home/img/avatar.jpg"
+                src="../assets/home/img/avatar.png"
                 width="50px"
                 height="50px"
                 alt=""
@@ -94,7 +96,9 @@
               />
               <div v-on:click.self.prevent="loadUsers()">
                 <h4 v-on:click.self.prevent="loadUsers()">{{ username }}</h4>
-                <small v-on:click.self.prevent="loadUsers()">Administrador</small>
+                <small v-on:click.self.prevent="loadUsers()"
+                  >Administrador</small
+                >
               </div>
             </div>
           </header>
