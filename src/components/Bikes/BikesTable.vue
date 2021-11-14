@@ -349,7 +349,7 @@ td {
 }
 
 .stationColumn {
-  width: 200px;
+  width: 15vw;
 }
 
 @media only screen and (max-width: 950px) {
