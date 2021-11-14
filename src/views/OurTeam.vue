@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Nuestro Equipo</h1>
+    <h1>Nuestro Equipo de Desarrollo</h1>
     <div>
       <OurTeamCards />
     </div>
