@@ -1,8 +1,17 @@
 <template>
-  <div class="general-container" v-if="loaded">
+  <div
+    class="general-container"
+    v-if="loaded"
+  >
     <div class="form-container">
-      <div class="title"><h1>Registrar bicicleta</h1></div>
-      <form name="form" id="form" v-on:submit.prevent="createBikes">
+      <div class="title">
+        <h1>Registrar bicicleta</h1>
+      </div>
+      <form
+        name="form"
+        id="form"
+        v-on:submit.prevent="checkForm"
+      >
         <h3 class="title">Nueva Bicicleta</h3>
         <div class="form-group">
           <p>Condición:</p>
@@ -10,26 +19,35 @@
             type="radio"
             name="condicion"
             id="buena"
-            value="true"
+            value=true
             v-model="newBike.b_condicion"
           />
-          <label class="rad" for="buena">En buen estado</label>
+          <label
+            class="rad"
+            for="buena"
+          >En buen estado</label>
           <br />
           <input
             type="radio"
             name="condicion"
             id="averiada"
-            value="false"
+            value=false
             v-model="newBike.b_condicion"
           />
-          <label class="rad" for="averiada">Averiada</label>
+          <label
+            class="rad"
+            for="averiada"
+          >Averiada</label>
           <br />
         </div>
 
         <div class="form-group">
           <p>Ubicación:</p>
           <select v-model="newBike.b_en_estacion">
-            <option disabled selected>Seleccione una estacion</option>
+            <option
+              disabled
+              selected
+            >Seleccione una estacion</option>
             <option
               v-for="station in stations"
               :key="station.e_id"
@@ -41,10 +59,19 @@
         </div>
         <br />
         <div class="botones">
-          <button class="boton_register" type="submit">
-            <fa icon="clipboard" class="icon" />Registrar
+          <button
+            class="boton_register"
+            type="submit"
+          >
+            <fa
+              icon="clipboard"
+              class="icon"
+            />Registrar
           </button>
-          <button class="boton_back" v-on:click.self.prevent="renderBikesTable">
+          <button
+            class="boton_back"
+            v-on:click.self.prevent="renderBikesTable"
+          >
             <fa
               icon="undo"
               class="icon"
@@ -71,7 +98,7 @@ export default {
   data: function () {
     return {
       newBike: {
-        b_condicion: true,
+        b_condicion: false,
         b_en_estacion: 0,
       },
       stations: {},
@@ -104,6 +131,24 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+
+    checkForm: function () {
+      let msg = "";
+
+      this.newBike.b_condicion = this.newBike.b_condicion == "true";
+
+      if (this.newBike.b_en_estacion) {
+        this.createBikes();
+        return true;
+      }
+
+      if (!this.newBike.b_en_estacion) {
+        msg += 'Debes elegir una estación.';
+      }
+
+      alert(msg)
+
     },
 
     createBikes: async function () {

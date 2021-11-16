@@ -2,7 +2,7 @@
   <div class="general-container">
     <div class="form-container">
       <div class="general-title"><h1>Registrar un nuevo usuario</h1></div>
-      <form name="form" id="form" v-on:submit.prevent="createUser()">
+      <form name="form" id="form" v-on:submit.prevent="checkForm()">
         <h3 class="title">Nuevo Usuario</h3>
         <p>
           Nombre:
@@ -46,8 +46,8 @@
         </p>
         <div class="form-group">
           <p class="sub-title">Rol:</p>
-          <select name="rol" id="rol" v-model="nuevoUsuario.role">
-            <option value="Admin" selected>Administrador</option>
+          <select name="rol" id="rol" v-model="role">
+            <option value="Admin" selected disabled>Administrador</option>
           </select>
         </div>
 
@@ -80,13 +80,48 @@ export default {
         username: "",
         password: "",
         email: "",
-        role: "Admin",
       },
+      role: "Admin",
     };
   },
   methods: {
     renderUsersTable: function () {
       this.$emit("loadcomponent", "UsersTable");
+    },
+
+    checkForm: function () {
+      let msg = "";
+
+      let banderaNombre = this.nuevoUsuario.name.trim() === "";
+      let banderaUsuario = this.nuevoUsuario.username.trim() === "";
+      let banderaContraseña = this.nuevoUsuario.password.trim() === "";
+      let banderaEmail = this.nuevoUsuario.email.trim() === "";
+
+      if (
+        !banderaNombre &&
+        !banderaUsuario &&
+        !banderaContraseña &&
+        !banderaEmail
+      ) {
+        this.createUser();
+        return true;
+      }
+
+      if (banderaNombre) {
+        msg += "Debes escribir un nombre. \n";
+      }
+
+      if (banderaUsuario) {
+        msg += "Debes escribir un nombre de Usuario. \n";
+      }
+      if (banderaContraseña) {
+        msg += "Debes escribir una contraseña. \n";
+      }
+      if (banderaEmail) {
+        msg += "Debes escribir un correo email.";
+      }
+
+      alert(msg);
     },
 
     createUser: async function () {
@@ -112,8 +147,15 @@ export default {
         .catch((error) => {
           if (error.response.status == "401") {
             this.accessDenied();
+          } else if (
+            error.response.data.username ==
+            "user with this username already exists."
+          ) {
+            alert("Usuario ya registrado");
+            console.log(error.response);
           } else if (error.response.status == "400") {
             alert("BAD REQUEST [400]");
+            console.log(error.response);
           } else {
             console.log(error);
           }
