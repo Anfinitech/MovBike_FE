@@ -42,4 +42,9 @@ export default {
 
 
 <style>
+
+*{
+  border: 0px solid red;
+}
+
 </style>

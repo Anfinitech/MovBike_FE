@@ -16,24 +16,27 @@
         Registrar Bicicleta
       </button>
     </div>
+    <table class="table-bikes">
+      <thead>
+        <tr>
+          <th class="idColumn">ID</th>
+          <th class="conditionColumn">Condición</th>
+          <th class="stationColumn">Ubicación</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+    </table>
+
     <div class="scroll">
-      <table class="table-bikes scroll">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Condición</th>
-            <th>Ubicación</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
+      <table class="table-bikes">
         <tbody>
           <tr
             v-for="bicicleta in filterBikeListByCondition"
             :key="bicicleta.b_id"
           >
-            <td>{{ bicicleta.id }}</td>
-            <td>{{ bicicleta.condicion }}</td>
-            <td>{{ bicicleta.estacion_nombre }}</td>
+            <td class="idColumn">{{ bicicleta.id }}</td>
+            <td class="conditionColumn">{{ bicicleta.condicion }}</td>
+            <td class="stationColumn">{{ bicicleta.estacion_nombre }}</td>
             <td>
               <button
                 class="btn-detail"
@@ -171,11 +174,6 @@ export default {
   --main-color: #5046af;
   --text-grey: #8390a2;
   --white: #fff;
-}
-
-.scroll {
-  overflow: scroll;
-  height: 500px;
 }
 
 .general-container {
@@ -336,6 +334,24 @@ td {
   padding: 6px;
 }
 
+.scroll {
+  overflow: scroll;
+  height: 300px;
+  width: 100%;
+}
+
+.idColumn {
+  width: 5vw;
+}
+
+.conditionColumn {
+  width: 15vw;
+}
+
+.stationColumn {
+  width: 15vw;
+}
+
 @media only screen and (max-width: 950px) {
   .general-container {
     padding: 10px;
@@ -382,6 +398,14 @@ td {
     color: white;
     text-align: center;
   }
+
+  .idColumn {
+    width: 5vw;
+  }
+
+  .conditionColumn {
+    width: 15vw;
+  }
 }
 
 @media only screen and (max-width: 700px) {
@@ -422,6 +446,14 @@ td {
 
   .btn-delete h6 {
     visibility: hidden;
+  }
+
+  .idColumn {
+    width: 5vw;
+  }
+
+  .conditionColumn {
+    width: 15vw;
   }
 }
 </style>
