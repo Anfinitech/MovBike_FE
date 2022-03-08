@@ -336,7 +336,7 @@ td {
 
 .scroll {
   overflow: scroll;
-  height: 300px;
+  height: 475px;
   width: 100%;
 }
 
