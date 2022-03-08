@@ -5,12 +5,18 @@
         <h1>Bicicletas</h1>
       </div>
     </div>
-    <div class="filtroPorCondicion">
-      <h4>Filtrar</h4>
-      <select v-model="filtroPorCondicion">
-        <option value="">Todas</option>
-        <option value="En buen estado">En buen estado</option>
-        <option value="Averiada">Averiada</option>
+    
+    <div class="filtroPorEstacion">
+      <h4>Estacion:</h4>
+      <select v-model="filtroPorEstacion">
+              <option value="">Todas</option>
+              <option 
+                v-for="estacion in estaciones"
+                :key="estacion"
+                v-bind:value="estacion"
+              >
+                {{ estacion }}
+                </option>
       </select>
       <button class="btn-register" v-on:click.self.prevent="renderCreate">
         Registrar Bicicleta
@@ -28,7 +34,7 @@
     </table>
 
     <div class="scroll">
-      <table class="table-bikes">
+      <table class="table-bikes scroll">
         <tbody>
           <tr
             v-for="bicicleta in filterBikeListByCondition"
@@ -38,7 +44,7 @@
             <td class="conditionColumn">{{ bicicleta.condicion }}</td>
             <td class="stationColumn">{{ bicicleta.estacion_nombre }}</td>
             <td>
-              <button
+              <button 
                 class="btn-detail"
                 v-on:click.self.prevent="renderUpdate(bicicleta)"
               >
@@ -70,11 +76,13 @@ import axios from "axios";
 export default {
   name: "BikesTable",
 
-  data() {
+  data: function() {
     return {
       bicicletas: [],
       checkedNames: [],
-      filtroPorCondicion: "",
+      loop: [],
+      estaciones: new Set(),
+      filtroPorEstacion: "",
       loaded: false,
     };
   },
@@ -97,9 +105,12 @@ export default {
             Authorization: `Bearer ${localStorage.getItem("tokenAccess")}`,
           },
         })
+        
         .then((response) => {
           this.bicicletas = response.data;
           this.loaded = true;
+          for (let bicicleta of this.bicicletas) this.estaciones.add(bicicleta.estacion_nombre)
+          console.log(this.estaciones)
         })
         .catch((error) => {
           console.log(error);
@@ -154,10 +165,20 @@ export default {
   computed: {
     filterBikeListByCondition() {
       return this.bicicletas.filter((bicicleta) => {
-        return !bicicleta.condicion.indexOf(this.filtroPorCondicion);
+        return !bicicleta.estacion_nombre.indexOf(this.filtroPorEstacion);
       });
     },
   },
+  
+  loop:function (bicicletas){
+      let loop = []
+      for (let bicicleta = 0; bicicleta < length(bicicletas); bicicleta ++){
+        if (!(bicicleta in loop)){
+          loop.push(bicicleta)
+      return loop 
+        }
+      }
+    },
 
   created: async function () {
     try {
@@ -212,7 +233,7 @@ export default {
   color: var(--main-color);
 }
 
-.filtroPorCondicion {
+.filtroPorEstacion {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -221,12 +242,12 @@ export default {
   margin-top: 20px;
 }
 
-.filtroPorCondicion h4 {
+.filtroPorEstacion h4 {
   padding-right: 5px;
   color: var(--main-color);
 }
 
-.filtroPorCondicion select {
+.filtroPorEstacion select {
   border-radius: 7px;
   cursor: pointer;
   border: #5046af solid 2px;
@@ -234,7 +255,33 @@ export default {
   justify-content: space-between;
 }
 
-.filtroPorCondicion select option:hover {
+.filtroPorEstacion select option:hover {
+  background-color: #6ee1ff !important;
+}
+
+.filtroPorEstacion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: initial;
+  padding-bottom: 30px;
+  margin-top: 20px;
+}
+
+.filtroPorEstacion h4 {
+  padding-right: 5px;
+  color: var(--main-color);
+}
+
+.filtroPorEstacion select {
+  border-radius: 7px;
+  cursor: pointer;
+  border: #5046af solid 2px;
+  text-decoration: none;
+  justify-content: space-between;
+}
+
+.filtroPorEstacion select option:hover {
   background-color: #6ee1ff !important;
 }
 
@@ -417,7 +464,16 @@ td {
     width: 97%;
   }
 
-  .filtroPorCondicion {
+  .filtroPorEstacion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding-bottom: 30px;
+    margin-top: 20px;
+  }
+
+  .filtroPorEstacion {
     display: flex;
     align-items: center;
     justify-content: center;
