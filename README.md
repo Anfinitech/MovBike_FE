@@ -1,3 +1,10 @@
+# README
+
+You can access our website [MovBike](movbike.herokuapp.com/) to try our WebApp prototype. 
+
+* Username: guest
+* Password: guest
+
 # movbike
 
 ## Project setup
